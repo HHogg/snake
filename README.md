@@ -6,7 +6,7 @@ Somewhere down the line that evening, I decided to build a snake game with the h
 
 It turns out, it's pretty hard. 
 
-I also got fed up of switch back and forth from my editor and the browser, so I stuck and editor in the browser. 
+I also got fed up of switching back and forth from my editor and the browser, so I stuck and editor in the browser. 
 
 ... then a scoring system, and turned it into a game. 
 
