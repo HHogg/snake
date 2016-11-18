@@ -14,7 +14,7 @@ I also got fed up of switching back and forth from my editor and the browser, so
 
 ### Notes about the game
 * The code is run in a sandbox worker... I haven't tested how secure this is. You might be able to cheat ¯\_(ツ)_/¯
-* The code is store in locale storage, so don't worry if you refresh. 
+* The code is stored in locale storage, so don't worry if you refresh. 
 * The scoring system is rudimentary to say the least, don't take it too seriously. 
 
 ### My current attempt 
