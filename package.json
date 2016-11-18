@@ -1,0 +1,25 @@
+{
+  "name": "asi-snake",
+  "version": "1.0.0",
+  "description": "Artificial Stupid Intelligence (ASI) Snake",
+  "scripts": {
+    "start": "http-server ./ -p 4000"
+  },
+  "repository": {
+    "url": "git+ssh://git@github.com/HHogg/asi-snake.git",
+    "type": "git"
+  },
+  "author": "Harry Hogg <harry@hogg.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HHogg/asi-snake/issues"
+  },
+  "homepage": "https://github.com/HHogg/asi-snake#readme",
+  "dependencies": {
+    "ace-builds": "^1.2.5",
+    "normalize.css": "^5.0.0"
+  },
+  "devDependencies": {
+    "http-server": "^0.9.0"
+  }
+}
