@@ -148,7 +148,7 @@ function findPath(xMax, yMax, snake, point, D) {
     consoleEl.innerHTML = message;
   }
 
-  function sandboxRequestMoves({ snake, point }, points, avg, score) {
+  function sandboxRequestMoves({ snake, point }, points, movesHistory, score) {
     let sandboxTimeout;
     let sandbox = new Worker('sandbox.js');
 
@@ -166,7 +166,12 @@ function findPath(xMax, yMax, snake, point, D) {
     sandbox.onmessage = ({ data: { action, error, moves } }) => {
       switch (action) {
       case 'moves':
-        update({ snake, point, moves }, points, avg.concat([moves.length]), score);
+        update(
+          { snake, point, moves },
+          points,
+          Array.isArray(moves) && moves.length > 0 ? movesHistory.concat([moves.length]) : movesHistory,
+          score
+        );
         break;
       case 'error':
         handleConsoleLog(error, true);
