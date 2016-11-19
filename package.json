@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Artificial Stupid Intelligence (ASI) Snake",
   "scripts": {
+    "gh-pages": "./deploy.sh",
     "start": "http-server ./ -p 4000"
   },
   "repository": {
