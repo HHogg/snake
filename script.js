@@ -329,7 +329,7 @@ function findPath(xMax, yMax, snake, point, D) {
 
     if (moves.length === 0) {
       avg = 0;
-    } if (moves.length === 1) {
+    } else if (moves.length === 1) {
       avg = moves[0];
     } else if ((moves.length / 2) % 1) {
       avg = (moves[Math.floor(moves.length / 2)] +  moves[Math.ceil(moves.length / 2)]) / 2;
