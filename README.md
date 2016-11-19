@@ -1,5 +1,7 @@
 # ASI Snake
 
+#### Try it out here [https://hhogg.github.io/asi-snake](https://hhogg.github.io/asi-snake)
+
 This started one evening with me thinking "I should really branch out from web development... AI and Autonomous Vehicles looks like a good direction.".
 
 Somewhere down the line that evening, I decided to build a snake game with the hope of a basic AI that could collect every point until the board was full.
