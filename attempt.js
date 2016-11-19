@@ -30,11 +30,7 @@
     return aH - bH;
   }
 
-  function getNextPosition(snake, direction) {
-    return [shiftPosition(snake[0], direction)].concat(snake);
-  }
-
-  function shiftPosition([x, y], direction) {
+  function shift([x, y], direction) {
     switch (direction) {
       case D.UP:    return [x, y - 1];
       case D.RIGHT: return [x + 1, y];
@@ -48,16 +44,11 @@
   let nX, nY;
 
   while (nX !== pX || nY !== pY) {
-    const [cX, cY] = snake[0];
-    const posUp = [cX, cY - 1];
-    const posRight = [cX + 1, cY];
-    const posDown = [cX, cY + 1];
-    const posLeft = [cX - 1, cY];
     const directions = [
-      [D.UP, posUp, heuristic(posUp)],
-      [D.RIGHT, posRight, heuristic(posRight)],
-      [D.DOWN, posDown, heuristic(posDown)],
-      [D.LEFT, posLeft, heuristic(posLeft)],
+      [D.UP, shift(snake[0], D.UP), heuristic(shift(snake[0], D.UP))],
+      [D.RIGHT, shift(snake[0], D.RIGHT), heuristic(shift(snake[0], D.RIGHT))],
+      [D.DOWN, shift(snake[0], D.DOWN), heuristic(shift(snake[0], D.DOWN))],
+      [D.LEFT, shift(snake[0], D.LEFT), heuristic(shift(snake[0], D.LEFT))],
     ].filter(filterInvalid).sort(sortByHeuristic);
 
     if (directions.length === 0) {
@@ -66,7 +57,7 @@
     }
 
     moves.push(directions[0][0]);
-    snake = getNextPosition(snake, directions[0][0]).slice(0, -1);
+    snake = [shift(snake[0], directions[0][0])].concat(snake).slice(0, -1);
     [nX, nY] = directions[0][1];
   }
 
