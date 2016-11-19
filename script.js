@@ -170,7 +170,8 @@ function findPath(xMax, yMax, snake, point, D) {
           { snake, point, moves },
           points,
           Array.isArray(moves) && moves.length > 0 ? movesHistory.concat([moves.length]) : movesHistory,
-          score
+          score,
+          true
         );
         break;
       case 'error':
