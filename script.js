@@ -193,9 +193,9 @@ function findPath(xMax, yMax, snake, point, D) {
     });
 
     sandboxTimeout = setTimeout(() => {
-      console.log('Sandbox time out');
       cleanSandbox();
       handleReset();
+      handleConsoleLog('⏰ Your code exceeded the maximum 5 seconds run time.');
     }, 5000);
   }
 

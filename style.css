@@ -77,7 +77,7 @@ body {
   background-color: var(--cell-inactive-color);
   font-family: "Courier New", Courier, monospace;
   font-size: 16px;
-  word-break: break-all;;
+  word-break: break-all;
   color: var(--text-color);
 }
 
