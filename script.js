@@ -123,7 +123,7 @@ function findPath(xMax, yMax, snake, point, D) {
 
     resetButton.setAttribute('disabled', '');
     startButton.removeAttribute('disabled');
-    handleConsoleLog('');
+    consoleEl.innerHTML = '';
 
     redraw({ snake: createSnake() });
   }
@@ -138,14 +138,18 @@ function findPath(xMax, yMax, snake, point, D) {
     scoreEl.innerHTML = Math.floor(score);
   }
 
-  function handleConsoleLog(message, error) {
-    if (error) {
-      consoleEl.classList.add('asi-console--error');
-    } else {
-      consoleEl.classList.remove('asi-console--error');
-    }
+  function handleConsoleLog(message) {
+    message = Array.isArray(message)
+      ? message.reduce((m, t) => `${m}${JSON.stringify(t)} `, '')
+      : message;
 
-    consoleEl.innerHTML = message;
+    consoleEl.innerHTML += `
+      <div class="asi-console__message">
+        ${message}
+      </div>
+    `;
+
+    consoleEl.lastElementChild.scrollIntoView()
   }
 
   function sandboxRequestMoves({ snake, point }, points, movesHistory, score) {
@@ -163,23 +167,20 @@ function findPath(xMax, yMax, snake, point, D) {
       cleanSandbox();
     }
 
-    sandbox.onmessage = ({ data: { action, error, moves } }) => {
+    sandbox.onmessage = ({ data: { action, args, error, moves } }) => {
       switch (action) {
       case 'moves':
-        update(
-          { snake, point, moves },
-          points,
-          Array.isArray(moves) && moves.length > 0 ? movesHistory.concat([moves.length]) : movesHistory,
-          score,
-          true
-        );
+        update({ snake, point, moves }, points, movesHistory, score, true);
+        cleanSandbox();
+        break;
+      case 'log':
+        handleConsoleLog(args);
         break;
       case 'error':
         handleConsoleLog(error, true);
+        cleanSandbox();
         break;
       }
-
-      cleanSandbox();
     };
 
     sandbox.postMessage({
@@ -263,6 +264,10 @@ function findPath(xMax, yMax, snake, point, D) {
 
     if (!Array.isArray(moves) || moves.length === 0) {
       return handleConsoleLog('You need to return some moves bruh 🙄');
+    }
+
+    if (fromSandbox) {
+      movesHistory = movesHistory.concat([moves.length]);
     }
 
     const nextDirection = moves.shift();

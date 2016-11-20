@@ -4,7 +4,18 @@ onmessage = ({ data }) => {
   let moves;
 
   try {
-    findPath = eval(`(function() { ${fn}; return findPath; })();`);
+    findPath = eval(`(function() {
+      console.log = function() {
+        postMessage({
+          action: 'log',
+          args: Array.prototype.map.call(arguments, (a) => a),
+        });
+      };
+
+      ${fn};
+      return findPath; })();
+    `);
+
     moves = findPath.apply(undefined, args);
   } catch(error) {
     postMessage({

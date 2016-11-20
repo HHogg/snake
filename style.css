@@ -80,6 +80,11 @@ body {
   color: var(--text-color);
 }
 
+.asi-console__message::before {
+  display: inline-block;
+  content: '> ';
+}
+
 .asi-controls {
   display: flex;
   align-items: center;
