@@ -33,17 +33,20 @@
   };
 
   const initialContent = `/**
- * @description Function to return the moves to locate the next point.
+ * @name findPath
+ * @description Function that is called at the beginning of each point, expecting
+ * an array of directions to be given to reach the X,Y coordinates of the square
+ * with the point on. The game will pause if the snake crashes or if the point
+ * is never reached.
  *
  * @param {Number} xMax Number of cells across the x axis.
  * @param {Number} yMax Number of cells across the y axis.
- * @param {Array} snake Array of [X,Y] coordinates of the current snake from head to tail.
- * @param {Array} point [X, Y] coordinates of where the point will be.
+ * @param {Array} snake Array of [X,Y] cords of the snake from head to tail.
+ * @param {Array} point [X, Y] coordinates of the point.
  * @param {Object} D Constant directions to be returned (UP, RIGHT, DOWN, LEFT)
  *
  * @return {Array} Moves for each cell i.e [D.UP, D.UP, D.RIGHT]
  */
-
 function findPath(xMax, yMax, snake, point, D) {
 
    // Do your thing...
@@ -254,6 +257,8 @@ function findPath(xMax, yMax, snake, point, D) {
   }
 
   function update({ snake, point, moves }, points = 0, movesHistory = [], score = 0, fromSandbox = false) {
+    let average;
+
     if (!running) {
       return;
     }
@@ -263,7 +268,7 @@ function findPath(xMax, yMax, snake, point, D) {
     }
 
     if (!Array.isArray(moves) || moves.length === 0) {
-      return handleConsoleLog('You need to return some moves bruh 🙄');
+      return handleConsoleLog('You need to return some moves ... 🙄');
     }
 
     if (fromSandbox) {
@@ -281,19 +286,22 @@ function findPath(xMax, yMax, snake, point, D) {
     const didCollectPoint = willCollectPoint(point, nextPositionExtended);
 
     if (didCollectPoint) {
-      const avg = calcMedian(movesHistory);
-
+      average = calcMedian(movesHistory);
       snake = nextPositionExtended;
       point = createPoint(snake);
       points = points + 1;
-      score = calcScore(score, avg, points);
-      handlePointIncrease(points, avg, score);
+      score = calcScore(score, average, points);
+      handlePointIncrease(points, average, score);
     } else {
       snake = nextPosition;
     }
 
     if (!didCollectPoint && !validateNextPosition(nextPosition)) {
       return handleConsoleLog('The 🐍 crashed 💥');
+    }
+
+    if (snake.length === (xMax * yMax)) {
+      return handleConsoleLog(`You did it! Your final score was ${score} with an average move count of ${average}`);
     }
 
     redraw({ point, snake });

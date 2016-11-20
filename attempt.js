@@ -1,5 +1,8 @@
 /**
- * @description Function to return the moves to locate the next point.
+ * @name findPath
+ * @description Function that is called at the beginning of each point, expecting
+ * an array of directions to be given to reach the X,Y coordinates of the square
+ * with the point on.
  *
  * @param {Number} xMax Number of cells across the x axis.
  * @param {Number} yMax Number of cells across the y axis.
