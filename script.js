@@ -346,6 +346,6 @@ function findPath(xMax, yMax, snake, point, D) {
   }
 
   function calcScore(score, avg, points) {
-    return score + (((avg / xMax) + (avg / yMax)) * points);
+    return score + (((xMax * yMax) / avg) * points);
   }
 })();
