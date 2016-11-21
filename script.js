@@ -296,15 +296,19 @@ function findPath(xMax, yMax, snake, point, D) {
       snake = nextPosition;
     }
 
+    redraw({ point, snake });
+
     if (!didCollectPoint && !validateNextPosition(nextPosition)) {
       return handleConsoleLog('The 🐍 crashed 💥');
     }
 
-    if (snake.length === (xMax * yMax)) {
-      return handleConsoleLog(`You did it! Your final score was ${score} with an average move count of ${average}`);
+    if (!didCollectPoint && moves.length === 0) {
+      return handleConsoleLog('The 🐍 did not reach the point, try again.');
     }
 
-    redraw({ point, snake });
+    if (snake.length === (xMax * yMax)) {
+      return handleConsoleLog(`🎉 You did it! Your final score was ${score} with an average move count of ${average} 🎉`);
+    }
 
     timeout = setTimeout(() =>
       update({ snake, point, moves }, points, movesHistory, score, false),
