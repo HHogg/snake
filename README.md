@@ -2,9 +2,7 @@
 
 #### Try it out here [https://hhogg.github.io/asi-snake](https://hhogg.github.io/asi-snake)
 
-This started one evening with me thinking "I should really branch out from web development... AI and Autonomous Vehicles looks like a good direction.".
-
-Somewhere down the line that evening, I decided to build a snake game with the hope of a basic AI that could collect every point until the board was full.
+One evening, after a spiral of thoughts that I need to do something different, I decided I wanted to write an algorithm to play the perfect snake game. 
 
 It turns out, it's pretty hard. 
 
@@ -17,15 +15,10 @@ I also got fed up of switching back and forth from my editor and the browser, so
 ### Notes about the game
 * The code is run in a sandbox worker... I haven't tested how secure this is. You might be able to cheat ¯\_(ツ)_/¯
 * The code is stored in locale storage, so don't worry if you refresh. 
-* The scoring system is rudimentary to say the least, don't take it too seriously. 
+* The scoring system is rudimentary to say the least, don't take it too seriously... but the less moves you take the higher your score will be.
 
-### My current attempt 
-
-My current attempt is in [attempt.js](./attempt.js), it uses the A* search algorithm with a Manhattan Heuristic function ([Stanford Theory](http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html)). 
-
-**However this only works up until it's retrieved that current point, it doesn't account for the environment after the point.** When I visit this next I'll look at putting this together with a strategic technique of leaving gaps.
-
-Feel free to load it in and improve it, send PRs. 
+### My current attempts
+All of my current attempts can be found in [attempts](./attempts). None of them are particularly great. Feel free to load them in.
 
 ### Try it out locally
 ```

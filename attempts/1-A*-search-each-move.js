@@ -1,16 +1,10 @@
 /**
- * @name findPath
- * @description Function that is called at the beginning of each point, expecting
- * an array of directions to be given to reach the X,Y coordinates of the square
- * with the point on.
+ * A* search with Manhattan heuristic (http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html)
+ * It seems to calculate the shortest path ok but:
+ * 1) Doesn't account for a future crash on that point
+ * 2) Doesn't account for the environment after it has collected that point.
  *
- * @param {Number} xMax Number of cells across the x axis.
- * @param {Number} yMax Number of cells across the y axis.
- * @param {Array} snake Array of [X,Y] cords of the snake from head to tail.
- * @param {Array} point [X, Y] coordinates of the point.
- * @param {Object} D Constant directions to be returned (UP, RIGHT, DOWN, LEFT)
- *
- * @return {Array} Moves for each cell i.e [D.UP, D.UP, D.RIGHT]
+ * MAX POINTS: 70 something (But it's mainly luck)
  */
  function findPath(xMax, yMax, snake, point, D) {
   function heuristic([x, y]) {
