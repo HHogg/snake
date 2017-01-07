@@ -299,7 +299,7 @@ function findPath(xMax, yMax, snake, point, D) {
       snake = nextPositionExtended;
       point = createPoint(snake);
       points = points + 1;
-      score = calcScore(score, average, points);
+      score = calcScore(score, movesHistory[movesHistory.length - 1], points);
       handlePointIncrease(points, average, score);
     } else {
       snake = nextPosition;
@@ -366,7 +366,7 @@ function findPath(xMax, yMax, snake, point, D) {
     return avg;
   }
 
-  function calcScore(score, avg, points) {
-    return score + (((xMax * yMax) / avg) * points);
+  function calcScore(score, lastMoveCount, points) {
+    return score + (((xMax * yMax) / lastMoveCount) * points);
   }
 })();
