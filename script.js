@@ -49,11 +49,17 @@
  */
 function findPath(xMax, yMax, snake, point, D) {
 
-   // Do your thing...
+   // Example expected return.
+   // return [D.UP, D.UP, D.UP, D.RIGHT, D.RIGHT, D.UP]
+   //
+   // The last move should reach the point.
+   //
+   // ... you may want to open your console 😉
 
 }`;
 
   let timeout;
+  let sandboxTimeout;
   let running;
 
   const canvas = document.getElementById('js__canvas');
@@ -121,12 +127,16 @@ function findPath(xMax, yMax, snake, point, D) {
 
   function handleReset() {
     clearTimeout(timeout);
+    clearTimeout(sandboxTimeout);
 
     running = false;
 
     resetButton.setAttribute('disabled', '');
     startButton.removeAttribute('disabled');
     consoleEl.innerHTML = '';
+    pointsEl.innerHTML = '0';
+    movesEl.innerHTML = '0';
+    scoreEl.innerHTML = '0';
 
     redraw({ snake: createSnake() });
   }
@@ -156,7 +166,6 @@ function findPath(xMax, yMax, snake, point, D) {
   }
 
   function sandboxRequestMoves({ snake, point }, points, movesHistory, score) {
-    let sandboxTimeout;
     let sandbox = new Worker('sandbox.js');
 
     function cleanSandbox() {
