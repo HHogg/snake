@@ -94,8 +94,9 @@ body {
 }
 
 .asi-controls__box {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   padding: 20px;
+  text-align: center;
 }
 
 .asi-controls__box:last-child {
@@ -112,6 +113,7 @@ body {
 }
 
 .asi-button {
+  width: 100%;
   margin: 0 5px 0 0;
   padding: 10px 20px;
   border: 0;
