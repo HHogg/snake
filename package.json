@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Artificial Stupid Intelligence (ASI) Snake",
   "scripts": {
-    "gh-pages": "./deploy.sh",
-    "start": "http-server ./ -p 4000"
+    "gh-pages": "gh-pages -d ./src",
+    "start": "http-server ./src -p 4000"
   },
   "repository": {
     "url": "git+ssh://git@github.com/HHogg/asi-snake.git",
@@ -16,11 +16,8 @@
     "url": "https://github.com/HHogg/asi-snake/issues"
   },
   "homepage": "https://github.com/HHogg/asi-snake#readme",
-  "dependencies": {
-    "ace-builds": "^1.2.5",
-    "normalize.css": "^5.0.0"
-  },
   "devDependencies": {
+    "gh-pages": "^0.12.0",
     "http-server": "^0.9.0"
   }
 }
