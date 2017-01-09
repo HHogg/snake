@@ -28,13 +28,14 @@
 html {
   box-sizing: border-box;
   min-height: 100%;
+  font-size: 100%;
 }
 
 body {
   height: 100vh;
-  font-family: Roboto-Light, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  font-size: 0.9rem;
   line-height: 1.2;
   -webkit-font-smoothing: antialiased;
   -ms-text-size-adjust: 100%;
@@ -45,10 +46,35 @@ body {
 
 .asi-app {
   display: flex;
+  flex-direction: column;
   height: 100%;
   width: 100%;
-  padding: 20px;
   background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.asi-app__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+  flex: 0 1 auto;
+}
+
+.asi-app__body {
+  display: flex;
+  padding: 20px;
+  flex: 1 1 auto;
+}
+
+.asi-app__title {
+  font-size: 1.3rem;
+}
+
+.asi-github-link,
+.asi-github-link:hover,
+.asi-github-link:visited {
+  color: inherit;
+  text-decoration: none;
 }
 
 .asi-app__arena {
@@ -76,7 +102,7 @@ body {
   overflow: auto;
   background-color: var(--cell-inactive-color);
   font-family: "Courier New", Courier, monospace;
-  font-size: 16px;
+  font-size: 1rem;
   word-break: break-all;
   color: var(--text-color);
 }
