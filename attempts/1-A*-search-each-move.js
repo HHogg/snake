@@ -41,8 +41,7 @@ function findPath(xMax, yMax, snake, point, DIR) {
   }
   
   let [[x, y]] = snake;
-  let index = 0;
-
+  
   while (x !== pX || y !== pY) {
     const SU = shift(x, y, U);
     const SR = shift(x, y, R);
