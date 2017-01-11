@@ -14,9 +14,9 @@
  * @return {Array} Moves for each cell i.e [D.UP, D.UP, D.RIGHT]
  */
 function findPath(xMax, yMax, snake, point, DIR) {
-  const U = DIR.UP, D = DIR.DOWN, L = DIR.LEFT, R = DIR.RIGHT;
   const moves = [];
   const [pX, pY] = point;
+  const { UP: U, DOWN: D, LEFT: L, RIGHT: R } = DIR;
   
   function shift(x, y, d) {
     switch (d) {
@@ -41,7 +41,8 @@ function findPath(xMax, yMax, snake, point, DIR) {
   }
   
   let [[x, y]] = snake;
-  
+  let index = 0;
+
   while (x !== pX || y !== pY) {
     const SU = shift(x, y, U);
     const SR = shift(x, y, R);
@@ -52,16 +53,17 @@ function findPath(xMax, yMax, snake, point, DIR) {
       [R, SR, heuristic(SR)],
       [D, SD, heuristic(SD)],
       [L, SL, heuristic(SL)],
-    ].filter(isValid).sort(byHeuristic).shift();
+    ].filter(isValid).sort(byHeuristic);
     
-    if (!winner) {
+    if (!winner[0]) {
       return moves; 
     }
     
-    const [d, p] = winner;
+    const [d, p] = winner[0];
     
     moves.push(d);
-    [[x, y]] = [p].concat(snake).slice(0, -1);
+    snake = [p].concat(snake).slice(0, -1);
+    [[x, y]] = snake;
   }
   
   return moves;
