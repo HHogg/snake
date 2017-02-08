@@ -24,9 +24,9 @@ Pathfinding, as Amit Patel succinctly puts,
 
 A combination of events led to this. 
 
-1) I realised all I ever build is enterprise applications.
-2) I was reading about [[AI](http://waitbutwhy.com/2015/01/artificial-intelligence-revolution-1.html)/[Tesla/Elon](http://waitbutwhy.com/2015/05/elon-musk-the-worlds-raddest-man.html) on Wait But Why](). (I highly recommend!)
-3) A fellow developer asked me if I had ever built anything just for fun, and I shamefully had to admit I was boring.
+1. I realised all I ever build is enterprise applications.
+1. I was reading about [[AI](http://waitbutwhy.com/2015/01/artificial-intelligence-revolution-1.html)/[Tesla/Elon](http://waitbutwhy.com/2015/05/elon-musk-the-worlds-raddest-man.html) on Wait But Why](). (I highly recommend!)
+1. A fellow developer asked me if I had ever built anything just for fun, and I shamefully had to admit I was boring.
 
 Initially it didn't start like a game... just wanted to write an algorithm for the perfect snake game, but I got fed up of switching back and forth from my editor and the browser so I stuck and editor into the browser.... then a scoring system.
 
