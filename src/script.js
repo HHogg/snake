@@ -12,58 +12,42 @@
   const LOCAL_STORAGE_KEY = 'asi-snake';
 
   const CFG = {
-    cellSize: 20,
+    cellSize: 30,
     gridPadding: 5,
     snakeLength: 4,
-    speed: 100,
+    speed: 50,
+    fnTimeoutSeconds: 10,
   };
 
-  const D = {
-    UP: 'up',
-    RIGHT: 'right',
-    DOWN: 'down',
-    LEFT: 'left',
-  };
+  const CHAR_SNAKE_HEAD = 'X';
+  const CHAR_SNAKE_TAIL = 'x';
+  const CHAR_POINT = '$';
 
-  const styleMap = {
-    0: getCSSVar('cell-inactive-color'),
-    1: getCSSVar('cell-snake-head-color'),
-    2: getCSSVar('cell-snake-tail-color'),
-    3: getCSSVar('cell-point-color'),
-  };
-
-  const initialContent = `/**
- * @name findPath
- * @description Function that is called at the beginning of each point, expecting
- * an array of directions to be given to reach the X,Y coordinates of the square
- * with the point on. The game will pause if the snake crashes or if the point
- * is never reached.
- *
- * @param {Number} xMax Number of cells across the x axis.
- * @param {Number} yMax Number of cells across the y axis.
- * @param {Array} snake Array of [X,Y] cords of the snake from head to tail.
- * @param {Array} point [X, Y] coordinates of the point.
- * @param {Object} D Constant directions to be returned (UP, RIGHT, DOWN, LEFT)
- *
- * @return {Array} Moves for each cell i.e [D.UP, D.UP, D.RIGHT]
+  const initialContent = `
+/**
+ * @param {Number} x The x coordinate of the cell
+ * @param {Number} y The y coordinate of the cell
+ * @param {Number} xMax The number of cells across the x axis
+ * @param {Number} yMax The number of cells across the y axiom
+ * @param {Array[Array[Number]} snake Coordinates of the position of the snake from head to tail. E.g. [[4, 1], [3, 1]]
+ * @param {Array[Number]} point Coorodinates of the point.
  */
-function findPath(xMax, yMax, snake, point, D) {
+function heuristic(x, y, xMax, yMax, snake, point) {
 
-   // Example expected return.
-   // return [D.UP, D.UP, D.UP, D.RIGHT, D.RIGHT, D.UP]
-   //
-   // The last move should reach the point.
-   //
-   // ... you may want to open your console 😉
-
-}`;
-
-  let timeout;
-  let sandboxTimeout;
-  let running;
+  /**
+   * This is an example to get you started. It simply returns the standard
+   * heuristic 'Mahanttan distance'. However it doesn't take into account
+   * its current or future environment.
+   */
+  return Math.abs(x - point[0]) + Math.abs(y - point[1]);
+}
+`;
 
   const canvas = document.getElementById('js__canvas');
   const startButton = document.getElementById('js__start');
+  const pauseButton = document.getElementById('js__pause');
+  const stepButton = document.getElementById('js__step');
+  const playButton = document.getElementById('js__play');
   const resetButton = document.getElementById('js__reset');
   const pointsEl = document.getElementById('js__points');
   const scoreEl = document.getElementById('js__score');
@@ -73,14 +57,21 @@ function findPath(xMax, yMax, snake, point, D) {
 
   const ctx = canvas.getContext('2d');
 
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
 
-  const xMax = Math.floor((canvas.width + CFG.gridPadding) / (CFG.cellSize + CFG.gridPadding));
-  const yMax = Math.floor((canvas.height + CFG.gridPadding) / (CFG.cellSize + CFG.gridPadding));
+  canvas.width = width * window.devicePixelRatio;
+  canvas.height = height * window.devicePixelRatio;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
 
-  const xPadding = (canvas.width - (CFG.cellSize * xMax)) / (xMax - 1);
-  const yPadding = (canvas.height - (CFG.cellSize * yMax)) / (yMax - 1);
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+  const xMax = Math.floor((width + CFG.gridPadding) / (CFG.cellSize + CFG.gridPadding));
+  const yMax = Math.floor((height + CFG.gridPadding) / (CFG.cellSize + CFG.gridPadding));
+
+  const xPadding = (width - (CFG.cellSize * xMax)) / (xMax - 1);
+  const yPadding = (height - (CFG.cellSize * yMax)) / (yMax - 1);
 
   const editor = ace.edit(ideEl);
 
@@ -90,6 +81,7 @@ function findPath(xMax, yMax, snake, point, D) {
   editor.$blockScrolling = Infinity;
   editor.setTheme('ace/theme/asi');
   editor.getSession().setMode('ace/mode/javascript');
+  editor.session.setUseWrapMode(true);
   editor.session.setOptions({
     tabSize: 2,
     useSoftTabs: true,
@@ -98,60 +90,71 @@ function findPath(xMax, yMax, snake, point, D) {
   editor.setValue(localStorage.getItem(LOCAL_STORAGE_KEY) || initialContent, 1);
   editor.on('change', handleEditorChange);
 
+  let interval;
+  let running;
+  let point;
+  let points;
+  let snake;
+  let history;
+  let score;
+  let average;
+
   startButton.addEventListener('click', handleStart);
+  playButton.addEventListener('click', handlePlay);
+  pauseButton.addEventListener('click', handlePause);
+  stepButton.addEventListener('click', handleStep);
   resetButton.addEventListener('click', handleReset);
 
   handleReset();
 
-  function getCSSVar(variable) {
-    return window
-      .getComputedStyle(document.documentElement)
-      .getPropertyValue(`--${variable}`)
-      .trim();
-  }
-
   function handleStart() {
-    const snake = createSnake();
-    const point = createPoint(snake);
-    const points = 0;
-    const moves =[];
-
-    running = true;
-
     startButton.setAttribute('disabled', '');
+    playButton.removeAttribute('disabled');
+    stepButton.removeAttribute('disabled');
+    pauseButton.removeAttribute('disabled');
     resetButton.removeAttribute('disabled');
-
-    update({ points, point, snake, moves });
-    redraw({ point, snake });
+    step();
   }
 
   function handleReset() {
-    clearTimeout(timeout);
-    clearTimeout(sandboxTimeout);
-
-    running = false;
-
-    resetButton.setAttribute('disabled', '');
-    startButton.removeAttribute('disabled');
+    snake = createSnake();
+    point = createPoint();
+    history = [0];
+    score = 0;
+    points = 0;
+    average = 0;
     consoleEl.innerHTML = '';
-    pointsEl.innerHTML = '0';
-    movesEl.innerHTML = '0';
-    scoreEl.innerHTML = '0';
 
-    redraw({ snake: createSnake() });
+    clearInterval(interval);
+    updateScoreBoard();
+    redraw();
+  }
+
+  function handlePlay() {
+    interval = setInterval(() => {
+      step();
+    }, CFG.speed);
+  }
+
+  function handlePause() {
+    clearInterval(interval);
+  }
+
+  function handleStep() {
+    step();
   }
 
   function handleEditorChange() {
     localStorage.setItem(LOCAL_STORAGE_KEY, editor.getValue());
   }
 
-  function handlePointIncrease(points, avgerage, score) {
+  function updateScoreBoard() {
     pointsEl.innerHTML = points;
-    movesEl.innerHTML = Math.floor(avgerage);
+    movesEl.innerHTML = Math.floor(average);
     scoreEl.innerHTML = Math.floor(score);
   }
 
-  function handleConsoleLog(message) {
+  function writeToConsole(message) {
     message = Array.isArray(message)
       ? message.reduce((m, t) => `${m}${JSON.stringify(t)} `, '')
       : message;
@@ -165,81 +168,14 @@ function findPath(xMax, yMax, snake, point, D) {
     consoleEl.lastElementChild.scrollIntoView()
   }
 
-  function sandboxRequestMoves({ snake, point }, points, movesHistory, score) {
-    let sandbox = new Worker('sandbox.js');
-
-    function cleanSandbox() {
-      clearTimeout(sandboxTimeout);
-      sandbox.terminate();
-      sandbox = null;
-    }
-
-    sandbox.onerror = (error) => {
-      handleConsoleLog(error);
-      cleanSandbox();
-    }
-
-    sandbox.onmessage = ({ data: { action, args, error, moves } }) => {
-      switch (action) {
-      case 'moves':
-        update({ snake, point, moves }, points, movesHistory, score, true);
-        cleanSandbox();
-        break;
-      case 'log':
-        handleConsoleLog(args);
-        break;
-      case 'error':
-        handleConsoleLog(error, true);
-        cleanSandbox();
-        break;
-      }
-    };
-
-    sandbox.postMessage({
-      action: 'request_moves',
-      fn: editor.getValue(),
-      args: [xMax, yMax, snake, point, D],
-    });
-
-    sandboxTimeout = setTimeout(() => {
-      cleanSandbox();
-      handleReset();
-      handleConsoleLog('⏰ Your code exceeded the maximum 5 seconds run time.');
-    }, 5000);
-  }
-
-  function createSnake(position) {
+  function createSnake() {
     return new Array(CFG.snakeLength).fill().map((v, i) => [
       Math.floor(xMax / 2) - i,
       Math.floor(yMax / 2)
     ]);
   }
 
-  function createGrid({ snake, point }) {
-    const grid = [];
-
-    for (let y = 0; y < yMax; y++) {
-      const row = [];
-
-      for (let x = 0; x < xMax; x++) {
-        row.push(0);
-      }
-
-      grid.push(row);
-    }
-
-    if (Array.isArray(snake)) {
-      snake.forEach(([x, y], i) => grid[y][x] = i === 0 ? 1 : 2);
-    }
-
-    if (Array.isArray(point)) {
-      grid[point[1]][point[0]] = 3;
-    }
-
-    return grid;
-  }
-
-  function createPoint(snake) {
+  function createPoint() {
     const x = Math.floor(Math.random() * xMax);
     const y = Math.floor(Math.random() * yMax);
 
@@ -250,117 +186,172 @@ function findPath(xMax, yMax, snake, point, D) {
     return [x, y];
   }
 
+  function createGrid(heuristicValues) {
+    const grid = [];
 
-  function redraw({ point, snake } = {}) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    createGrid({ point, snake }).forEach((row, y) => {
+    for (let y = 0; y < yMax; y++) {
+      const row = [];
+      for (let x = 0; x < xMax; x++) {
+        row.push(Array.isArray(heuristicValues) && Array.isArray(heuristicValues[y])
+          ? heuristicValues[y][x] // User specified heuristic value
+          : null                  // Filler for initial render
+        );
+      }
+      grid.push(row);
+    }
+
+    snake.forEach(([x, y], i) =>
+      grid[y][x] = i === 0 ? CHAR_SNAKE_HEAD : CHAR_SNAKE_TAIL
+    );
+
+    if (Array.isArray(point)) {
+      grid[point[1]][point[0]] = CHAR_POINT;
+    }
+
+    return grid;
+  }
+
+  function getCSSVar(variable) {
+    return window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue(`--${variable}`)
+      .trim();
+  }
+
+  function getFillColor(value) {
+    return {
+      [CHAR_SNAKE_HEAD]: getCSSVar('cell-snake-head-color'),
+      [CHAR_SNAKE_TAIL]: getCSSVar('cell-snake-tail-color'),
+      [CHAR_POINT]: getCSSVar('cell-point-color'),
+    }[value] || getCSSVar('cell-inactive-color');
+  }
+
+  function redraw(heuristicValues) {
+    const paddedX = (CFG.cellSize + xPadding);
+    const paddedY = (CFG.cellSize + yPadding);
+
+    ctx.clearRect(0, 0, width, height);
+    createGrid(heuristicValues).forEach((row, y) => {
       row.forEach((value, x) => {
-        ctx.fillStyle = styleMap[value];
-        ctx.fillRect(
-          x * (CFG.cellSize + xPadding),
-          y * (CFG.cellSize + yPadding),
-          CFG.cellSize,
-          CFG.cellSize);
+        ctx.fillStyle = getFillColor(value);
+        ctx.fillRect(x * paddedX, y * paddedY, CFG.cellSize, CFG.cellSize);
+
+        if (!isNaN(parseInt(value))) {
+          ctx.fillStyle = getCSSVar('cell-text-color');
+          ctx.textAlign = 'center';
+          ctx.font = '12px "Roboto", Helvetica, Arial, sans-serif';
+          ctx.fillText(value,
+            Math.floor((x * paddedX) + (CFG.cellSize / 2)),
+            Math.floor((y * paddedY) + (CFG.cellSize / 2)) + 5
+          );
+        }
       });
     });
   }
 
-  function update({ snake, point, moves }, points = 0, movesHistory = [], score = 0, fromSandbox = false) {
-    let average;
+  function calcualteHeuristicValues() {
+    return new Promise((resolve, reject) => {
+      let sandboxTimeout;
+      let sandbox = new Worker('sandbox.js');
 
-    if (!running) {
-      return;
-    }
+      function cleanSandbox() {
+        clearTimeout(sandboxTimeout);
+        sandbox.terminate();
+      }
 
-    if (Array.isArray(moves) && moves.length === 0 && !fromSandbox) {
-      return sandboxRequestMoves({ snake, point }, points, movesHistory, score);
-    }
+      function handleError(error) {
+        writeToConsole(error);
+        cleanSandbox();
+        reject(error);
+      }
 
-    if (!Array.isArray(moves) || moves.length === 0) {
-      return handleConsoleLog('You need to return some moves ... 🙄');
-    }
+      sandbox.onerror = handleError;
 
-    if (fromSandbox) {
-      movesHistory = movesHistory.concat([moves.length]);
-    }
+      sandbox.onmessage = ({ data: { action, error, heuristicValues } }) => {
+        cleanSandbox();
 
-    const nextDirection = moves.shift();
-    const nextPositionExtended = getNextPosition(snake, nextDirection);
-    const nextPosition = nextPositionExtended.slice(0, -1);
+        const actionFnMap = {
+          complete: () => resolve(heuristicValues),
+          error: () => handleError(error),
+        }[action]();
+      };
 
-    if (!nextDirection || !Object.values(D).includes(nextDirection)) {
-      return handleConsoleLog('Looks like something in the returned array is not one of the constant directions (D).');
-    }
+      sandbox.postMessage({
+        action: 'calculate',
+        fn: editor.getValue(),
+        env: { xMax, yMax, snake, point },
+      });
 
-    const didCollectPoint = willCollectPoint(point, nextPositionExtended);
+      sandboxTimeout = setTimeout(() => {
+        cleanSandbox();
+        handleReset();
+        writeToConsole(`⏰ Your code exceeded the maximum ${CFG.fnTimeoutSeconds} seconds run time.`);
+        reject();
+      }, CFG.fnTimeoutSeconds * 1000);
+    });
+  }
 
-    if (didCollectPoint) {
-      average = calcMedian(movesHistory);
-      snake = nextPositionExtended;
-      point = createPoint(snake);
-      points = points + 1;
-      score = calcScore(score, movesHistory[movesHistory.length - 1], points);
-      handlePointIncrease(points, average, score);
+  function move(heuristicValues) {
+    const [px, py] = point;
+    const cells = [
+      [snake[0][0], snake[0][1] - 1],
+      [snake[0][0] + 1, snake[0][1]],
+      [snake[0][0], snake[0][1] + 1],
+      [snake[0][0] - 1, snake[0][1]],
+    ];
+
+    history[history.length - 1]++;
+
+    if (isNearPoint(point, cells)) {
+      average = calcMedian(history);
+      snake = [[px, py]].concat(snake);
+      point = createPoint();
+      points++;
+      score = calcScore(score, history[history.length - 1], points);
+      updateScoreBoard();
+      history.push(0);
+
+      if (snake.length === (xMax * yMax)) {
+        return writeToConsole(`🎉 You did it! Your final score was ${score} with an average move count of ${average} 🎉`);
+      }
     } else {
-      snake = nextPosition;
-    }
+      const nextCell = cells
+        .filter(onlyValid)
+        .sort((aCell, bCell) => byHeuristic(heuristicValues, aCell, bCell))[0];
 
-    redraw({ point, snake });
+      if (!nextCell) {
+        handlePause();
+        return writeToConsole('The 🐍 did not reach the point. There were no valid cells to move to.');
+      }
 
-    if (!didCollectPoint && !validateNextPosition(nextPosition)) {
-      return handleConsoleLog('The 🐍 crashed 💥');
-    }
-
-    if (!didCollectPoint && moves.length === 0) {
-      return handleConsoleLog('The 🐍 did not reach the point, try again.');
-    }
-
-    if (snake.length === (xMax * yMax)) {
-      return handleConsoleLog(`🎉 You did it! Your final score was ${score} with an average move count of ${average} 🎉`);
-    }
-
-    timeout = setTimeout(() =>
-      update({ snake, point, moves }, points, movesHistory, score, false),
-      1000 / CFG.speed
-    );
-  }
-
-  function getNextPosition(snake, direction) {
-    return [shiftPosition(snake[0], direction)].concat(snake);
-  }
-
-  function shiftPosition([x, y], direction) {
-    switch (direction) {
-      case D.UP:    return [x, y - 1];
-      case D.RIGHT: return [x + 1, y];
-      case D.DOWN:  return [x, y + 1];
-      case D.LEFT:  return [x - 1, y];
+      snake = [nextCell].concat(snake).slice(0, -1);
     }
   }
 
-  function validateNextPosition(nextPosition) {
-    return nextPosition.every(([x, y], i) =>
-      x >= 0 && x < xMax && y >= 0 && y < yMax &&
-      !nextPosition.find(([fX, fY], fI) => fI !== i && fX === x && fY === y)
-    );
+  function isNearPoint([px, py], cells) {
+    return cells.find(([x, y]) => x === px && y === py);
   }
 
-  function willCollectPoint(point, nextPosition) {
-    return point[0] === nextPosition[0][0] &&
-      point[1] === nextPosition[0][1];
+  function onlyValid([x, y]) {
+    return x >= 0 && x < xMax && y >= 0 && y < yMax &&
+      !snake.some(([sX, sY]) => x === sX && y === sY);
   }
 
-  function calcMedian(moves) {
-    moves = moves.slice(0).sort((a, b) => a - b);
+  function byHeuristic(heuristicValues, [ax, ay], [bx, by]) {
+    return heuristicValues[ay][ax] - heuristicValues[by][bx];
+  }
 
-    if (moves.length === 0) {
+  function calcMedian(history) {
+    history = history.slice(0).sort((a, b) => a - b);
+
+    if (history.length === 0) {
       avg = 0;
-    } else if (moves.length === 1) {
-      avg = moves[0];
-    } else if ((moves.length / 2) % 1) {
-      avg = (moves[Math.floor(moves.length / 2)] +  moves[Math.ceil(moves.length / 2)]) / 2;
+    } else if (history.length === 1) {
+      avg = history[0];
+    } else if ((history.length / 2) % 1) {
+      avg = (history[Math.floor(history.length / 2)] +  history[Math.ceil(history.length / 2)]) / 2;
     } else {
-      avg = moves[moves.length / 2];
+      avg = history[history.length / 2];
     }
 
     return avg;
@@ -368,5 +359,16 @@ function findPath(xMax, yMax, snake, point, D) {
 
   function calcScore(score, lastMoveCount, points) {
     return score + (((xMax * yMax) / lastMoveCount) * points);
+  }
+
+  function step() {
+    calcualteHeuristicValues()
+      .then((heuristicValues) => {
+        redraw(heuristicValues);
+        move(heuristicValues);
+      })
+      .catch(() => {
+        handlePause();
+      });
   }
 })();

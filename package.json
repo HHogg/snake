@@ -1,21 +1,21 @@
 {
-  "name": "asi-snake",
+  "name": "snake-heuristics",
   "version": "1.0.0",
-  "description": "Artificial Stupid Intelligence (ASI) Snake",
+  "description": "Snake Heuristics a game of pathfinding",
   "scripts": {
     "gh-pages": "gh-pages -d ./src",
     "start": "http-server ./src -p 4000"
   },
   "repository": {
-    "url": "git+ssh://git@github.com/HHogg/asi-snake.git",
+    "url": "git+ssh://git@github.com/HHogg/snake-heuristics.git",
     "type": "git"
   },
   "author": "Harry Hogg <harry@hogg.io>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/HHogg/asi-snake/issues"
+    "url": "https://github.com/HHogg/snake-heuristics/issues"
   },
-  "homepage": "https://github.com/HHogg/asi-snake#readme",
+  "homepage": "https://github.com/HHogg/snake-heuristics#readme",
   "devDependencies": {
     "gh-pages": "^0.12.0",
     "http-server": "^0.9.0"
