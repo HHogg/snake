@@ -125,6 +125,12 @@ function heuristic(x, y, xMax, yMax, snake, point) {
     average = 0;
     consoleEl.innerHTML = '';
 
+    startButton.removeAttribute('disabled');
+    playButton.setAttribute('disabled', '');
+    stepButton.setAttribute('disabled', '');
+    pauseButton.setAttribute('disabled', '');
+    resetButton.setAttribute('disabled', '');
+
     clearInterval(interval);
     updateScoreBoard();
     redraw();
