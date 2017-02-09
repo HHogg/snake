@@ -2,7 +2,7 @@
 
 #### Try it out here [https://hhogg.github.io/snake-heuristics](https://hhogg.github.io/snake-heuristics)
 
-Snake Heuristics is a game of ["Pathfinding"](http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html), by writing a simple heuristic function. 
+Snake Heuristics is a game of ["Pathfinding"](http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html), by writing a  heuristic function. 
 
 Pathfinding, as Amit Patel succinctly puts,
 
@@ -12,7 +12,7 @@ Pathfinding, as Amit Patel succinctly puts,
 
 #### About the game
 
-* The code is fun in a sandbox worker... I haven't tested how secure this is. You might be able to cheat ¯\_(ツ)_/¯
+* The code is run in a sandbox worker... I haven't tested how secure this is. You might be able to cheat ¯\_(ツ)_/¯
 * The code is stored in locale storage, so don't worry if you refresh. 
 * The scoring system is rudimentary to say the least, don't take it too seriously... but 
   * The less moves you take the higher your score will be.
