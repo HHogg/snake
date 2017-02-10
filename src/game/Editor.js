@@ -1,3 +1,5 @@
+require('./Editor.css');
+
 const brace = require('brace');
 const { LOCAL_STORAGE_CONTENT_KEY } = require('../config');
 

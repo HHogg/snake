@@ -1,3 +1,7 @@
+.asi-app__editor {
+  flex: 1 0 500px;
+}
+
 .ace-asi .ace_gutter {
   background: var(--dark-0);
   color: var(--text-color-subtle);

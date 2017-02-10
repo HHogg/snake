@@ -1,3 +1,5 @@
+require('./Canvas.css');
+
 const getCSSVar = require('../utils/getCSSVar');
 const {
   CELL_SIZE,
@@ -48,7 +50,7 @@ class Canvas {
         if (!isNaN(parseInt(value))) {
           this.context.fillStyle = getCSSVar('cell-text-color');
           this.context.textAlign = 'center';
-          this.context.font = '12px "Roboto", Helvetica, Arial, sans-serif';
+          this.context.font = '"Courier New", Courier, monospace';
           this.context.fillText(value,
             Math.floor((x * paddedX) + (CELL_SIZE / 2)),
             Math.floor((y * paddedY) + (CELL_SIZE / 2)) + 5

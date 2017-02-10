@@ -86,33 +86,6 @@ body {
   flex: 5 0 0%;
 }
 
-.asi-app__editor {
-  flex: 1 0 500px;
-}
-
-.asi-canvas {
-  margin: 0 0 20px;
-  flex: 1 1 auto;
-}
-
-.asi-console {
-  margin: 0 0 20px;
-  padding: 10px;
-  height: 120px;
-  flex: 0 1 auto;
-  overflow: auto;
-  background-color: var(--cell-inactive-color);
-  font-family: "Courier New", Courier, monospace;
-  font-size: 1rem;
-  word-break: break-all;
-  color: var(--text-color);
-}
-
-.asi-console__message::before {
-  display: inline-block;
-  content: '> ';
-}
-
 .asi-controls {
   display: flex;
   align-items: center;
@@ -143,6 +116,26 @@ body {
   color: var(--text-color-subtle);
 }
 
+.asi-button-group {
+  display: flex;
+
+  & .asi-button {
+    border-radius: 0;
+    border-right-color: rgba(0, 0, 0, 0.5);
+
+    &:first-child {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border-right-color: transparent;
+    }
+  }
+}
+
 .asi-button {
   width: 100%;
   padding: 10px 20px;
@@ -153,48 +146,27 @@ body {
   appearance: none;
   transition: background-color 300ms ease,
               box-shadow 300ms ease;
-}
 
-.asi-button:last-child {
-  margin-right: 0;
-}
+  &:last-child {
+    margin-right: 0;
+  }
 
-.asi-button:hover {
-  cursor: pointer;
-}
+  &:hover {
+    cursor: pointer;
+  }
 
-.asi-button:focus {
-  outline: 0;
-}
+  &:focus {
+    outline: 0;
+  }
 
-.asi-button:active {
-  box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.5);
-}
+  &:active {
+    box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.5);
+  }
 
-.asi-button[disabled] {
-  opacity: .2;
+  &:disabled {
+    opacity: .2;
+  }
 }
-
-.asi-button-group {
-  display: flex;
-}
-
-.asi-button-group .asi-button {
-  border-radius: 0;
-  border-right-color: rgba(0, 0, 0, 0.5);
-}
-
-.asi-button-group .asi-button:first-child {
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-
-.asi-button-group .asi-button:last-child {
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  border-right-color: transparent;
-}
-
 
 .asi-button--green { background-color: #51cf66; }
 .asi-button--green:not([disabled]):hover { background-color: #40c057; }
@@ -207,5 +179,3 @@ body {
 .asi-button--blue { background-color: #329af0; }
 .asi-button--blue:not([disabled]):hover { background-color: #228ae6; }
 .asi-button--blue:active { background-color: #1c7cd6; }
-
-

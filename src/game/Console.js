@@ -1,3 +1,5 @@
+require('./Console.css');
+
 class Console {
   constructor(element) {
     this.element = element;

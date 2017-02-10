@@ -1,3 +1,6 @@
+require('normalize.css');
+require('./style.css');
+
 const Canvas = require('./game/Canvas');
 const Console = require('./game/Console');
 const Editor = require('./game/Editor');
@@ -43,12 +46,10 @@ function setInaciveButtonStates() {
   buttons.step.setAttribute('disabled', '');
 }
 
-buttons.play.addEventListener('click', () => {
-  game.play();
-});
 
-buttons.pause.addEventListener('click', () => {
-  game.pause();
+buttons.start.addEventListener('click', () => {
+  setAciveButtonStates();
+  game.start();
 });
 
 buttons.reset.addEventListener('click', () => {
@@ -56,11 +57,6 @@ buttons.reset.addEventListener('click', () => {
   game.reset();
 });
 
-buttons.start.addEventListener('click', () => {
-  setAciveButtonStates();
-  game.start();
-});
-
-buttons.step.addEventListener('click', () => {
-  game.step();
-});
+buttons.play.addEventListener('click', () => game.play());
+buttons.pause.addEventListener('click', () => game.pause());
+buttons.step.addEventListener('click', () => game.step());
