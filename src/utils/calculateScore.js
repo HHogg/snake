@@ -1,3 +1,3 @@
-module.exports = function calculateScore(normaliser, average, seq, multiplier) {
-  return ((normaliser / average) / (normaliser / seq)) * multiplier;
+module.exports = function calculateScore(norm, avg, value, multi) {
+  return Math.abs(((( norm / value) - (norm / avg)) || 1)) * multi;
 };

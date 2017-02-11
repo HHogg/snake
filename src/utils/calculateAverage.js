@@ -10,9 +10,11 @@ module.exports = function calculateAverage(dataset) {
   }
 
   if ((sortedDataSet.length / 2) % 1) {
-    return (sortedDataSet[Math.floor(sortedDataSet.length / 2)] +
-      sortedDataSet[Math.ceil(sortedDataSet.length / 2)]) / 2;
+    return sortedDataSet[Math.floor(sortedDataSet.length / 2)];
   }
 
-  return sortedDataSet[sortedDataSet.length / 2];
+  return (
+    sortedDataSet[(sortedDataSet.length / 2) - 1] +
+    sortedDataSet[sortedDataSet.length / 2]
+  ) / 2;
 };
