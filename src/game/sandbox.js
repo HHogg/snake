@@ -25,11 +25,6 @@ onmessage = ({ data }) => {
     /* eslint-disable no-console */
     console.error(error);
     /* eslint-enable no-console */
-
-    postMessage({
-      action: 'error',
-      error: error.message,
-    });
   }
 
   postMessage({

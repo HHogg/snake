@@ -11,7 +11,6 @@ class Game {
     this.editor = editor;
     this.console = consle;
     this.scoreboard = scoreboard;
-
     this.reset();
   }
 
@@ -23,15 +22,11 @@ class Game {
     this.point = this.createPoint();
     this.console.clear();
     this.scoreboard.reset();
-    this.update();
-  }
-
-  update(values) {
-    this.canvas.draw(this.createGrid(values));
+    this.redraw();
   }
 
   start() {
-    this.step();
+    this.refresh();
   }
 
   play() {
@@ -46,6 +41,10 @@ class Game {
 
   step() {
     this.isRunning = true;
+    this.refresh();
+  }
+
+  refresh() {
     this.run(false);
   }
 
@@ -104,6 +103,10 @@ class Game {
     );
   }
 
+  redraw(values) {
+    this.canvas.draw(this.createGrid(values));
+  }
+
   run(carryOn) {
     runInSandbox(sandboxWorker, {
       fn: this.editor.getValue(),
@@ -114,7 +117,7 @@ class Game {
         point: this.point,
       },
     }).then(({ action, error, values }) => {
-      this.update(values);
+      this.redraw(values);
 
       if (action === 'error' || !this.isRunning) {
         return Promise.reject(error);

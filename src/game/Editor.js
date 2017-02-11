@@ -62,6 +62,10 @@ class Editor {
   saveContent() {
     window.localStorage.setItem(LOCAL_STORAGE_CONTENT_KEY, this.getValue());
   }
+
+  on(event, callback) {
+    this.ide.on(event, callback);
+  }
 }
 
 module.exports = Editor;

@@ -22,6 +22,7 @@ const buttons = {
   reset: document.getElementById('js__reset'),
   start: document.getElementById('js__start'),
   step: document.getElementById('js__step'),
+  refresh: document.getElementById('js__refresh'),
 };
 
 const canvas = new Canvas(elements.canvas);
@@ -32,10 +33,11 @@ const game = new Game(canvas, editor, consle, scoreboard);
 
 function setAciveButtonStates() {
   buttons.play.removeAttribute('disabled');
-  buttons.pause.removeAttribute('disabled');
+  buttons.pause.setAttribute('disabled', '');
   buttons.reset.removeAttribute('disabled');
   buttons.start.setAttribute('disabled', '');
   buttons.step.removeAttribute('disabled');
+  buttons.refresh.removeAttribute('disabled');
 }
 
 function setInaciveButtonStates() {
@@ -44,6 +46,7 @@ function setInaciveButtonStates() {
   buttons.reset.setAttribute('disabled', '');
   buttons.start.removeAttribute('disabled');
   buttons.step.setAttribute('disabled', '');
+  buttons.refresh.setAttribute('disabled', '');
 }
 
 
@@ -57,6 +60,21 @@ buttons.reset.addEventListener('click', () => {
   game.reset();
 });
 
-buttons.play.addEventListener('click', () => game.play());
-buttons.pause.addEventListener('click', () => game.pause());
+buttons.play.addEventListener('click', () => {
+  buttons.play.setAttribute('disabled', '');
+  buttons.step.setAttribute('disabled', '');
+  buttons.refresh.setAttribute('disabled', '');
+  buttons.pause.removeAttribute('disabled');
+  game.play();
+});
+
+buttons.pause.addEventListener('click', () => {
+  buttons.play.removeAttribute('disabled');
+  buttons.step.removeAttribute('disabled');
+  buttons.refresh.removeAttribute('disabled');
+  buttons.pause.setAttribute('disabled', '');
+  game.pause();
+});
+
 buttons.step.addEventListener('click', () => game.step());
+buttons.refresh.addEventListener('click', () => game.refresh());
