@@ -1,14 +1,18 @@
 .asi-console {
-  margin: 0 0 20px;
-  padding: 10px;
-  height: 120px;
+  position: relative;
   flex: 0 1 auto;
+  margin: 0 0 20px;
+  height: 120px;
+  padding: 10px;
   overflow: auto;
   background-color: var(--cell-inactive-color);
-  font-family: "Courier New", Courier, monospace;
-  font-size: 1rem;
-  word-break: break-all;
   color: var(--text-color);
+  word-break: break-all;
+}
+
+.asi-console__messages {
+  font-size: 1rem;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .asi-console__message {
@@ -17,5 +21,21 @@
   &::before {
     display: inline-block;
     content: '> ';
+  }
+}
+
+.asi-console__clear {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  padding: 5px 15px;
+  background-color: var(--background-color);
+  opacity: 0.5;
+  transition: opacity 300ms ease;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    opacity: 1;
   }
 }

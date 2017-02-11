@@ -17,6 +17,7 @@ const elements = {
 };
 
 const buttons = {
+  clear: document.getElementById('js__console-clear'),
   play:  document.getElementById('js__play'),
   pause: document.getElementById('js__pause'),
   reset: document.getElementById('js__reset'),
@@ -78,3 +79,4 @@ buttons.pause.addEventListener('click', () => {
 
 buttons.step.addEventListener('click', () => game.step());
 buttons.refresh.addEventListener('click', () => game.refresh());
+buttons.clear.addEventListener('click', () => consle.clear());
