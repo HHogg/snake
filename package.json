@@ -3,15 +3,12 @@
   "version": "1.0.0",
   "description": "Snake Heuristics a game of pathfinding",
   "scripts": {
-    "gh-pages": "webpack --config webpack.static.config.js && gh-pages -d ./static",
+    "gh-pages": "webpack --config webpack.static.config.js && gh-pages -d ./static --repo git@github.com:HHogg/snake-heuristics.git",
     "lint": "eslint --config .eslintrc ./src",
     "start": "webpack-dev-server --port 4000 --inline --hot --content-base src/",
     "test": "jest --config .jest.json"
   },
-  "repository": {
-    "url": "git+ssh://git@github.com/HHogg/snake-heuristics.git",
-    "type": "git"
-  },
+  "repository": "https://git@github.com/HHogg/snake-heuristics.git",
   "author": "Harry Hogg <harry@hogg.io>",
   "license": "ISC",
   "bugs": {
