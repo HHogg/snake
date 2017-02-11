@@ -51,7 +51,7 @@ class Canvas {
           this.context.fillStyle = getCSSVar('cell-text-color');
           this.context.textAlign = 'center';
           this.context.font = '"Courier New", Courier, monospace';
-          this.context.fillText(value,
+          this.context.fillText(+value.toFixed(2),
             Math.floor((x * paddedX) + (CELL_SIZE / 2)),
             Math.floor((y * paddedY) + (CELL_SIZE / 2)) + 5
           );
