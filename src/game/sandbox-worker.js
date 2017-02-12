@@ -13,10 +13,7 @@ onmessage = ({ data }) => {
         values[y][x] = heuristicFn(x, y, xMax, yMax, snake, point);
 
         if (isNaN(parseInt(values[y][x]))) {
-          postMessage({
-            action: 'error',
-            error: `[${x},${y}] returned "${values[y][x]}". This is not a number`,
-          });
+          throw new Error(`[${x},${y}] returned "${values[y][x]}". This is not a number`);
         }
       }
     }
@@ -27,9 +24,6 @@ onmessage = ({ data }) => {
     /* eslint-enable no-console */
   }
 
-  postMessage({
-    action: 'complete',
-    values,
-  });
+  postMessage({ values });
 };
 

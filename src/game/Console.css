@@ -2,15 +2,15 @@
   position: relative;
   flex: 0 1 auto;
   margin: 0 0 20px;
-  height: 120px;
-  padding: 10px;
-  overflow: auto;
   background-color: var(--cell-inactive-color);
   color: var(--text-color);
   word-break: break-all;
 }
 
 .asi-console__messages {
+  padding: 10px;
+  height: 120px;
+  overflow: auto;
   font-size: 1rem;
   font-family: "Courier New", Courier, monospace;
 }
@@ -30,7 +30,7 @@
   bottom: 0px;
   padding: 5px 15px;
   background-color: var(--background-color);
-  opacity: 0.5;
+  opacity: 0.6;
   transition: opacity 300ms ease;
 
   &:hover {
