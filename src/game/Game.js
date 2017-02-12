@@ -62,6 +62,7 @@ class Game {
   }
 
   reset() {
+    this.pause();
     this.interval = null;
     this.snake = this.createSnake();
     this.point = this.createPoint(this.snake);
