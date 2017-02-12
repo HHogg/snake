@@ -1,4 +1,4 @@
-const { FN_TIMEOUT } = require('../config');
+const { FN_TIMEOUT_SECONDS } = require('../config');
 const sandboxWorker = require('raw-loader!./sandbox-worker.js');
 
 class Sandbox {
@@ -21,8 +21,9 @@ class Sandbox {
   run(args) {
     this.worker.postMessage(args);
     this.timeout = setTimeout(() => {
-      this.onError({ message: `⏰ Your code exceeded the maximum ${FN_TIMEOUT} seconds run time.` });
-    }, FN_TIMEOUT * 1000);
+      this.onError({ message: '⏰ Your code exceeded the maximum ' +
+        FN_TIMEOUT_SECONDS + 'seconds run time.' });
+    }, FN_TIMEOUT_SECONDS * 1000);
   }
 
   reset() {

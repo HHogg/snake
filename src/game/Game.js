@@ -1,8 +1,14 @@
-const { CHAR_SNAKE_HEAD, CHAR_SNAKE_TAIL, CHAR_POINT, SNAKE_LENGTH } = require('../config');
 const containsCoordinates = require('../utils/containsCoordinates');
 const incrementLastElement = require('../utils/incrementLastElement');
 const isInBounds = require('../utils/isInBounds');
 const Sandbox = require('./Sandbox');
+const {
+  CHAR_SNAKE_HEAD,
+  CHAR_SNAKE_TAIL,
+  CHAR_POINT,
+  SNAKE_LENGTH,
+  SPEED_MSECONDS,
+} = require('../config');
 
 class Game {
   constructor(canvas, editor, consle, scoreboard) {
@@ -11,54 +17,103 @@ class Game {
     this.console = consle;
     this.scoreboard = scoreboard;
 
-    this.boundHandleMessage = this.handleMessage.bind(this);
-    this.boundHandleError = this.handleError.bind(this);
-    this.boundRun = this.run.bind(this);
+    this.boundHandleSandboxMessage = this.handleSandboxMessage.bind(this);
+    this.boundHandleSandboxError = this.handleSandboxError.bind(this);
+    this.boundTick = this.step.bind(this);
 
     this.sandbox = new Sandbox(
-      this.boundHandleMessage,
-      this.boundHandleError
+      this.boundHandleSandboxMessage,
+      this.boundHandleSandboxError
     );
 
     this.reset();
   }
 
-  reset() {
-    this.pause();
-    this.history = [0];
-    this.animationFrame = null;
-    this.snake = this.createSnake();
-    this.point = this.createPoint();
-    this.console.clear();
-    this.scoreboard.reset();
-    this.sandbox.reset();
-    this.redraw();
-  }
-
   start() {
-    this.refresh();
+    this.isRunning = true;
+    this.snake = this.createSnake();
+    this.point = this.createPoint(this.snake);
+    this.history = [0];
+    this.run();
   }
 
   play() {
     this.isRunning = true;
-    this.isPlaying = true;
-    this.run();
+    this.interval = window.setInterval(this.boundTick, SPEED_MSECONDS);
   }
 
   pause() {
     this.isRunning = false;
-    this.isPlaying = false;
-    window.cancelAnimationFrame(this.animationFrame);
+    window.clearInterval(this.interval);
   }
 
   step() {
     this.isRunning = true;
-    this.run();
+    this.tick();
+    this.isRunning = false;
+  }
+
+  tick() {
+    if (this.isRunning) {
+      this.move();
+      this.run();
+    }
   }
 
   refresh() {
-    this.isRunning = false;
     this.run();
+  }
+
+  reset() {
+    this.interval = null;
+    this.console.clear();
+    this.scoreboard.reset();
+    this.sandbox.reset();
+  }
+
+  run() {
+    this.sandbox.run({
+      fn: this.editor.getValue(),
+      env: {
+        xMax: this.canvas.xMax,
+        yMax: this.canvas.yMax,
+        snake: this.snake,
+        point: this.point,
+      },
+    });
+  }
+
+  handleSandboxMessage({ values }) {
+    this.values = values;
+    this.canvas.draw(this.createGrid(values));
+  }
+
+  handleSandboxError({ message }) {
+    this.pause();
+    this.console.log(message);
+  }
+
+  move() {
+    const cells = this.getPossibleCells();
+    const nextCell = cells.sort(([ax, ay], [bx, by]) =>
+      this.values[ay][ax] - this.values[by][bx])[0];
+
+    if (!nextCell) {
+      return this.handleSandboxError({
+        message: 'The 🐍 did not reach the point. There were no valid cells to move to.',
+      });
+    }
+
+    this.history = incrementLastElement(this.history);
+
+    if (containsCoordinates(cells, this.point)) {
+      this.scoreboard.increase(this.history);
+      this.snake = [this.point].concat(this.snake);
+      this.point = this.createPoint(this.snake);
+      this.history = this.history.concat([0]);
+    } else {
+      this.snake = [nextCell].concat(this.snake.slice(0, -1));
+    }
   }
 
   createSnake() {
@@ -68,14 +123,14 @@ class Game {
     ]);
   }
 
-  createPoint() {
+  createPoint(snake) {
     const coordinates = [
       Math.floor(Math.random() * this.canvas.xMax),
       Math.floor(Math.random() * this.canvas.yMax),
     ];
 
-    return containsCoordinates(this.snake, coordinates)
-      ? this.createPoint()
+    return containsCoordinates(snake, coordinates)
+      ? this.createPoint(snake)
       : coordinates;
   }
 
@@ -114,59 +169,6 @@ class Game {
       isInBounds(this.canvas.xMax, this.canvas.yMax, cell) &&
         !containsCoordinates(this.snake, cell)
     );
-  }
-
-  redraw(values) {
-    this.canvas.draw(this.createGrid(values));
-  }
-
-  run() {
-    this.sandbox.run({
-      fn: this.editor.getValue(),
-      env: {
-        xMax: this.canvas.xMax,
-        yMax: this.canvas.yMax,
-        snake: this.snake,
-        point: this.point,
-      },
-    });
-  }
-
-  handleMessage({ values }) {
-    this.redraw(values);
-
-    if (!this.isRunning) {
-      return;
-    }
-
-    const cells = this.getPossibleCells();
-    const nextCell = cells.sort(([ax, ay], [bx, by]) => values[ay][ax] - values[by][bx])[0];
-
-    if (!nextCell) {
-      return this.handleError({
-        message: 'The 🐍 did not reach the point. There were no valid cells to move to.',
-      });
-    }
-
-    this.history = incrementLastElement(this.history);
-
-    if (containsCoordinates(cells, this.point)) {
-      this.scoreboard.increase(this.history);
-      this.snake = [this.point].concat(this.snake);
-      this.point = this.createPoint();
-      this.history = this.history.concat([0]);
-    } else {
-      this.snake = [nextCell].concat(this.snake.slice(0, -1));
-    }
-
-    if (this.isPlaying) {
-      this.animationFrame = window.requestAnimationFrame(this.boundRun);
-    }
-  }
-
-  handleError({ message }) {
-    this.pause();
-    this.console.log(message);
   }
 }
 
