@@ -31,9 +31,6 @@ class Game {
 
   start() {
     this.isRunning = true;
-    this.snake = this.createSnake();
-    this.point = this.createPoint(this.snake);
-    this.history = [0];
     this.run();
   }
 
@@ -66,9 +63,17 @@ class Game {
 
   reset() {
     this.interval = null;
+    this.snake = this.createSnake();
+    this.point = this.createPoint(this.snake);
+    this.history = [0];
     this.console.clear();
     this.scoreboard.reset();
     this.sandbox.reset();
+    this.redraw();
+  }
+
+  redraw(values) {
+    this.canvas.draw(this.createGrid(values));
   }
 
   run() {
@@ -85,7 +90,7 @@ class Game {
 
   handleSandboxMessage({ values }) {
     this.values = values;
-    this.canvas.draw(this.createGrid(values));
+    this.redraw(values);
   }
 
   handleSandboxError({ message }) {
