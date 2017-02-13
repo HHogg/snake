@@ -1,3 +1,4 @@
+require('offline-plugin/runtime').install();
 require('normalize.css');
 require('./style.css');
 
