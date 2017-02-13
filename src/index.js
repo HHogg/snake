@@ -30,34 +30,34 @@ const canvas = new Canvas(elements.canvas);
 const editor = new Editor(elements.editor);
 const consle = new Console(elements.console);
 const scoreboard = new Scoreboard(elements.average, elements.points, elements.score, canvas);
-const game = new Game(canvas, editor, consle, scoreboard);
+const game = new Game(canvas, editor, consle, scoreboard, {
+  onGameOver: () => {
+    buttons.play.setAttribute('disabled', '');
+    buttons.pause.setAttribute('disabled', '');
+    buttons.reset.removeAttribute('disabled');
+    buttons.start.setAttribute('disabled', '');
+    buttons.step.setAttribute('disabled', '');
+    buttons.refresh.setAttribute('disabled', '');
+  },
+});
 
-function setAciveButtonStates() {
+buttons.start.addEventListener('click', () => {
   buttons.play.removeAttribute('disabled');
   buttons.pause.setAttribute('disabled', '');
   buttons.reset.removeAttribute('disabled');
   buttons.start.setAttribute('disabled', '');
   buttons.step.removeAttribute('disabled');
   buttons.refresh.removeAttribute('disabled');
-}
+  game.start();
+});
 
-function setInaciveButtonStates() {
+buttons.reset.addEventListener('click', () => {
   buttons.play.setAttribute('disabled', '');
   buttons.pause.setAttribute('disabled', '');
   buttons.reset.setAttribute('disabled', '');
   buttons.start.removeAttribute('disabled');
   buttons.step.setAttribute('disabled', '');
   buttons.refresh.setAttribute('disabled', '');
-}
-
-
-buttons.start.addEventListener('click', () => {
-  setAciveButtonStates();
-  game.start();
-});
-
-buttons.reset.addEventListener('click', () => {
-  setInaciveButtonStates();
   game.reset();
 });
 

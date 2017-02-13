@@ -11,11 +11,12 @@ const {
 } = require('../config');
 
 class Game {
-  constructor(canvas, editor, consle, scoreboard) {
+  constructor(canvas, editor, consle, scoreboard, callbacks) {
     this.canvas = canvas;
     this.editor = editor;
     this.console = consle;
     this.scoreboard = scoreboard;
+    this.callbacks = callbacks;
 
     this.boundHandleSandboxMessage = this.handleSandboxMessage.bind(this);
     this.boundHandleSandboxError = this.handleSandboxError.bind(this);
@@ -105,6 +106,7 @@ class Game {
       this.values[ay][ax] - this.values[by][bx])[0];
 
     if (!nextCell) {
+      this.callbacks.onGameOver();
       return this.handleSandboxError({
         message: 'The 🐍 did not reach the point. There were no valid cells to move to.',
       });
