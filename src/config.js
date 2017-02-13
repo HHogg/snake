@@ -4,8 +4,7 @@ module.exports = {
   CHAR_POINT: '$',
   CHAR_SNAKE_HEAD: 'X',
   CHAR_SNAKE_TAIL: 'x',
-  FN_TIMEOUT_SECONDS: 10,
+  FN_TIMEOUT_SECONDS: 3,
   LOCAL_STORAGE_CONTENT_KEY: 'snake-heuristics:content',
   SNAKE_LENGTH: 4,
-  SPEED_MSECONDS: 50,
 };

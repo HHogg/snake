@@ -7,7 +7,6 @@ const {
   CHAR_SNAKE_TAIL,
   CHAR_POINT,
   SNAKE_LENGTH,
-  SPEED_MSECONDS,
 } = require('../config');
 
 class Game {
@@ -20,7 +19,7 @@ class Game {
 
     this.boundHandleSandboxMessage = this.handleSandboxMessage.bind(this);
     this.boundHandleSandboxError = this.handleSandboxError.bind(this);
-    this.boundTick = this.step.bind(this);
+    this.boundTick = this.tick.bind(this);
 
     this.sandbox = new Sandbox(
       this.boundHandleSandboxMessage,
@@ -37,12 +36,13 @@ class Game {
 
   play() {
     this.isRunning = true;
-    this.interval = window.setInterval(this.boundTick, SPEED_MSECONDS);
+    this.isPlaying = true;
+    this.tick();
   }
 
   pause() {
     this.isRunning = false;
-    window.clearInterval(this.interval);
+    this.isPlaying = false;
   }
 
   step() {
@@ -93,6 +93,10 @@ class Game {
   handleSandboxMessage({ values }) {
     this.values = values;
     this.redraw(values);
+
+    if (this.isPlaying) {
+      window.requestAnimationFrame(this.boundTick);
+    }
   }
 
   handleSandboxError({ message }) {
@@ -101,6 +105,12 @@ class Game {
   }
 
   move() {
+    if (!Array.isArray(this.values)) {
+      return this.handleSandboxError({
+        message: '🔥 There were no heuristic values to calculate a move 🔥',
+      });
+    }
+
     const cells = this.getPossibleCells();
     const nextCell = cells.sort(([ax, ay], [bx, by]) =>
       this.values[ay][ax] - this.values[by][bx])[0];
