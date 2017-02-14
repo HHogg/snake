@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -14,7 +13,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
-    new OfflinePlugin(),
   ],
   module: {
     rules: [{
