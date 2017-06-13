@@ -1,10 +1,8 @@
-module.exports = {
-  CELL_PADDING: 5,
-  CELL_SIZE: 30,
-  CHAR_POINT: '$',
-  CHAR_SNAKE_HEAD: 'X',
-  CHAR_SNAKE_TAIL: 'x',
-  FN_TIMEOUT_SECONDS: 3,
-  LOCAL_STORAGE_CONTENT_KEY: 'snake-heuristics:content',
-  SNAKE_LENGTH: 4,
-};
+export const CELL_PADDING = 5;
+export const CELL_SIZE = 30;
+export const CHAR_POINT = '$';
+export const CHAR_SNAKE_HEAD = 'X';
+export const CHAR_SNAKE_TAIL = 'x';
+export const FN_TIMEOUT_SECONDS = 10;
+export const LOCAL_STORAGE_REDUX_KEY = 'snake-heuristics:redux';
+export const SNAKE_LENGTH = 4;

@@ -1,0 +1,49 @@
+.sh-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.sh-app__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+  flex: 0 1 auto;
+}
+
+.sh-app__body {
+  display: flex;
+  padding: 20px;
+  flex: 1 1 auto;
+}
+
+.sh-app__pane {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+}
+
+.sh-app__pane--shrink {
+  flex: 0 1 auto;
+}
+
+.sh-app__section {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  margin: var(--page-padding) 0;
+
+  &:first-child { margin-top: 0; }
+  &:last-child  { margin-bottom: 0; }
+}
+
+.sh-app__section--shrink {
+  flex: 0 1 auto;
+}
+
+.sh-app__title {
+  font-size: 1.3rem;
+}

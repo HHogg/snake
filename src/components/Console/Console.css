@@ -1,30 +1,11 @@
-.asi-console {
+.sh-console {
   position: relative;
-  flex: 0 1 auto;
-  margin: 0 0 20px;
   background-color: var(--cell-inactive-color);
   color: var(--text-color);
   word-break: break-all;
 }
 
-.asi-console__messages {
-  padding: 10px;
-  height: 120px;
-  overflow: auto;
-  font-size: 1rem;
-  font-family: "Courier New", Courier, monospace;
-}
-
-.asi-console__message {
-  margin-bottom: 5px;
-
-  &::before {
-    display: inline-block;
-    content: '> ';
-  }
-}
-
-.asi-console__clear {
+.sh-console__clear {
   position: absolute;
   right: 0px;
   bottom: 0px;
@@ -37,5 +18,23 @@
     cursor: pointer;
     text-decoration: underline;
     opacity: 1;
+  }
+}
+
+.sh-console__messages {
+  padding: 10px;
+  height: 120px;
+  overflow: auto;
+  font-size: 1rem;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.sh-console__message {
+  margin: 0 0 5px;
+
+  &::before {
+    display: inline-block;
+    content: '> ';
+    margin-right: 5px;
   }
 }

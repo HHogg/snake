@@ -26,4 +26,3 @@ onmessage = ({ data }) => {
 
   postMessage({ values });
 };
-

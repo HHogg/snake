@@ -1,0 +1,36 @@
+:root {
+  --background-color: var(--oc-gray-9);
+
+  --text-color: var(--oc-gray-2);
+  --text-color-subtle: var(--oc-gray-6);
+
+  --cell-inactive-color: var(--oc-gray-8);
+  --cell-text-color: var(--oc-gray-2);
+  --cell-snake-head-color: var(--oc-yellow-6);
+  --cell-snake-tail-color: var(--oc-yellow-3);
+  --cell-point-color: var(--oc-blue-5);
+
+  --page-padding: 1.25rem;
+}
+
+html {
+  height: 100vh;
+}
+
+body {
+  height: 100vh;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sh-app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}

@@ -1,0 +1,6 @@
+.sh-github-link,
+.sh-github-link:hover,
+.sh-github-link:visited {
+  color: inherit;
+  text-decoration: none;
+}

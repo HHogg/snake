@@ -1,5 +1,6 @@
 {
-  "extends": ["eslint:recommended"],
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "env": {
     "amd": true,
     "es6": true,
@@ -7,6 +8,7 @@
     "jest": true
   },
   "globals": {
+    "__DEVELOPMENT__": true,
     "document": true,
     "window": true,
     "Promise": true,
@@ -17,7 +19,6 @@
   },
   "rules": {
     "comma-dangle": [2, "always-multiline"],
-    "func-style": [2, "declaration"],
     "indent": [2, 2, {"SwitchCase": 0}],
     "keyword-spacing": [2],
     "max-len": [2, 100],

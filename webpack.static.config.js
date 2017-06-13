@@ -1,17 +1,16 @@
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
+const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 
 module.exports = {
-  entry: {
-    main: './src/index.js',
-  },
+  entry: './src/static.js',
   output: {
     filename: 'assets/snake-heuristics.[hash].min.js',
     path: 'static',
     publicPath: '/snake-heuristics',
+    libraryTarget: 'umd',
   },
   module: {
     rules: [{
@@ -27,6 +26,9 @@ module.exports = {
       test: /\.js$/,
       exclude: /node_modules/,
       use: ['babel-loader'],
+    }, {
+      test: /\.ejs$/,
+      use: ['ejs-loader'],
     }],
   },
   plugins: [
@@ -34,10 +36,6 @@ module.exports = {
     new ExtractTextPlugin({
       allChunks: true,
       filename: 'assets/snake-heuristics.[hash].min.css',
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './src/index.html',
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
@@ -48,6 +46,12 @@ module.exports = {
         warnings: false,
       },
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '\'production\'',
+      },
+    }),
+    new StaticSiteGeneratorPlugin('main'),
     new OfflinePlugin({
       publicPath: '/snake-heuristics',
     }),

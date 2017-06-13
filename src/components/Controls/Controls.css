@@ -1,0 +1,11 @@
+.sh-controls {
+  display: flex;
+}
+
+.sh-control-group {
+  flex: 1 1 auto;
+
+  margin: 0 var(--page-padding) 0 0;
+
+  &:last-child { margin-right: 0; }
+}

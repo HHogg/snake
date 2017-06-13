@@ -1,6 +1,15 @@
-module.exports = function getCSSVar(variable) {
+
+export default (variable, context) => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  if (!context || context === document) {
+    context = document.documentElement;
+  }
+
   return window
-    .getComputedStyle(document.documentElement)
+    .getComputedStyle(context)
     .getPropertyValue(`--${variable}`)
     .trim();
 };

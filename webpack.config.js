@@ -3,25 +3,29 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   devtool: 'source-map',
   entry: {
-    main: './src/index.js',
+    main: './src/client.js',
   },
   output: {
     filename: 'snake-heuristics.js',
     publicPath: '/',
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-    }),
-  ],
   module: {
     rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: ['babel-loader'],
+    }, {
       test: /\.css$/,
       use: [
         'style-loader',
-        'css-loader?importLoaders=1',
-        'postcss-loader?sourceMap=inline',
+        'css-loader',
+        'postcss-loader',
       ],
     }],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.ejs',
+    }),
+  ],
 };

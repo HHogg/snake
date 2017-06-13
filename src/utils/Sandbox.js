@@ -1,11 +1,14 @@
-const { FN_TIMEOUT_SECONDS } = require('../config');
-const sandboxWorker = require('raw-loader!./sandbox-worker.js');
+import { FN_TIMEOUT_SECONDS } from '../config';
+import sandboxWorker from 'raw-loader!./sandboxWorker';
 
-class Sandbox {
+export default class Sandbox {
   constructor(onMessage, onError) {
     this.onMessage = onMessage;
     this.onError = onError;
-    this.createWorker();
+
+    if (typeof Worker !== 'undefined') {
+      this.createWorker();
+    }
   }
 
   createWorker() {
@@ -36,5 +39,3 @@ class Sandbox {
     clearTimeout(this.timeout);
   }
 }
-
-module.exports = Sandbox;
