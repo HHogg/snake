@@ -3,14 +3,16 @@ import classnames from 'classnames';
 
 export default class AppSection extends Component {
   static propTypes = {
+    align: PropTypes.oneOf(['end']),
     children: PropTypes.node.isRequired,
     shrink: PropTypes.bool,
   };
 
   render() {
-    const { children, shrink, ...rest } = this.props;
+    const { align, children, shrink, ...rest } = this.props;
     const classes = classnames('sh-app__section', {
       'sh-app__section--shrink': shrink,
+      [`sh-app__section--${align}`]: align,
     });
 
     return (

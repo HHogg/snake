@@ -27,7 +27,7 @@ const EDITOR_SET_CONTENT = 'EDITOR_SET_CONTENT';
 
 export const editorSetContent = actionCreator(EDITOR_SET_CONTENT);
 
-export default function reducer(state = initialState, { type, payload }) {
+export default (state = initialState, { type, payload }) => {
   switch (type) {
   case EDITOR_SET_CONTENT:
     return {
@@ -37,4 +37,4 @@ export default function reducer(state = initialState, { type, payload }) {
   default:
     return state;
   }
-}
+};

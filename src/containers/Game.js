@@ -22,6 +22,7 @@ import Console from './Console';
 import Controller from './Controller';
 import Editor from './Editor';
 import Scoreboard from './Scoreboard';
+import UserMenu from './UserMenu';
 import { createEnvironment, createPoint } from '../utils/createEnvironment';
 import containsCoordinates from '../utils/containsCoordinates';
 import getSurroundingCells from '../utils/getSurroundingCells';
@@ -190,7 +191,7 @@ class Game extends Component {
           </AppPane>
 
           <AppPane shrink={ true }>
-            <GithubLink href="https://github.com/HHogg/snake-heuristics" />
+            <UserMenu />
           </AppPane>
         </AppHeader>
 
@@ -218,7 +219,13 @@ class Game extends Component {
           </AppPane>
 
           <AppPane>
-            <Editor />
+            <AppSection>
+              <Editor />
+            </AppSection>
+
+            <AppSection align="end" shrink={ true }>
+              <GithubLink href="https://github.com/HHogg/snake-heuristics" />
+            </AppSection>
           </AppPane>
         </AppBody>
       </App>

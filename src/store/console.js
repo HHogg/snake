@@ -11,7 +11,7 @@ const CONSOLE_CLEAR_MESSAGES = 'CONSOLE_CLEAR_MESSAGES';
 export const consoleAddMessage = actionCreator(CONSOLE_ADD_MESSAGE);
 export const consoleClearMessages = actionCreator(CONSOLE_CLEAR_MESSAGES);
 
-export default function reducer(state = initialState, { type, payload }) {
+export default (state = initialState, { type, payload }) => {
   switch (type) {
   case CONSOLE_ADD_MESSAGE:
     return {
@@ -30,4 +30,4 @@ export default function reducer(state = initialState, { type, payload }) {
   default:
     return state;
   }
-}
+};

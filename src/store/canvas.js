@@ -9,7 +9,7 @@ const CANVAS_SET_SIZE = 'CANVAS_SET_SIZE';
 
 export const canvasSetSize = actionCreator(CANVAS_SET_SIZE);
 
-export default function reducer(state = initialState, { type, payload }) {
+export default (state = initialState, { type, payload }) => {
   switch (type) {
   case CANVAS_SET_SIZE:
     return {
@@ -20,4 +20,4 @@ export default function reducer(state = initialState, { type, payload }) {
   default:
     return state;
   }
-}
+};

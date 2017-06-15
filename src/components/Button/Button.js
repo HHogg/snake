@@ -5,7 +5,7 @@ import './Button.css';
 export default class Button extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
-    color: PropTypes.oneOf(['red', 'green', 'blue']).isRequired,
+    color: PropTypes.oneOf(['gray', 'red', 'green', 'blue']).isRequired,
   };
 
   render() {

@@ -1,11 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { initializeApp } from 'firebase';
 import configureStore from './store';
 import Game from './containers/Game';
 import 'normalize.css/normalize.css';
 import 'open-color/open-color.css';
 import './client.css';
+
+initializeApp({
+  apiKey: 'AIzaSyDjffGgEF_020YYP4h5TjG8SUyzxd7EVi8',
+  authDomain: 'snake-heuristics.firebaseapp.com',
+  databaseURL: 'https://snake-heuristics.firebaseio.com',
+  projectId: 'snake-heuristics',
+  storageBucket: 'snake-heuristics.appspot.com',
+  messagingSenderId: '1049330516962',
+});
 
 render((
   <Provider store={ configureStore() }>

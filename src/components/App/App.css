@@ -24,6 +24,7 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 0%;
+  justify-content: center;
 }
 
 .sh-app__pane--shrink {
@@ -42,6 +43,10 @@
 
 .sh-app__section--shrink {
   flex: 0 1 auto;
+}
+
+.sh-app__section--end {
+  align-items: flex-end;
 }
 
 .sh-app__title {
