@@ -10,19 +10,14 @@ import {
   gameSetEnvironment,
   gameStopGame,
 } from '../store/game';
-import App from '../components/App/App';
-import AppHeader from '../components/App/AppHeader';
+import AppContainer from '../components/App/AppContainer';
 import AppPane from '../components/App/AppPane';
-import AppTitle from '../components/App/AppTitle';
-import AppBody from '../components/App/AppBody';
 import AppSection from '../components/App/AppSection';
-import GithubLink from '../components/GithubLink/GithubLink';
 import Canvas from './Canvas';
 import Console from './Console';
 import Controller from './Controller';
 import Editor from './Editor';
 import Scoreboard from './Scoreboard';
-import UserMenu from './UserMenu';
 import { createEnvironment, createPoint } from '../utils/createEnvironment';
 import containsCoordinates from '../utils/containsCoordinates';
 import getSurroundingCells from '../utils/getSurroundingCells';
@@ -42,6 +37,7 @@ class Game extends Component {
     history: PropTypes.array.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     isRunning: PropTypes.bool.isRequired,
+    isVisible: PropTypes.bool.isRequired,
     point: PropTypes.array,
     snake: PropTypes.array,
     tails: PropTypes.array.isRequired,
@@ -182,53 +178,36 @@ class Game extends Component {
 
   render() {
     const { values } = this.state;
+    const { isVisible } = this.props;
 
     return (
-      <App>
-        <AppHeader>
-          <AppPane>
-            <AppTitle>Snake Heuristics</AppTitle>
-          </AppPane>
+      <AppContainer isVisible={ isVisible }>
+        <AppPane>
+          <AppSection>
+            <Canvas values={ values } />
+          </AppSection>
 
-          <AppPane shrink={ true }>
-            <UserMenu />
-          </AppPane>
-        </AppHeader>
+          <AppSection shrink={ true }>
+            <Console />
+          </AppSection>
 
-        <AppBody>
-          <AppPane>
-            <AppSection>
-              <Canvas values={ values } />
-            </AppSection>
+          <AppSection shrink={ true }>
+            <Scoreboard />
+          </AppSection>
 
-            <AppSection shrink={ true }>
-              <Console />
-            </AppSection>
+          <AppSection shrink={ true }>
+            <Controller
+                onRefresh={ () => this.handleRefresh() }
+                onReset={ () => this.handleReset() }
+                onStepBackwards={ () => this.handleStepBackwards() }
+                onStepForwards={ () => this.handleStepForwards() } />
+          </AppSection>
+        </AppPane>
 
-            <AppSection shrink={ true }>
-              <Scoreboard />
-            </AppSection>
-
-            <AppSection shrink={ true }>
-              <Controller
-                  onRefresh={ () => this.handleRefresh() }
-                  onReset={ () => this.handleReset() }
-                  onStepBackwards={ () => this.handleStepBackwards() }
-                  onStepForwards={ () => this.handleStepForwards() } />
-            </AppSection>
-          </AppPane>
-
-          <AppPane>
-            <AppSection>
-              <Editor />
-            </AppSection>
-
-            <AppSection align="end" shrink={ true }>
-              <GithubLink href="https://github.com/HHogg/snake-heuristics" />
-            </AppSection>
-          </AppPane>
-        </AppBody>
-      </App>
+        <AppPane>
+          <Editor />
+        </AppPane>
+      </AppContainer>
     );
   }
 }

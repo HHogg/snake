@@ -7,7 +7,7 @@ import { render } from 'react-dom';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import configureStore from './store';
-import Game from './containers/Game';
+import Application from './containers/Application';
 import template from './index.ejs';
 import 'normalize.css/normalize.css';
 import 'open-color/open-color.css';
@@ -16,7 +16,7 @@ import './client.css';
 if (typeof document !== 'undefined') {
   render((
     <Provider store={ configureStore() }>
-      <Game />
+      <Application />
     </Provider>
   ), document.getElementById('react-root'));
 }
@@ -31,7 +31,7 @@ export default (locals) => {
         script: `/snake-heuristics/assets/snake-heuristics.${hash}.min.js`,
         html: renderToString(
           <Provider store={ configureStore() }>
-            <Game />
+            <Application />
           </Provider>
         ),
       },

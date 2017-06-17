@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { initializeApp } from 'firebase';
 import configureStore from './store';
-import Game from './containers/Game';
+import Application from './containers/Application';
 import 'normalize.css/normalize.css';
 import 'open-color/open-color.css';
 import './client.css';
@@ -19,6 +19,6 @@ initializeApp({
 
 render((
   <Provider store={ configureStore() }>
-    <Game />
+    <Application />
   </Provider>
 ), document.getElementById('react-root'));

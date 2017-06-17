@@ -1,0 +1,16 @@
+.sh-menu {
+  display: flex;
+  align-items: center;
+}
+
+.sh-menu__item {
+  margin-right: 1rem;
+  padding-right: 1rem;
+  border-right: 0.0625rem dotted var(--oc-gray-5);
+
+  &:last-child {
+    margin-right: 0;
+    padding-right: 0;
+    border-right: 0;
+  }
+}

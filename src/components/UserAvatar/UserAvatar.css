@@ -5,12 +5,10 @@
 .sh-user-avatar {
   display: flex;
   align-items: center;
-  border: 1px solid white;
-  border-radius: var(--user-avatar__size);
 }
 
 .sh-user-avatar__name {
-  padding: 0 .5rem 0 1rem;
+  padding: 0 .5rem 0 0;
   font-size: 0.875rem;
   font-weight: bold;
 }

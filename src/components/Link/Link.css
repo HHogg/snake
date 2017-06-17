@@ -1,0 +1,9 @@
+.sh-link {
+  font-weight: bold;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    opacity: 1;
+  }
+}
