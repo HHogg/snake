@@ -2,7 +2,7 @@
   display: inline-flex;
   justify-content: center;
   width: 100%;
-  padding: 0.625rem 1.25rem;
+  padding: 0.5rem 1rem;
   border: 0.0625rem solid transparent;
   border-radius: 0.1875rem;
   background-color: transparent;
@@ -50,6 +50,14 @@
   &:hover { background-color: var(--oc-blue-6); }
   &:active { background-color: var(--oc-blue-7); }
   &:disabled { background-color: var(--oc-blue-5); }
+}
+
+.sh-button--yellow {
+  background-color: var(--oc-yellow-5);
+
+  &:hover { background-color: var(--oc-yellow-6); }
+  &:active { background-color: var(--oc-yellow-7); }
+  &:disabled { background-color: var(--oc-yellow-5); }
 }
 
 .sh-button-group {

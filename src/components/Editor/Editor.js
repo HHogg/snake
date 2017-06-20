@@ -38,6 +38,12 @@ export default class Editor extends Component {
     this.ide.on('change', () => onChange({ content: this.ide.getValue() }));
   }
 
+  componentWillReceiveProps({ initialValue }) {
+    if (initialValue !== this.ide.getValue()) {
+      this.ide.setValue(initialValue, 1);
+    }
+  }
+
   render() {
     return (
       <div

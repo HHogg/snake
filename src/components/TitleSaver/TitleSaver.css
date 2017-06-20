@@ -1,0 +1,35 @@
+.sh-title-saver {
+  display: flex;
+  margin-left: 2rem;
+  padding-bottom: .5rem;
+}
+
+.sh-title-saver__input-container {
+  display: flex;
+  flex: 1 0 0%;
+}
+
+.sh-title-saver__input {
+  display: block;
+  min-width: 0;
+  padding: 0 .5rem;
+  margin-right: 1rem;
+  width: 100%;
+  border: 0;
+  background-color: transparent;
+  font-size: 1.2rem;
+  color: inherit;
+  appearance: none;
+
+  &:focus {
+    outline: 0.0625rem dashed var(--oc-blue-7);
+  }
+
+  &::placeholder {
+    font-style: italic;
+  }
+}
+
+.sh-title-saver__button {
+  flex: 0 0 auto;
+}

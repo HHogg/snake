@@ -10,7 +10,7 @@
 .sh-app__header {
   display: flex;
   justify-content: space-between;
-  padding: 20px 20px 0;
+  padding: 10px 20px 0;
   min-height: 2.25rem;
   flex: 0 1 auto;
 }
@@ -61,10 +61,9 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 0%;
-  margin: var(--page-padding) 0;
+  margin: var(--page-padding) 0 0;
 
   &:first-child { margin-top: 0; }
-  &:last-child  { margin-bottom: 0; }
 }
 
 .sh-app__section--shrink {

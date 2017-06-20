@@ -1,7 +1,7 @@
 import merge from 'lodash.merge';
 import { LOCAL_STORAGE_REDUX_KEY } from '../config';
 
-const storeList = ['editor', 'user'];
+const storeList = ['editor'];
 
 export default function localStore() {
   return (next) => (reducer, initialState, enhancer) => {

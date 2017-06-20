@@ -1,5 +1,7 @@
 .sh-link {
+  color: inherit;
   font-weight: bold;
+  text-decoration: none;
 
   &:hover {
     cursor: pointer;

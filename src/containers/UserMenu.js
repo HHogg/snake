@@ -30,6 +30,20 @@ class UserMenu extends Component {
     };
   }
 
+  componentWillMount() {
+    const { userLoginSuccessful } = this.props;
+
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        userLoginSuccessful({
+          id: user.uid,
+          avatar: user.photoURL,
+          username: user.displayName,
+        });
+      }
+    });
+  }
+
   handleOnClick() {
     const { authenticating } = this.state;
     const { userLoginSuccessful } = this.props;
@@ -41,9 +55,9 @@ class UserMenu extends Component {
     this.setState({ authenticating: true });
     auth().signInWithPopup(provider).then((result) => {
       userLoginSuccessful({
-        accessToken: result.credential.accessToken,
-        avatar: result.additionalUserInfo.profile.avatar_url,
-        username: result.additionalUserInfo.username,
+        id: result.user.uid,
+        avatar: result.user.photoURL,
+        username: result.user.displayName,
       });
     }).catch(() => {
       this.setState({ authenticating: false });
@@ -97,7 +111,7 @@ class UserMenu extends Component {
 
 export default connect((state) => ({
   avatar: state.user.avatar,
-  isLoggedIn: !!state.user.accessToken,
+  isLoggedIn: !!state.user.id,
   username: state.user.username,
 }), {
   applicationShowLeaderboard,

@@ -1,7 +1,9 @@
 import actionCreator from '../utils/actionCreator';
 
 const initialState = {
-  user: undefined,
+  id: undefined,
+  avatar: undefined,
+  username: undefined,
 };
 
 const USER_LOGIN_SUCCESSFUL = 'USER_LOGIN_SUCCESSFUL';
@@ -13,7 +15,7 @@ export default (state = initialState, { type, payload }) => {
   case USER_LOGIN_SUCCESSFUL:
     return {
       ...state,
-      accessToken: payload.accessToken,
+      id: payload.id,
       avatar: payload.avatar,
       username: payload.username,
     };

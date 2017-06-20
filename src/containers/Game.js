@@ -18,6 +18,7 @@ import Console from './Console';
 import Controller from './Controller';
 import Editor from './Editor';
 import Scoreboard from './Scoreboard';
+import SolutionTitle from './SolutionTitle';
 import { createEnvironment, createPoint } from '../utils/createEnvironment';
 import containsCoordinates from '../utils/containsCoordinates';
 import getSurroundingCells from '../utils/getSurroundingCells';
@@ -205,7 +206,13 @@ class Game extends Component {
         </AppPane>
 
         <AppPane>
-          <Editor />
+          <AppSection shrink={ true }>
+            <SolutionTitle />
+          </AppSection>
+
+          <AppSection>
+            <Editor />
+          </AppSection>
         </AppPane>
       </AppContainer>
     );

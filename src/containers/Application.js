@@ -13,6 +13,7 @@ import UserMenu from './UserMenu';
 class Application extends Component {
   static propTypes = {
     isGameVisible: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
     isLeaderboardVisible: PropTypes.bool.isRequired,
     isSavedSolutionsVisible: PropTypes.bool.isRequired,
   };
@@ -21,6 +22,7 @@ class Application extends Component {
     const {
       isGameVisible,
       isLeaderboardVisible,
+      isLoggedIn,
       isSavedSolutionsVisible,
     } = this.props;
 
@@ -39,7 +41,10 @@ class Application extends Component {
         <AppBody>
           <Game isVisible={ isGameVisible } />
           <Leaderboard isVisible={ isLeaderboardVisible } />
-          <SavedSolutions isVisible={ isSavedSolutionsVisible } />
+
+          { isLoggedIn && (
+            <SavedSolutions isVisible={ isSavedSolutionsVisible } />
+          ) }
         </AppBody>
       </App>
     );
@@ -49,6 +54,7 @@ class Application extends Component {
 export default connect((state) => ({
   isGameVisible: state.application.game,
   isLeaderboardVisible: state.application.leaderboard,
+  isLoggedIn: !!state.user.id,
   isSavedSolutionsVisible: state.application.savedSolutions,
 }), {
 
