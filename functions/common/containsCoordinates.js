@@ -1,3 +1,3 @@
 
-export default (set, [x, y]) =>
+module.exports = (set, [x, y]) =>
   set.some(([sx, sy]) => x === sx && y === sy);

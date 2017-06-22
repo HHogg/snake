@@ -2,7 +2,8 @@ import actionCreator from '../utils/actionCreator';
 
 /* eslint-disable max-len */
 const initialState = {
-  selectedSolutionId: undefined,
+  edited: false,
+  selectedSolutionKey: undefined,
   title: '',
   content: `/**
  * @param {Number} x The x coordinate of the cell
@@ -28,11 +29,13 @@ function heuristic(x, y, xMax, yMax, snake, point) {
 const EDITOR_SELECT_SOLUTION = 'EDITOR_SELECT_SOLUTION';
 const EDITOR_SET_CONTENT = 'EDITOR_SET_CONTENT';
 const EDITOR_SET_TITLE = 'EDITOR_SET_TITLE';
+const EDITOR_SET_UNEDITED = 'EDITOR_SET_UNEDITED';
 const EDITOR_START_NEW = 'EDITOR_START_NEW';
 
 export const editorSelectSolution = actionCreator(EDITOR_SELECT_SOLUTION);
 export const editorSetContent = actionCreator(EDITOR_SET_CONTENT);
 export const editorSetTitle = actionCreator(EDITOR_SET_TITLE);
+export const editorSetUnedited = actionCreator(EDITOR_SET_UNEDITED);
 export const editorStartNew = actionCreator(EDITOR_START_NEW);
 
 export default (state = initialState, { type, payload }) => {
@@ -41,17 +44,26 @@ export default (state = initialState, { type, payload }) => {
     return {
       ...state,
       content: payload.content,
+      edited: true,
     };
   case EDITOR_SET_TITLE:
     return {
       ...state,
+      edited: true,
       title: payload.title,
+    };
+  case EDITOR_SET_UNEDITED:
+    return {
+      ...state,
+      edited: false,
     };
   case EDITOR_SELECT_SOLUTION:
     return {
+      ...state,
+      edited: false,
       content: payload.content,
       title: payload.title,
-      selectedSolutionId: payload.id,
+      selectedSolutionKey: payload.key,
     };
   case EDITOR_START_NEW:
     return initialState;

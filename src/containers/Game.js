@@ -19,26 +19,26 @@ import Controller from './Controller';
 import Editor from './Editor';
 import Scoreboard from './Scoreboard';
 import SolutionTitle from './SolutionTitle';
-import { createEnvironment, createPoint } from '../utils/createEnvironment';
-import containsCoordinates from '../utils/containsCoordinates';
-import getSurroundingCells from '../utils/getSurroundingCells';
+import { createEnvironment, createPoint } from '../../functions/common/createEnvironment';
+import containsCoordinates from '../../functions/common/containsCoordinates';
+import getSurroundingCells from '../../functions/common/getSurroundingCells';
 import Sandbox from '../utils/Sandbox';
 
 class Game extends Component {
   static propTypes = {
-    consoleAddMessage: PropTypes.func.isRequired,
+    consoleLog: PropTypes.func.isRequired,
     content: PropTypes.string.isRequired,
-    gameCollectPoint: PropTypes.func.isRequired,
-    gameMoveSnakeBackwards: PropTypes.func.isRequired,
-    gameMoveSnakeForwards: PropTypes.func.isRequired,
-    gamePauseGame: PropTypes.func.isRequired,
-    gameResetGame: PropTypes.func.isRequired,
-    gameSetEnvironment: PropTypes.func.isRequired,
-    gameStopGame: PropTypes.func.isRequired,
     history: PropTypes.array.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     isRunning: PropTypes.bool.isRequired,
     isVisible: PropTypes.bool.isRequired,
+    onCollectPoint: PropTypes.func.isRequired,
+    onGameInit: PropTypes.func.isRequired,
+    onPauseGame: PropTypes.func.isRequired,
+    onResetGame: PropTypes.func.isRequired,
+    onStepBackwards: PropTypes.func.isRequired,
+    onStepForwards: PropTypes.func.isRequired,
+    onStopGame: PropTypes.func.isRequired,
     point: PropTypes.array,
     snake: PropTypes.array,
     tails: PropTypes.array.isRequired,
@@ -58,10 +58,10 @@ class Game extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const { gameSetEnvironment, isRunning, isPlaying } = this.props;
+    const { onGameInit, isRunning, isPlaying } = this.props;
 
     if (!next.snake && !next.point) {
-      gameSetEnvironment(createEnvironment(next.xMax, next.yMax));
+      onGameInit(createEnvironment(next.xMax, next.yMax));
     }
 
     if (!isRunning && next.isRunning ||
@@ -84,10 +84,10 @@ class Game extends Component {
   move() {
     const { values } = this.state;
     const {
-      consoleAddMessage,
-      gameCollectPoint,
-      gameMoveSnakeForwards,
-      gameStopGame,
+      consoleLog,
+      onCollectPoint,
+      onStepForwards,
+      onStopGame,
       point,
       snake,
       xMax,
@@ -95,7 +95,7 @@ class Game extends Component {
     } = this.props;
 
     if (!Array.isArray(values)) {
-      return consoleAddMessage({
+      return consoleLog({
         message: '🔥 There were no heuristic values to calculate a move 🔥',
       });
     }
@@ -104,9 +104,9 @@ class Game extends Component {
     const nextCell = cells.sort(([ax, ay], [bx, by]) => values[ay][ax] - values[by][bx])[0];
 
     if (!nextCell) {
-      gameStopGame();
+      onStopGame();
 
-      return consoleAddMessage({
+      return consoleLog({
         message: 'The 🐍 did not reach the point. There were no valid cells to move to.',
       });
     }
@@ -117,7 +117,7 @@ class Game extends Component {
     if (containsCoordinates(cells, point)) {
       nextSnake = [point, ...snake];
       nextPoint = createPoint(xMax, yMax, nextSnake);
-      gameCollectPoint({
+      onCollectPoint({
         point: nextPoint,
         snake: nextSnake,
         xMax,
@@ -125,7 +125,7 @@ class Game extends Component {
       });
     } else {
       nextSnake = [nextCell, ...snake.slice(0, -1)];
-      gameMoveSnakeForwards({
+      onStepForwards({
         snake: nextSnake,
         tail: snake[snake.length - 1],
       });
@@ -150,10 +150,10 @@ class Game extends Component {
   }
 
   handleSandboxError({ message }) {
-    const { consoleAddMessage, gamePauseGame } = this.props;
+    const { consoleLog, onPauseGame } = this.props;
 
-    gamePauseGame();
-    consoleAddMessage({ message });
+    onPauseGame();
+    consoleLog({ message });
   }
 
   handleRefresh() {
@@ -165,16 +165,16 @@ class Game extends Component {
   }
 
   handleStepBackwards() {
-    const { gameMoveSnakeBackwards } = this.props;
+    const { onStepBackwards } = this.props;
 
-    gameMoveSnakeBackwards();
+    onStepBackwards();
   }
 
   handleReset() {
-    const { gameResetGame } = this.props;
+    const { onResetGame } = this.props;
 
     this.setState({ values: null });
-    gameResetGame();
+    onResetGame();
   }
 
   render() {
@@ -230,12 +230,12 @@ export default connect((state) => ({
   xMax: state.canvas.xMax,
   yMax: state.canvas.yMax,
 }), {
-  consoleAddMessage,
-  gameCollectPoint,
-  gameMoveSnakeBackwards,
-  gameMoveSnakeForwards,
-  gamePauseGame,
-  gameResetGame,
-  gameSetEnvironment,
-  gameStopGame,
+  consoleLog: consoleAddMessage,
+  onCollectPoint: gameCollectPoint,
+  onGameInit: gameSetEnvironment,
+  onPauseGame: gamePauseGame,
+  onResetGame: gameResetGame,
+  onStepBackwards: gameMoveSnakeBackwards,
+  onStepForwards: gameMoveSnakeForwards,
+  onStopGame: gameStopGame,
 })(Game);

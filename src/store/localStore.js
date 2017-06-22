@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { LOCAL_STORAGE_REDUX_KEY } from '../config';
+import { LOCAL_STORAGE_REDUX_KEY } from '../../functions/config';
 
 const storeList = ['editor'];
 

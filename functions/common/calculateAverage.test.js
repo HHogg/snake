@@ -1,6 +1,6 @@
 import calculateAverage from './calculateAverage';
 
-describe('utils:calculateAverage', () => {
+describe('common: calculateAverage', () => {
   describe('with an empty dataset', () => {
     it('return 0', () => {
       expect(calculateAverage([])).toBe(0);

@@ -6,16 +6,16 @@ import Editor from '../components/Editor/Editor';
 class EditorC extends Component {
   static propTypes = {
     content: PropTypes.string.isRequired,
-    editorSetContent: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
   };
 
   render() {
-    const { content, editorSetContent } = this.props;
+    const { content, onChange } = this.props;
 
     return (
       <Editor
           initialValue={ content }
-          onChange={ editorSetContent } />
+          onChange={ onChange } />
     );
   }
 }
@@ -23,5 +23,5 @@ class EditorC extends Component {
 export default connect((state) => ({
   content: state.editor.content,
 }), {
-  editorSetContent,
+  onChange: editorSetContent,
 })(EditorC);

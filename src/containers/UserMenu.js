@@ -15,12 +15,12 @@ const provider = new auth.GithubAuthProvider();
 
 class UserMenu extends Component {
   static propTypes = {
-    applicationShowLeaderboard: PropTypes.func.isRequired,
-    applicationShowSavedSolutions: PropTypes.func.isRequired,
     avatar: PropTypes.string,
+    displayName: PropTypes.string,
     isLoggedIn: PropTypes.bool.isRequired,
-    username: PropTypes.string,
-    userLoginSuccessful: PropTypes.func.isRequired,
+    onLogin: PropTypes.func.isRequired,
+    onShowLeaderboard: PropTypes.func.isRequired,
+    onShowSavedSolutions: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -31,14 +31,14 @@ class UserMenu extends Component {
   }
 
   componentWillMount() {
-    const { userLoginSuccessful } = this.props;
+    const { onLogin } = this.props;
 
     auth().onAuthStateChanged((user) => {
       if (user) {
-        userLoginSuccessful({
+        onLogin({
           id: user.uid,
           avatar: user.photoURL,
-          username: user.displayName,
+          displayName: user.displayName,
         });
       }
     });
@@ -46,7 +46,7 @@ class UserMenu extends Component {
 
   handleOnClick() {
     const { authenticating } = this.state;
-    const { userLoginSuccessful } = this.props;
+    const { onLogin } = this.props;
 
     if (authenticating) {
       return;
@@ -54,10 +54,10 @@ class UserMenu extends Component {
 
     this.setState({ authenticating: true });
     auth().signInWithPopup(provider).then((result) => {
-      userLoginSuccessful({
+      onLogin({
         id: result.user.uid,
         avatar: result.user.photoURL,
-        username: result.user.displayName,
+        displayName: result.user.displayName,
       });
     }).catch(() => {
       this.setState({ authenticating: false });
@@ -66,24 +66,24 @@ class UserMenu extends Component {
 
   render() {
     const {
-      applicationShowLeaderboard,
-      applicationShowSavedSolutions,
       avatar,
+      displayName,
       isLoggedIn,
-      username,
+      onShowLeaderboard,
+      onShowSavedSolutions,
     } = this.props;
 
     return (
       <Menu>
         <MenuItem>
-          <Link onClick={ () => applicationShowLeaderboard() }>
+          <Link onClick={ () => onShowLeaderboard() }>
             Leaderboard
           </Link>
         </MenuItem>
 
         { isLoggedIn && (
           <MenuItem>
-            <Link onClick={ () => applicationShowSavedSolutions() }>
+            <Link onClick={ () => onShowSavedSolutions() }>
               My Saved Solutions
             </Link>
           </MenuItem>
@@ -92,7 +92,7 @@ class UserMenu extends Component {
         { isLoggedIn && (
           <MenuItem>
             <UserAvatar
-                name={ username }
+                name={ displayName }
                 src={ avatar } />
           </MenuItem>
         ) }
@@ -111,10 +111,10 @@ class UserMenu extends Component {
 
 export default connect((state) => ({
   avatar: state.user.avatar,
+  displayName: state.user.displayName,
   isLoggedIn: !!state.user.id,
-  username: state.user.username,
 }), {
-  applicationShowLeaderboard,
-  applicationShowSavedSolutions,
-  userLoginSuccessful,
+  onLogin: userLoginSuccessful,
+  onShowLeaderboard: applicationShowLeaderboard,
+  onShowSavedSolutions: applicationShowSavedSolutions,
 })(UserMenu);

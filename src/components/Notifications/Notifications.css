@@ -1,0 +1,38 @@
+.sh-notifications {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.sh-notifications--visible {
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: var(--transition-time-slow);
+  transition-timing-function: var(--transition-function);
+}
+
+.sh-notifications__notification {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.625rem 1.25rem;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sh-notifications__notification--error {
+  background-color: var(--oc-red-7);
+  color: var(--text-color);
+}
+
+.sh-notifications__notification--success {
+  background-color: var(--oc-green-7);
+  color: var(--text-color);
+}

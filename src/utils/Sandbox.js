@@ -1,4 +1,4 @@
-import { FN_TIMEOUT_SECONDS } from '../config';
+import { FN_TIMEOUT_SECONDS } from '../../functions/config';
 import sandboxWorker from 'raw-loader!./sandboxWorker';
 
 export default class Sandbox {

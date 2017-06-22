@@ -1,6 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { CELL_SIZE, CELL_PADDING, CHAR_SNAKE_HEAD, CHAR_SNAKE_TAIL, CHAR_POINT } from '../config';
+import {
+  CELL_SIZE,
+  CELL_PADDING,
+  CHAR_SNAKE_HEAD,
+  CHAR_SNAKE_TAIL,
+  CHAR_POINT,
+} from '../../functions/config';
 import { canvasSetSize } from '../store/canvas';
 import getCSSVar from '../utils/getCSSVar';
 
@@ -32,6 +38,14 @@ class CanvasC extends Component {
       xMax: Math.floor((this.width + CELL_PADDING) / (CELL_SIZE + CELL_PADDING)),
       yMax: Math.floor((this.height + CELL_PADDING) / (CELL_SIZE + CELL_PADDING)),
     });
+
+    this.colorMap = {
+      [CHAR_SNAKE_HEAD]: getCSSVar('cell-snake-head-color'),
+      [CHAR_SNAKE_TAIL]: getCSSVar('cell-snake-tail-color'),
+      [CHAR_POINT]: getCSSVar('cell-point-color'),
+      inactive: getCSSVar('cell-inactive-color'),
+      text: getCSSVar('cell-text-color'),
+    };
   }
 
   componentDidUpdate() {
@@ -43,12 +57,6 @@ class CanvasC extends Component {
     const { point, snake, values, xMax, yMax } = this.props;
     const paddedX = (CELL_SIZE + (this.width - (CELL_SIZE * xMax)) / (xMax - 1));
     const paddedY = (CELL_SIZE + (this.height - (CELL_SIZE * yMax)) / (yMax - 1));
-    const colorMap = {
-      [CHAR_SNAKE_HEAD]: getCSSVar('cell-snake-head-color'),
-      [CHAR_SNAKE_TAIL]: getCSSVar('cell-snake-tail-color'),
-      [CHAR_POINT]: getCSSVar('cell-point-color'),
-      inactive: getCSSVar('cell-inactive-color'),
-    };
 
     this.context.clearRect(0, 0, this.width, this.height);
 
@@ -56,11 +64,11 @@ class CanvasC extends Component {
       for (let x = 0; x < xMax; x++) {
         const value = values && values[y][x];
 
-        this.context.fillStyle = colorMap.inactive;
+        this.context.fillStyle = this.colorMap.inactive;
         this.context.fillRect(x * paddedX, y * paddedY, CELL_SIZE, CELL_SIZE);
 
         if (!isNaN(parseInt(value))) {
-          this.context.fillStyle = getCSSVar('cell-text-color');
+          this.context.fillStyle = this.colorMap.text;
           this.context.textAlign = 'center';
           this.context.font = '"Courier New", Courier, monospace';
           this.context.fillText(+value.toFixed(2),
@@ -72,12 +80,12 @@ class CanvasC extends Component {
     }
 
     for (let i = 0; i < snake.length; i++) {
-      this.context.fillStyle = colorMap[i === 0 ? CHAR_SNAKE_HEAD : CHAR_SNAKE_TAIL];
+      this.context.fillStyle = this.colorMap[i === 0 ? CHAR_SNAKE_HEAD : CHAR_SNAKE_TAIL];
       this.context.fillRect(snake[i][0] * paddedX, snake[i][1] * paddedY, CELL_SIZE, CELL_SIZE);
     }
 
     if (point) {
-      this.context.fillStyle = colorMap[CHAR_POINT];
+      this.context.fillStyle = this.colorMap[CHAR_POINT];
       this.context.fillRect(point[0] * paddedX, point[1] * paddedY, CELL_SIZE, CELL_SIZE);
     }
   }

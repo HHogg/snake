@@ -4,7 +4,10 @@ import { database } from 'firebase';
 import { createSelector } from 'reselect';
 import { applicationShowGame } from '../store/application';
 import { editorSelectSolution } from '../store/editor';
-import { notifierAddNotfication } from '../store/notifier';
+import {
+  notifierAddErrorNotification,
+  notifierAddSuccessNotification,
+} from '../store/notifier';
 import {
   solutionsAddSaved,
   solutionsUpdateSaved,
@@ -19,41 +22,42 @@ import Solution from '../components/Solutions/Solution';
 
 class SavedSolutions extends Component {
   static propTypes = {
-    applicationShowGame: PropTypes.func.isRequired,
     avatar: PropTypes.string.isRequired,
-    editorSelectSolution: PropTypes.func.isRequired,
+    displayName: PropTypes.string.isRequired,
     isVisible: PropTypes.bool.isRequired,
-    notifierAddNotfication: PropTypes.func.isRequired,
+    onBackToGame: PropTypes.func.isRequired,
+    onErrorNotification: PropTypes.func.isRequired,
+    onSolutionAdded: PropTypes.func.isRequired,
+    onSolutionLoad: PropTypes.func.isRequired,
+    onSolutionRemoved: PropTypes.func.isRequired,
+    onSolutionUpdated: PropTypes.func.isRequired,
+    onSuccessNotification: PropTypes.func.isRequired,
     solutions: PropTypes.array.isRequired,
-    solutionsAddSaved: PropTypes.func.isRequired,
-    solutionsUpdateSaved: PropTypes.func.isRequired,
-    solutionsRemoveSaved: PropTypes.func.isRequired,
     userId: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
   };
 
   componentWillMount() {
     const {
-      notifierAddNotfication,
-      solutionsAddSaved,
-      solutionsUpdateSaved,
-      solutionsRemoveSaved,
+      onErrorNotification,
+      onSolutionAdded,
+      onSolutionUpdated,
+      onSolutionRemoved,
       userId,
     } = this.props;
 
     this.solutionsRef = database().ref(`solutions/${userId}`);
 
     this.solutionsRef.on('child_added',
-      (result) => solutionsAddSaved({ solution: result.val() }),
-      (error) => notifierAddNotfication({ notification: error.message }));
+      (data) => onSolutionAdded({ solution: data.val(), key: data.key }),
+      (error) => onErrorNotification(error.message));
 
     this.solutionsRef.on('child_changed',
-      (result) => solutionsUpdateSaved({ solution: result.val() }),
-      (error) => notifierAddNotfication({ notification: error.message }));
+      (data) => onSolutionUpdated({ solution: data.val(), key: data.key }),
+      (error) => onErrorNotification(error.message));
 
     this.solutionsRef.on('child_removed',
-      (result) => solutionsRemoveSaved({ solution: result.val() }),
-      (error) => notifierAddNotfication({ notification: error.message }));
+      (data) => onSolutionRemoved({ solution: data.val(), key: data.key }),
+      (error) => onErrorNotification(error.message));
   }
 
   componentWillUnmount() {
@@ -61,35 +65,56 @@ class SavedSolutions extends Component {
   }
 
   handleDelete(solution) {
-    const { userId } = this.props;
-
-    database()
-      .ref(`solutions/${userId}/${solution.id}`)
-      .remove();
-  }
-
-  handleLoad({ content, id, title }) {
     const {
-      applicationShowGame,
-      editorSelectSolution,
+      onErrorNotification,
+      onSuccessNotification,
+      userId,
     } = this.props;
 
-    editorSelectSolution({ content, title, id });
-    applicationShowGame();
+    database()
+      .ref(`solutions/${userId}/${solution.key}`)
+      .remove()
+      .then(() => onSuccessNotification('Solution removed'))
+      .catch((error) => onErrorNotification(error.message));
+  }
+
+  handleLoad({ content, key, title }) {
+    const {
+      onBackToGame,
+      onSolutionLoad,
+    } = this.props;
+
+    onSolutionLoad({ content, title, key });
+    onBackToGame();
   }
 
   handleSubmit(solution) {
+    const {
+      avatar,
+      displayName,
+      onErrorNotification,
+      onSuccessNotification,
+      userId,
+    } = this.props;
+
     database()
-      .ref('leaderboard')
-      .push()
-      .set(solution);
+      .ref(`leaderboard/${solution.key}`)
+      .set({
+        ...solution,
+        avatar,
+        displayName,
+        modified: database.ServerValue.TIMESTAMP,
+        uid: userId,
+      })
+      .then(() => onSuccessNotification('Solution submitted to leaderboard'))
+      .catch((error) => onErrorNotification(error.message));
   }
 
   render() {
     const {
       avatar,
-      username,
-      applicationShowGame,
+      displayName,
+      onBackToGame,
       isVisible,
       solutions,
     } = this.props;
@@ -104,22 +129,21 @@ class SavedSolutions extends Component {
                     avatar={ avatar }
                     average={ solution.average }
                     content={ solution.content }
-                    id={ solution.id }
-                    key={ solution.id }
-                    lastModified={ solution.lastModified }
+                    displayName={ displayName }
+                    key={ solution.key }
+                    modified={ solution.modified }
                     onDelete={ () => this.handleDelete(solution) }
                     onLoad={ () => this.handleLoad(solution) }
                     onSubmit={ () => this.handleSubmit(solution) }
                     points={ solution.points }
                     score={ solution.score }
-                    title={ solution.title }
-                    user={ username } />
+                    title={ solution.title } />
               ) }
             </Solutions>
           </AppSection>
 
           <AppSection shrink={ true }>
-            <Link onClick={ () => applicationShowGame() }>
+            <Link onClick={ () => onBackToGame() }>
               {'<'} Back to Game
             </Link>
           </AppSection>
@@ -132,20 +156,20 @@ class SavedSolutions extends Component {
 const solutionsSelector = createSelector(
   (state) => state.solutions.saved,
   (solutions) => Object.keys(solutions)
-    .map((solutionId) => solutions[solutionId])
-    .sort((a, b) => new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime()),
+    .map((key) => ({ ...solutions[key], key })),
 );
 
 export default connect((state) => ({
   avatar: state.user.avatar,
   solutions: solutionsSelector(state),
   userId: state.user.id,
-  username: state.user.username,
+  displayName: state.user.displayName,
 }), {
-  applicationShowGame,
-  editorSelectSolution,
-  notifierAddNotfication,
-  solutionsAddSaved,
-  solutionsUpdateSaved,
-  solutionsRemoveSaved,
+  onBackToGame: applicationShowGame,
+  onErrorNotification: notifierAddErrorNotification,
+  onSolutionAdded: solutionsAddSaved,
+  onSolutionLoad: editorSelectSolution,
+  onSolutionRemoved: solutionsRemoveSaved,
+  onSolutionUpdated: solutionsUpdateSaved,
+  onSuccessNotification: notifierAddSuccessNotification,
 })(SavedSolutions);

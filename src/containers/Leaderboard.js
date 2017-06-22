@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { database } from 'firebase';
+import { createSelector } from 'reselect';
 import { applicationShowGame } from '../store/application';
-import { notifierAddNotfication } from '../store/notifier';
+import { editorSelectSolution } from '../store/editor';
+import { notifierAddErrorNotification } from '../store/notifier';
 import {
   solutionsAddLeaderboard,
   solutionsUpdateLeaderboard,
@@ -12,59 +14,92 @@ import AppContainer from '../components/App/AppContainer';
 import AppPane from '../components/App/AppPane';
 import AppSection from '../components/App/AppSection';
 import Link from '../components/Link/Link';
+import Solutions from '../components/Solutions/Solutions';
+import Solution from '../components/Solutions/Solution';
 
 class Leaderboard extends Component {
   static propTypes = {
-    applicationShowGame: PropTypes.func.isRequired,
     isVisible: PropTypes.bool.isRequired,
-    notifierAddNotfication: PropTypes.func.isRequired,
-    solutionsAddLeaderboard: PropTypes.func.isRequired,
-    solutionsUpdateLeaderboard: PropTypes.func.isRequired,
-    solutionsRemoveLeaderboard: PropTypes.func.isRequired,
+    solutions: PropTypes.array.isRequired,
+    onBackToGame: PropTypes.func.isRequired,
+    onErrorNotification: PropTypes.func.isRequired,
+    onSolutionAdded: PropTypes.func.isRequired,
+    onSolutionLoad: PropTypes.func.isRequired,
+    onSolutionUpdated: PropTypes.func.isRequired,
+    onSolutionRemoved: PropTypes.func.isRequired,
   };
 
   componentWillMount() {
     const {
-      notifierAddNotfication,
-      solutionsAddLeaderboard,
-      solutionsUpdateLeaderboard,
-      solutionsRemoveLeaderboard,
+      onErrorNotification,
+      onSolutionAdded,
+      onSolutionUpdated,
+      onSolutionRemoved,
     } = this.props;
 
-    // this.solutionsRef = database()
-    //   .ref('leaderboard')
-    //   .orderByChild('points')
-    //   .limitToFirst(20);
+    this.solutionsRef = database()
+      .ref('leaderboard')
+      .orderByChild('score')
+      .startAt(0)
+      .limitToLast(20);
 
-    // this.solutionsRef.on('child_added',
-    //   (result) => solutionsAddLeaderboard({ solution: result.val() }),
-    //   (error) => notifierAddNotfication({ notification: error.message }));
+    this.solutionsRef.on('child_added',
+      (data) => onSolutionAdded({ solution: data.val(), key: data.key }),
+      (error) => onErrorNotification(error.message));
 
-    // this.solutionsRef.on('child_changed',
-    //   (result) => solutionsUpdateLeaderboard({ solution: result.val() }),
-    //   (error) => notifierAddNotfication({ notification: error.message }));
+    this.solutionsRef.on('child_changed',
+      (data) => onSolutionUpdated({ solution: data.val(), key: data.key }),
+      (error) => onErrorNotification(error.message));
 
-    // this.solutionsRef.on('child_removed',
-    //   (result) => solutionsRemoveLeaderboard({ solution: result.val() }),
-    //   (error) => notifierAddNotfication({ notification: error.message }));
+    this.solutionsRef.on('child_removed',
+      (data) => onSolutionRemoved({ solution: data.val(), key: data.key }),
+      (error) => onErrorNotification(error.message));
   }
 
   componentWillUnmount() {
-    // this.solutionsRef.off();
+    this.solutionsRef.off();
+  }
+
+  handleLoad({ content, key, title }) {
+    const {
+      onBackToGame,
+      onSolutionLoad,
+    } = this.props;
+
+    onSolutionLoad({ content, title, key });
+    onBackToGame();
   }
 
   render() {
-    const { applicationShowGame, isVisible } = this.props;
+    const {
+      onBackToGame,
+      isVisible,
+      solutions,
+    } = this.props;
 
     return (
       <AppContainer isVisible={ isVisible }>
         <AppPane>
           <AppSection>
-            Leaderboard
+            <Solutions>
+              { solutions.map((solution) =>
+                <Solution
+                    avatar={ solution.avatar }
+                    average={ solution.average }
+                    content={ solution.content }
+                    displayName={ solution.displayName }
+                    key={ solution.key }
+                    modified={ solution.modified }
+                    onLoad={ () => this.handleLoad(solution) }
+                    points={ solution.points }
+                    score={ solution.score }
+                    title={ solution.title } />
+              ) }
+            </Solutions>
           </AppSection>
 
           <AppSection shrink={ true }>
-            <Link onClick={ () => applicationShowGame() }>
+            <Link onClick={ () => onBackToGame() }>
               {'<'} Back to Game
             </Link>
           </AppSection>
@@ -74,12 +109,20 @@ class Leaderboard extends Component {
   }
 }
 
+const solutionsSelector = createSelector(
+  (state) => state.solutions.leaderboard,
+  (solutions) => Object.keys(solutions)
+    .map((key) => ({ ...solutions[key], key }))
+    .sort((a, b) => b.score - a.score),
+);
+
 export default connect((state) => ({
-  solutions: state.solutions.leaderboard,
+  solutions: solutionsSelector(state),
 }), {
-  applicationShowGame,
-  notifierAddNotfication,
-  solutionsAddLeaderboard,
-  solutionsUpdateLeaderboard,
-  solutionsRemoveLeaderboard,
+  onBackToGame: applicationShowGame,
+  onErrorNotification: notifierAddErrorNotification,
+  onSolutionAdded: solutionsAddLeaderboard,
+  onSolutionLoad: editorSelectSolution,
+  onSolutionUpdated: solutionsUpdateLeaderboard,
+  onSolutionRemoved: solutionsRemoveLeaderboard,
 })(Leaderboard);

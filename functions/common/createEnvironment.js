@@ -1,13 +1,13 @@
-import { SNAKE_LENGTH } from '../config';
-import containsCoordinates from './containsCoordinates';
+const { SNAKE_LENGTH } = require('../config');
+const containsCoordinates = require('./containsCoordinates');
 
-export const createSnake = (xMax, yMax) =>
+const createSnake = (xMax, yMax) =>
   Array.from({ length: SNAKE_LENGTH }, (v, i) => [
     Math.floor(xMax / 2) - i,
     Math.floor(yMax / 2),
   ]);
 
-export const createPoint = (xMax, yMax, snake) => {
+const createPoint = (xMax, yMax, snake) => {
   let point;
 
   while (!point || containsCoordinates(snake, point)) {
@@ -20,9 +20,15 @@ export const createPoint = (xMax, yMax, snake) => {
   return point;
 };
 
-export const createEnvironment = (xMax, yMax) => {
+const createEnvironment = (xMax, yMax) => {
   const snake = createSnake(xMax, yMax);
   const point = createPoint(xMax, yMax, snake);
 
   return { snake, point };
+};
+
+module.exports = {
+  createSnake,
+  createPoint,
+  createEnvironment,
 };

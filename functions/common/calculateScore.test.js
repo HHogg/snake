@@ -1,6 +1,6 @@
 import calculateScore from './calculateScore';
 
-describe('utils:calculateScore', () => {
+describe('common: calculateScore', () => {
   it('normalises the score', () => {
     expect(calculateScore(100, 10, 12, 2))
       .toBe(calculateScore(400, 40, 48, 2));

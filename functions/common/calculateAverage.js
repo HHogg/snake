@@ -1,5 +1,5 @@
 
-export default (dataset) => {
+module.exports = (dataset) => {
   const sortedDataSet = dataset
     .slice(0)
     .sort((a, b) => a.length - b.length);

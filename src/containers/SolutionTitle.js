@@ -1,17 +1,30 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { database } from 'firebase';
-import { editorSelectSolution, editorSetTitle, editorStartNew } from '../store/editor';
+import {
+  editorSelectSolution,
+  editorSetTitle,
+  editorSetUnedited,
+  editorStartNew,
+} from '../store/editor';
+import {
+  notifierAddErrorNotification,
+  notifierAddSuccessNotification,
+} from '../store/notifier';
 import TitleSaver from '../components/TitleSaver/TitleSaver';
 
 class SolutionTitle extends Component {
   static propTypes = {
     content: PropTypes.string,
-    editorSelectSolution: PropTypes.func.isRequired,
-    editorSetTitle: PropTypes.func.isRequired,
-    editorStartNew: PropTypes.func.isRequired,
+    edited: PropTypes.bool.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    selectedSolutionId: PropTypes.string,
+    onErrorNotifcation: PropTypes.func.isRequired,
+    onNew: PropTypes.func.isRequired,
+    onSolutionSelect: PropTypes.func.isRequired,
+    onSolutionUpdate: PropTypes.func.isRequired,
+    onSuccessNotification: PropTypes.func.isRequired,
+    onTitleChange: PropTypes.func.isRequired,
+    selectedSolutionKey: PropTypes.string,
     title: PropTypes.string,
     userId: PropTypes.string,
   };
@@ -19,51 +32,48 @@ class SolutionTitle extends Component {
   handleSave() {
     const {
       content,
-      editorSelectSolution,
-      selectedSolutionId,
-      userId,
+      onErrorNotifcation,
+      onSolutionSelect,
+      onSolutionUpdate,
+      onSuccessNotification,
+      selectedSolutionKey,
       title,
+      userId,
     } = this.props;
 
-    if (selectedSolutionId) {
+    if (selectedSolutionKey) {
       database()
-        .ref(`solutions/${userId}/${selectedSolutionId}`)
-        .set({
-          id: selectedSolutionId,
-          title,
-          content,
-          lastModified: new Date().toISOString(),
-        });
+        .ref(`solutions/${userId}/${selectedSolutionKey}`)
+        .update({ title, content, modified: database.ServerValue.TIMESTAMP })
+        .then(() => onSolutionUpdate())
+        .then(() => onSuccessNotification('Solution updated'))
+        .catch((error) => onErrorNotifcation(error.message));
     } else {
-      const newSolutionRef = database()
-        .ref(`solutions/${userId}`)
-        .push();
+      const newSolution = database().ref(`solutions/${userId}`).push();
 
-      const newSolution = {
-        id: newSolutionRef.key,
-        title,
-        content,
-        lastModified: new Date().toISOString(),
-      };
-
-      newSolutionRef.set(newSolution);
-      editorSelectSolution(newSolution);
+      newSolution
+        .set({ title, content, modified: database.ServerValue.TIMESTAMP })
+        .then(() => onSolutionSelect({ title, content, key: newSolution.key }))
+        .then(() => onSuccessNotification('Solution saved'))
+        .catch((error) => onErrorNotifcation(error.message));
     }
   }
 
   render() {
     const {
-      editorSetTitle,
-      editorStartNew,
+      edited,
+      onTitleChange,
+      onNew,
       isLoggedIn,
       title,
     } = this.props;
 
     return (
       <TitleSaver
-          onNew={ editorStartNew }
+          edited={ edited }
+          onNew={ onNew }
           onSave={ isLoggedIn ? () => this.handleSave() : undefined }
-          onTitleChange={ editorSetTitle }
+          onTitleChange={ onTitleChange }
           value={ title } />
     );
   }
@@ -71,12 +81,16 @@ class SolutionTitle extends Component {
 
 export default connect((state) => ({
   content: state.editor.content,
+  edited: state.editor.edited,
   isLoggedIn: !!state.user.id,
-  selectedSolutionId: state.editor.selectedSolutionId,
+  selectedSolutionKey: state.editor.selectedSolutionKey,
   title: state.editor.title,
   userId: state.user.id,
 }), {
-  editorSelectSolution,
-  editorSetTitle,
-  editorStartNew,
+  onErrorNotifcation: notifierAddErrorNotification,
+  onNew: editorStartNew,
+  onSolutionSelect: editorSelectSolution,
+  onSolutionUpdate: editorSetUnedited,
+  onSuccessNotification: notifierAddSuccessNotification,
+  onTitleChange: editorSetTitle,
 })(SolutionTitle);

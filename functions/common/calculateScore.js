@@ -1,5 +1,5 @@
 
-export default (norm, avg, value, multi) =>
+module.exports = (norm, avg, value, multi) =>
   Math.abs(
     ((( norm / value) - (norm / avg)) || 1)
   ) * multi;

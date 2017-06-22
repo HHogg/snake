@@ -1,6 +1,6 @@
 import containsCoordinates from './containsCoordinates';
 
-describe('utils:containsCoordinates', () => {
+describe('common: containsCoordinates', () => {
   describe('given coordinates are in the set', () => {
     it('returns true', () => {
       expect(containsCoordinates([[5, 5], [4, 5], [3, 5]], [4, 5]))

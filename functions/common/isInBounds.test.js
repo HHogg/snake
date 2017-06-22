@@ -1,6 +1,6 @@
 import isInBounds from './isInBounds';
 
-describe('utils:isInBounds', () => {
+describe('common: isInBounds', () => {
   describe('when the x value is less than 0', () => {
     it('returns false', () => {
       expect(isInBounds(10, 10, [-1, 5])).toBe(false);

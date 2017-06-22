@@ -1,6 +1,6 @@
 import actionCreator from '../utils/actionCreator';
-import calculateAverage from '../utils/calculateAverage';
-import calculateScore from '../utils/calculateScore';
+import calculateAverage from '../../functions/common/calculateAverage';
+import calculateScore from '../../functions/common/calculateScore';
 
 const initialState = {
   average: 0,

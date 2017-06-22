@@ -21,6 +21,12 @@
   overflow: hidden;
 }
 
+.sh-app__footer {
+  position: relative;
+  height: 3rem;
+  flex: 0 1 auto;
+}
+
 .sh-app__container {
   position: absolute;
   top: 0;

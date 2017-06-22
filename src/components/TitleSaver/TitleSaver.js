@@ -5,6 +5,7 @@ import './TitleSaver.css';
 
 export default class TitleSaver extends Component {
   static propTypes = {
+    edited: PropTypes.bool.isRequired,
     value: PropTypes.string,
     onNew: PropTypes.func.isRequired,
     onSave: PropTypes.func,
@@ -12,7 +13,7 @@ export default class TitleSaver extends Component {
   };
 
   render() {
-    const { onNew, onSave, onTitleChange, value } = this.props;
+    const { edited, onNew, onSave, onTitleChange, value } = this.props;
 
     return (
       <div className="sh-title-saver">
@@ -29,10 +30,12 @@ export default class TitleSaver extends Component {
             <Button
                 color="blue"
                 onClick={ () => onNew() }>New</Button>
-            <Button
-                color="blue"
-                disabled={ !onSave || !value }
-                onClick={ () => onSave() }>Save</Button>
+            { onSave && (
+              <Button
+                  color="blue"
+                  disabled={ !value || !edited }
+                  onClick={ () => onSave() }>Save</Button>
+            ) }
           </ButtonGroup>
         </div>
       </div>
