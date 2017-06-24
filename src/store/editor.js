@@ -17,7 +17,7 @@ function heuristic(x, y, xMax, yMax, snake, point) {
 
   /**
    * This is an example to get you started. It simply returns the standard
-   * heuristic 'Mahanttan distance'. However it doesn't take into account
+   * heuristic 'Mahattan distance'. However it doesn't take into account
    * its current or future environment.
    */
   return Math.abs(x - point[0]) + Math.abs(y - point[1]);

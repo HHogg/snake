@@ -34,11 +34,6 @@ class CanvasC extends Component {
     this.context = this.el.getContext('2d');
     this.context.scale(window.devicePixelRatio, window.devicePixelRatio);
 
-    canvasSetSize({
-      xMax: Math.floor((this.width + CELL_PADDING) / (CELL_SIZE + CELL_PADDING)),
-      yMax: Math.floor((this.height + CELL_PADDING) / (CELL_SIZE + CELL_PADDING)),
-    });
-
     this.colorMap = {
       [CHAR_SNAKE_HEAD]: getCSSVar('cell-snake-head-color'),
       [CHAR_SNAKE_TAIL]: getCSSVar('cell-snake-tail-color'),
@@ -46,6 +41,11 @@ class CanvasC extends Component {
       inactive: getCSSVar('cell-inactive-color'),
       text: getCSSVar('cell-text-color'),
     };
+
+    canvasSetSize({
+      xMax: Math.floor((this.width + CELL_PADDING) / (CELL_SIZE + CELL_PADDING)),
+      yMax: Math.floor((this.height + CELL_PADDING) / (CELL_SIZE + CELL_PADDING)),
+    });
   }
 
   componentDidUpdate() {

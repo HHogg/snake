@@ -5,7 +5,5 @@
 
   &:hover {
     cursor: pointer;
-    text-decoration: underline;
-    opacity: 1;
   }
 }

@@ -10,16 +10,13 @@ import {
   solutionsUpdateLeaderboard,
   solutionsRemoveLeaderboard,
 } from '../store/solutions';
-import AppContainer from '../components/App/AppContainer';
-import AppPane from '../components/App/AppPane';
-import AppSection from '../components/App/AppSection';
+import Flex from '../components/Flex/Flex';
 import Link from '../components/Link/Link';
 import Solutions from '../components/Solutions/Solutions';
 import Solution from '../components/Solutions/Solution';
 
 class Leaderboard extends Component {
   static propTypes = {
-    isVisible: PropTypes.bool.isRequired,
     solutions: PropTypes.array.isRequired,
     onBackToGame: PropTypes.func.isRequired,
     onErrorNotification: PropTypes.func.isRequired,
@@ -60,51 +57,48 @@ class Leaderboard extends Component {
     this.solutionsRef.off();
   }
 
-  handleLoad({ content, key, title }) {
+  handleLoad({ content, title }) {
     const {
       onBackToGame,
       onSolutionLoad,
     } = this.props;
 
-    onSolutionLoad({ content, title, key });
+    onSolutionLoad({ content, title });
     onBackToGame();
   }
 
   render() {
     const {
       onBackToGame,
-      isVisible,
       solutions,
     } = this.props;
 
     return (
-      <AppContainer isVisible={ isVisible }>
-        <AppPane>
-          <AppSection>
-            <Solutions>
-              { solutions.map((solution) =>
-                <Solution
-                    avatar={ solution.avatar }
-                    average={ solution.average }
-                    content={ solution.content }
-                    displayName={ solution.displayName }
-                    key={ solution.key }
-                    modified={ solution.modified }
-                    onLoad={ () => this.handleLoad(solution) }
-                    points={ solution.points }
-                    score={ solution.score }
-                    title={ solution.title } />
-              ) }
-            </Solutions>
-          </AppSection>
+      <Flex container direction="vertical">
+        <Flex>
+          <Solutions>
+            { solutions.map((solution) =>
+              <Solution
+                  avatar={ solution.avatar }
+                  average={ solution.average }
+                  content={ solution.content }
+                  displayName={ solution.displayName }
+                  key={ solution.key }
+                  modified={ solution.modified }
+                  onLoad={ () => this.handleLoad(solution) }
+                  points={ solution.points }
+                  score={ solution.score }
+                  title={ solution.title } />
+            ) }
+          </Solutions>
+        </Flex>
 
-          <AppSection shrink={ true }>
-            <Link onClick={ () => onBackToGame() }>
-              {'<'} Back to Game
-            </Link>
-          </AppSection>
-        </AppPane>
-      </AppContainer>
+        <Flex shrink>
+          <Link onClick={ () => onBackToGame() }>
+            {'<'} Back to Game
+          </Link>
+        </Flex>
+      </Flex>
     );
   }
 }

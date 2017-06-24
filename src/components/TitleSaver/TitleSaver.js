@@ -18,11 +18,13 @@ export default class TitleSaver extends Component {
     return (
       <div className="sh-title-saver">
         <div className="sh-title-saver__input-container">
-          <input
-              className="sh-title-saver__input"
-              onChange={ (e) => onTitleChange({ title: e.target.value }) }
-              placeholder="Untitled solution"
-              value={ value || '' } />
+          { onSave && (
+            <input
+                className="sh-title-saver__input"
+                onChange={ (e) => onTitleChange({ title: e.target.value }) }
+                placeholder="Untitled solution"
+                value={ value || '' } />
+          ) }
         </div>
 
         <div className="sh-title-saver__button">

@@ -13,9 +13,7 @@ import {
   solutionsUpdateSaved,
   solutionsRemoveSaved,
 } from '../store/solutions';
-import AppContainer from '../components/App/AppContainer';
-import AppPane from '../components/App/AppPane';
-import AppSection from '../components/App/AppSection';
+import Flex from '../components/Flex/Flex';
 import Link from '../components/Link/Link';
 import Solutions from '../components/Solutions/Solutions';
 import Solution from '../components/Solutions/Solution';
@@ -24,7 +22,6 @@ class SavedSolutions extends Component {
   static propTypes = {
     avatar: PropTypes.string.isRequired,
     displayName: PropTypes.string.isRequired,
-    isVisible: PropTypes.bool.isRequired,
     onBackToGame: PropTypes.func.isRequired,
     onErrorNotification: PropTypes.func.isRequired,
     onSolutionAdded: PropTypes.func.isRequired,
@@ -115,14 +112,16 @@ class SavedSolutions extends Component {
       avatar,
       displayName,
       onBackToGame,
-      isVisible,
       solutions,
     } = this.props;
 
     return (
-      <AppContainer isVisible={ isVisible }>
-        <AppPane>
-          <AppSection>
+      <Flex container direction="vertical">
+        <Flex
+            centerChildren={ !solutions.length }
+            container
+            direction="vertical">
+          { !!solutions.length && (
             <Solutions>
               { solutions.map((solution) =>
                 <Solution
@@ -140,15 +139,21 @@ class SavedSolutions extends Component {
                     title={ solution.title } />
               ) }
             </Solutions>
-          </AppSection>
+          ) }
 
-          <AppSection shrink={ true }>
-            <Link onClick={ () => onBackToGame() }>
-              {'<'} Back to Game
-            </Link>
-          </AppSection>
-        </AppPane>
-      </AppContainer>
+          { !solutions.length && (
+            <Flex shrink>
+              No solutions
+            </Flex>
+          ) }
+        </Flex>
+
+        <Flex shrink>
+          <Link onClick={ () => onBackToGame() }>
+            {'<'} Back to Game
+          </Link>
+        </Flex>
+      </Flex>
     );
   }
 }

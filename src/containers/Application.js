@@ -1,65 +1,69 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import App from '../components/App/App';
-import AppBody from '../components/App/AppBody';
-import AppFooter from '../components/App/AppFooter';
-import AppHeader from '../components/App/AppHeader';
-import AppPane from '../components/App/AppPane';
-import AppTitle from '../components/App/AppTitle';
+import AppTitle from '../components/AppTitle/AppTitle';
+import Flex from '../components/Flex/Flex';
+import Page from '../components/Page/Page';
+import Pages from '../components/Page/Pages';
+import About from './About';
 import Game from './Game';
 import Leaderboard from './Leaderboard';
-import Notifier from './Notifier';
 import SavedSolutions from './SavedSolutions';
-import UserMenu from './UserMenu';
+import Menu from './Menu';
 
 class Application extends Component {
   static propTypes = {
-    isGameVisible: PropTypes.bool.isRequired,
+    isAboutActive: PropTypes.bool.isRequired,
+    isGameActive: PropTypes.bool.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    isLeaderboardVisible: PropTypes.bool.isRequired,
-    isSavedSolutionsVisible: PropTypes.bool.isRequired,
+    isLeaderboardActive: PropTypes.bool.isRequired,
+    isSavedSolutionsActive: PropTypes.bool.isRequired,
   };
 
   render() {
     const {
-      isGameVisible,
-      isLeaderboardVisible,
+      isAboutActive,
+      isGameActive,
+      isLeaderboardActive,
       isLoggedIn,
-      isSavedSolutionsVisible,
+      isSavedSolutionsActive,
     } = this.props;
 
     return (
-      <App>
-        <AppHeader>
-          <AppPane>
-            <AppTitle>Snake Heuristics</AppTitle>
-          </AppPane>
+      <Flex container direction="vertical">
+        <Flex shrink>
+          <Menu />
+        </Flex>
 
-          <AppPane shrink={ true }>
-            <UserMenu />
-          </AppPane>
-        </AppHeader>
+        <Flex container>
+          <Pages>
+            <Page active={ isAboutActive }>
+              <About />
+            </Page>
 
-        <AppBody>
-          <Game isVisible={ isGameVisible } />
-          <Leaderboard isVisible={ isLeaderboardVisible } />
+            <Page active={ isGameActive }>
+              <Game />
+            </Page>
 
-          { isLoggedIn && (
-            <SavedSolutions isVisible={ isSavedSolutionsVisible } />
-          ) }
-        </AppBody>
+            <Page active={ isLeaderboardActive }>
+              <Leaderboard />
+            </Page>
 
-        <AppFooter>
-          <Notifier />
-        </AppFooter>
-      </App>
+            { isLoggedIn && (
+              <Page active={ isSavedSolutionsActive }>
+                <SavedSolutions />
+              </Page>
+            ) }
+          </Pages>
+        </Flex>
+      </Flex>
     );
   }
 }
 
 export default connect((state) => ({
-  isGameVisible: state.application.game,
-  isLeaderboardVisible: state.application.leaderboard,
+  isAboutActive: state.application.about,
+  isGameActive: state.application.game,
+  isLeaderboardActive: state.application.leaderboard,
   isLoggedIn: !!state.user.id,
-  isSavedSolutionsVisible: state.application.savedSolutions,
+  isSavedSolutionsActive: state.application.savedSolutions,
 }), {})(Application);

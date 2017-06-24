@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { auth } from 'firebase';
 import {
+  applicationShowAbout,
+  applicationShowGame,
   applicationShowLeaderboard,
   applicationShowSavedSolutions,
 } from '../store/application';
@@ -13,12 +15,18 @@ import UserAvatar from '../components/UserAvatar/UserAvatar';
 
 const provider = new auth.GithubAuthProvider();
 
-class UserMenu extends Component {
+class MenuC extends Component {
   static propTypes = {
     avatar: PropTypes.string,
     displayName: PropTypes.string,
+    isAboutActive: PropTypes.bool.isRequired,
+    isGameActive: PropTypes.bool.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
+    isLeaderboardActive: PropTypes.bool.isRequired,
+    isSavedSolutionsActive: PropTypes.bool.isRequired,
     onLogin: PropTypes.func.isRequired,
+    onShowAbout: PropTypes.func.isRequired,
+    onShowGame: PropTypes.func.isRequired,
     onShowLeaderboard: PropTypes.func.isRequired,
     onShowSavedSolutions: PropTypes.func.isRequired,
   };
@@ -68,21 +76,39 @@ class UserMenu extends Component {
     const {
       avatar,
       displayName,
+      isAboutActive,
+      isGameActive,
+      isLeaderboardActive,
       isLoggedIn,
+      isSavedSolutionsActive,
+      onShowAbout,
+      onShowGame,
       onShowLeaderboard,
       onShowSavedSolutions,
     } = this.props;
 
     return (
-      <Menu>
-        <MenuItem>
+      <Menu style={ { minHeight: 'var(--user-avatar__size)' } }>
+        <MenuItem active={ isGameActive }>
+          <Link onClick={ () => onShowGame() }>
+            Snake Heuristics
+          </Link>
+        </MenuItem>
+
+        <MenuItem active={ isAboutActive }>
+          <Link onClick={ () => onShowAbout() }>
+            About
+          </Link>
+        </MenuItem>
+
+        <MenuItem active={ isLeaderboardActive }>
           <Link onClick={ () => onShowLeaderboard() }>
             Leaderboard
           </Link>
         </MenuItem>
 
         { isLoggedIn && (
-          <MenuItem>
+          <MenuItem active={ isSavedSolutionsActive }>
             <Link onClick={ () => onShowSavedSolutions() }>
               My Saved Solutions
             </Link>
@@ -112,9 +138,15 @@ class UserMenu extends Component {
 export default connect((state) => ({
   avatar: state.user.avatar,
   displayName: state.user.displayName,
+  isAboutActive: state.application.about,
+  isGameActive: state.application.game,
+  isLeaderboardActive: state.application.leaderboard,
   isLoggedIn: !!state.user.id,
+  isSavedSolutionsActive: state.application.savedSolutions,
 }), {
   onLogin: userLoginSuccessful,
+  onShowAbout: applicationShowAbout,
+  onShowGame: applicationShowGame,
   onShowLeaderboard: applicationShowLeaderboard,
   onShowSavedSolutions: applicationShowSavedSolutions,
-})(UserMenu);
+})(MenuC);

@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
+import Flex from '../Flex/Flex';
+import './Page.css';
 
-export default class MenuItem extends Component {
+export default class Page extends Component {
   static propTypes = {
     active: PropTypes.bool,
     children: PropTypes.node.isRequired,
@@ -9,15 +11,14 @@ export default class MenuItem extends Component {
 
   render() {
     const { active, children } = this.props;
-    const classes = classnames('sh-menu__item', {
-      'sh-menu__item--active': active,
-      'sh-menu__item--activatable': active !== undefined,
+    const classes = classnames('sh-pages__page', {
+      'sh-pages__page--active': active,
     });
 
     return (
-      <div className={ classes }>
+      <Flex className={ classes } container direction="vertical">
         { children }
-      </div>
+      </Flex>
     );
   }
 }

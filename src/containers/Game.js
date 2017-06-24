@@ -10,9 +10,7 @@ import {
   gameSetEnvironment,
   gameStopGame,
 } from '../store/game';
-import AppContainer from '../components/App/AppContainer';
-import AppPane from '../components/App/AppPane';
-import AppSection from '../components/App/AppSection';
+import Flex from '../components/Flex/Flex';
 import Canvas from './Canvas';
 import Console from './Console';
 import Controller from './Controller';
@@ -31,7 +29,6 @@ class Game extends Component {
     history: PropTypes.array.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     isRunning: PropTypes.bool.isRequired,
-    isVisible: PropTypes.bool.isRequired,
     onCollectPoint: PropTypes.func.isRequired,
     onGameInit: PropTypes.func.isRequired,
     onPauseGame: PropTypes.func.isRequired,
@@ -179,42 +176,41 @@ class Game extends Component {
 
   render() {
     const { values } = this.state;
-    const { isVisible } = this.props;
 
     return (
-      <AppContainer isVisible={ isVisible }>
-        <AppPane>
-          <AppSection>
-            <Canvas values={ values } />
-          </AppSection>
+      <Flex container direction="vertical">
+        <Flex shrink>
+          <SolutionTitle />
+        </Flex>
 
-          <AppSection shrink={ true }>
-            <Console />
-          </AppSection>
+        <Flex container>
+          <Flex container direction="vertical">
+            <Flex container>
+              <Canvas values={ values } />
+            </Flex>
 
-          <AppSection shrink={ true }>
-            <Scoreboard />
-          </AppSection>
+            <Flex shrink>
+              <Console />
+            </Flex>
 
-          <AppSection shrink={ true }>
-            <Controller
-                onRefresh={ () => this.handleRefresh() }
-                onReset={ () => this.handleReset() }
-                onStepBackwards={ () => this.handleStepBackwards() }
-                onStepForwards={ () => this.handleStepForwards() } />
-          </AppSection>
-        </AppPane>
+            <Flex shrink>
+              <Scoreboard />
+            </Flex>
 
-        <AppPane>
-          <AppSection shrink={ true }>
-            <SolutionTitle />
-          </AppSection>
+            <Flex shrink>
+              <Controller
+                  onRefresh={ () => this.handleRefresh() }
+                  onReset={ () => this.handleReset() }
+                  onStepBackwards={ () => this.handleStepBackwards() }
+                  onStepForwards={ () => this.handleStepForwards() } />
+            </Flex>
+          </Flex>
 
-          <AppSection>
+          <Flex>
             <Editor />
-          </AppSection>
-        </AppPane>
-      </AppContainer>
+          </Flex>
+        </Flex>
+      </Flex>
     );
   }
 }

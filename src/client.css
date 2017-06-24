@@ -1,4 +1,6 @@
 :root {
+  --spacing: 1.25rem;
+
   --background-color: var(--oc-gray-9);
 
   --text-color: var(--oc-gray-2);
@@ -6,8 +8,8 @@
 
   --cell-inactive-color: var(--oc-gray-8);
   --cell-text-color: var(--oc-gray-2);
-  --cell-snake-head-color: var(--oc-yellow-6);
-  --cell-snake-tail-color: var(--oc-yellow-3);
+  --cell-snake-head-color: var(--oc-yellow-7);
+  --cell-snake-tail-color: var(--oc-yellow-2);
   --cell-point-color: var(--oc-blue-5);
 
   --page-padding: 1.25rem;
@@ -16,6 +18,12 @@
   --transition-time-base: 200ms;
   --transition-time-slow: 400ms;
   --transition-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 html {
@@ -29,6 +37,10 @@ body {
   font-size: 0.9rem;
   line-height: 1.2;
   -webkit-font-smoothing: antialiased;
+  padding: var(--spacing);
+  box-sizing: border-box;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .sh-app-container {
@@ -36,6 +48,4 @@ body {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  background-color: var(--background-color);
-  color: var(--text-color);
 }
