@@ -35,7 +35,7 @@ class SavedSolutions extends Component {
     userId: PropTypes.string.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const {
       onErrorNotification,
       onSolutionAdded,

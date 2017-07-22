@@ -29,7 +29,7 @@ class Leaderboard extends Component {
     onSolutionRemoved: PropTypes.func.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const {
       onErrorNotification,
       onSolutionAdded,

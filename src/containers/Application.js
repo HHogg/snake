@@ -29,7 +29,7 @@ class Application extends Component {
     skipIntro: PropTypes.bool.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { onLogin } = this.props;
 
     auth().onAuthStateChanged((user) => {
