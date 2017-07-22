@@ -35,6 +35,7 @@ export default class Editor extends Component {
     });
 
     this.ide.setValue(initialValue, 1);
+    this.ide.getSession().setUndoManager(new brace.UndoManager());
     this.ide.on('change', () => onChange({ content: this.ide.getValue() }));
   }
 

@@ -19,4 +19,5 @@
 .sh-pages__page--active {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+  transition-delay: var(--transition-time-slow);
 }

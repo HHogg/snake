@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { database } from 'firebase';
 import { createSelector } from 'reselect';
-import { applicationShowGame } from '../store/application';
+import { applicationShowGame, applicationShowSavedSolutions } from '../store/application';
 import { editorSelectSolution } from '../store/editor';
 import { notifierAddErrorNotification } from '../store/notifier';
 import {
@@ -12,14 +12,17 @@ import {
 } from '../store/solutions';
 import Flex from '../components/Flex/Flex';
 import Link from '../components/Link/Link';
+import Paragraph from '../components/Paragraph/Paragraph';
 import Solutions from '../components/Solutions/Solutions';
 import Solution from '../components/Solutions/Solution';
 
 class Leaderboard extends Component {
   static propTypes = {
     solutions: PropTypes.array.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
     onBackToGame: PropTypes.func.isRequired,
     onErrorNotification: PropTypes.func.isRequired,
+    onShowSavedSolutions: PropTypes.func.isRequired,
     onSolutionAdded: PropTypes.func.isRequired,
     onSolutionLoad: PropTypes.func.isRequired,
     onSolutionUpdated: PropTypes.func.isRequired,
@@ -69,34 +72,61 @@ class Leaderboard extends Component {
 
   render() {
     const {
-      onBackToGame,
+      onShowSavedSolutions,
+      isLoggedIn,
       solutions,
     } = this.props;
 
     return (
-      <Flex container direction="vertical">
-        <Flex>
-          <Solutions>
-            { solutions.map((solution) =>
-              <Solution
-                  avatar={ solution.avatar }
-                  average={ solution.average }
-                  content={ solution.content }
-                  displayName={ solution.displayName }
-                  key={ solution.key }
-                  modified={ solution.modified }
-                  onLoad={ () => this.handleLoad(solution) }
-                  points={ solution.points }
-                  score={ solution.score }
-                  title={ solution.title } />
-            ) }
-          </Solutions>
+      <Flex container>
+        <Flex alignSelf="end">
+          <Paragraph>
+            The Leaderboard shows the top 20 scoring solutions.
+          </Paragraph>
+
+          <Paragraph>
+            All solutions are run 5 times
+            using <Link href="https://firebase.google.com/products/functions/">Firebase
+            cloud functions</Link> on a 15 x 15 grid. Out of those 5 runs, the highest
+            score is what is taken for the Leaderboard.
+          </Paragraph>
+
+          <Paragraph>
+            To submit your solution to the Leaderboard you need to have authenticated
+            with Github. Once authenticated, save a solution and
+            from <Link onClick={ () => isLoggedIn && onShowSavedSolutions() }>My Saved
+            Solutions</Link> click 'Submit' on a solution.
+          </Paragraph>
         </Flex>
 
-        <Flex shrink>
-          <Link onClick={ () => onBackToGame() }>
-            {'<'} Back to Game
-          </Link>
+        <Flex
+            centerChildren={ !solutions.length }
+            container
+            direction="vertical"
+            priority="2">
+          { !!solutions.length && (
+            <Solutions>
+              { solutions.map((solution) =>
+                <Solution
+                    avatar={ solution.avatar }
+                    average={ solution.average }
+                    content={ solution.content }
+                    displayName={ solution.displayName }
+                    key={ solution.key }
+                    modified={ solution.modified }
+                    onLoad={ () => this.handleLoad(solution) }
+                    points={ solution.points }
+                    score={ solution.score }
+                    title={ solution.title } />
+              ) }
+            </Solutions>
+          ) }
+
+          { !solutions.length && (
+            <Flex shrink>
+              No solutions
+            </Flex>
+          ) }
         </Flex>
       </Flex>
     );
@@ -111,10 +141,12 @@ const solutionsSelector = createSelector(
 );
 
 export default connect((state) => ({
+  isLoggedIn: !!state.user.id,
   solutions: solutionsSelector(state),
 }), {
   onBackToGame: applicationShowGame,
   onErrorNotification: notifierAddErrorNotification,
+  onShowSavedSolutions: applicationShowSavedSolutions,
   onSolutionAdded: solutionsAddLeaderboard,
   onSolutionLoad: editorSelectSolution,
   onSolutionUpdated: solutionsUpdateLeaderboard,

@@ -6,11 +6,14 @@ export default class Button extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
     color: PropTypes.oneOf(['gray', 'red', 'green', 'blue', 'yellow']).isRequired,
+    shrink: PropTypes.bool,
   };
 
   render() {
-    const { children, color, ...rest } = this.props;
-    const classes = classnames('sh-button', `sh-button--${color}`);
+    const { children, color, shrink, ...rest } = this.props;
+    const classes = classnames('sh-button', `sh-button--${color}`, {
+      'sh-button--shrink': shrink,
+    });
 
     return (
       <button { ...rest } className={ classes }>

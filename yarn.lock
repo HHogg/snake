@@ -5813,6 +5813,10 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vm2@^3.4.6:
+  version "3.4.6"
+  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.4.6.tgz#9f952e4083e3af8398291a40e802854fed6a7673"
+
 w3c-blob@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/w3c-blob/-/w3c-blob-0.0.1.tgz#b0cd352a1a50f515563420ffd5861f950f1d85b8"

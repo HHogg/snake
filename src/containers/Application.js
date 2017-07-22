@@ -1,14 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import AppTitle from '../components/AppTitle/AppTitle';
+import { auth } from 'firebase';
 import Flex from '../components/Flex/Flex';
+import IntroModal from '../components/Intro/IntroModal';
 import Page from '../components/Page/Page';
 import Pages from '../components/Page/Pages';
+import { applicationShowGame } from '../store/application';
+import { uiSkipIntro } from '../store/ui';
+import { userLoginSuccessful } from '../store/user';
 import About from './About';
 import Game from './Game';
+import Menu from './Menu';
 import Leaderboard from './Leaderboard';
 import SavedSolutions from './SavedSolutions';
-import Menu from './Menu';
+import UserMenu from './UserMenu';
+
 
 class Application extends Component {
   static propTypes = {
@@ -17,7 +23,25 @@ class Application extends Component {
     isLoggedIn: PropTypes.bool.isRequired,
     isLeaderboardActive: PropTypes.bool.isRequired,
     isSavedSolutionsActive: PropTypes.bool.isRequired,
+    onLogin: PropTypes.func.isRequired,
+    onShowGame: PropTypes.func.isRequired,
+    onSkipIntro: PropTypes.func.isRequired,
+    skipIntro: PropTypes.bool.isRequired,
   };
+
+  componentWillMount() {
+    const { onLogin } = this.props;
+
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        onLogin({
+          id: user.uid,
+          avatar: user.photoURL,
+          displayName: user.displayName,
+        });
+      }
+    });
+  }
 
   render() {
     const {
@@ -26,18 +50,27 @@ class Application extends Component {
       isLeaderboardActive,
       isLoggedIn,
       isSavedSolutionsActive,
+      onShowGame,
+      onSkipIntro,
+      skipIntro,
     } = this.props;
 
     return (
       <Flex container direction="vertical">
-        <Flex shrink>
-          <Menu />
+        <Flex container shrink>
+          <Flex>
+            <Menu />
+          </Flex>
+
+          <Flex shrink>
+            <UserMenu />
+          </Flex>
         </Flex>
 
         <Flex container>
           <Pages>
             <Page active={ isAboutActive }>
-              <About />
+              <About onPlay={ onShowGame } />
             </Page>
 
             <Page active={ isGameActive }>
@@ -54,6 +87,9 @@ class Application extends Component {
               </Page>
             ) }
           </Pages>
+          <IntroModal
+              skipIntro={ skipIntro }
+              onSkipIntro={ onSkipIntro } />
         </Flex>
       </Flex>
     );
@@ -66,4 +102,9 @@ export default connect((state) => ({
   isLeaderboardActive: state.application.leaderboard,
   isLoggedIn: !!state.user.id,
   isSavedSolutionsActive: state.application.savedSolutions,
-}), {})(Application);
+  skipIntro: state.ui.skipIntro,
+}), {
+  onLogin: userLoginSuccessful,
+  onShowGame: applicationShowGame,
+  onSkipIntro: uiSkipIntro,
+})(Application);

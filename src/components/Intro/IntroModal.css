@@ -1,0 +1,42 @@
+.sh-intro__modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+  background-color: var(--background-color);
+  transition-property: opacity;
+  transition-duration: var(--transition-time-slow);
+  transition-timing-function: var(--transition-function);
+}
+
+.sh-intro__modal--closing {
+  opacity: 0;
+}
+
+.sh-intro__modal--shown {
+  & .sh-intro__logo { opacity: 0 }
+  & .sh-intro__steps { opacity: 1 }
+}
+
+.sh-intro__logo,
+.sh-intro__steps {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate3d(-50%, -50%, 0);
+  transition-property: opacity;
+  transition-duration: var(--transition-time-slow);
+  transition-timing-function: var(--transition-function);
+}
+
+.sh-intro__logo {
+  max-width: 600px;
+}
+
+.sh-intro__steps {
+  opacity: 0;
+  transition-delay: 1000ms;
+}

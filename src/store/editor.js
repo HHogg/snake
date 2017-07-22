@@ -9,7 +9,7 @@ const initialState = {
  * @param {Number} x The x coordinate of the cell
  * @param {Number} y The y coordinate of the cell
  * @param {Number} xMax The number of cells across the x axis
- * @param {Number} yMax The number of cells across the y axiom
+ * @param {Number} yMax The number of cells across the y axis
  * @param {Array[Array[Number]} snake Coordinates of the position of the snake from head to tail. E.g. [[4, 1], [3, 1]]
  * @param {Array[Number]} point Coorodinates of the point.
  */
@@ -17,7 +17,7 @@ function heuristic(x, y, xMax, yMax, snake, point) {
 
   /**
    * This is an example to get you started. It simply returns the standard
-   * heuristic 'Mahattan distance'. However it doesn't take into account
+   * heuristic 'Manhattan distance'. However it doesn't take into account
    * its current or future environment.
    */
   return Math.abs(x - point[0]) + Math.abs(y - point[1]);

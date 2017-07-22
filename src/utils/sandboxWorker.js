@@ -13,7 +13,7 @@ onmessage = ({ data }) => {
         values[y][x] = heuristicFn(x, y, xMax, yMax, snake, point);
 
         if (isNaN(parseInt(values[y][x]))) {
-          throw new Error(`[${x},${y}] returned "${values[y][x]}". This is not a number`);
+          values[y][x] = NaN;
         }
       }
     }

@@ -111,7 +111,7 @@ class Game extends Component {
     let nextSnake;
     let nextPoint = point;
 
-    if (containsCoordinates(cells, point)) {
+    if (containsCoordinates([nextCell], point)) {
       nextSnake = [point, ...snake];
       nextPoint = createPoint(xMax, yMax, nextSnake);
       onCollectPoint({
@@ -178,32 +178,32 @@ class Game extends Component {
     const { values } = this.state;
 
     return (
-      <Flex container direction="vertical">
-        <Flex shrink>
-          <SolutionTitle />
+      <Flex container>
+        <Flex container direction="vertical">
+          <Flex container>
+            <Canvas values={ values } />
+          </Flex>
+
+          <Flex shrink>
+            <Console />
+          </Flex>
+
+          <Flex shrink>
+            <Scoreboard />
+          </Flex>
+
+          <Flex shrink>
+            <Controller
+                onRefresh={ () => this.handleRefresh() }
+                onReset={ () => this.handleReset() }
+                onStepBackwards={ () => this.handleStepBackwards() }
+                onStepForwards={ () => this.handleStepForwards() } />
+          </Flex>
         </Flex>
 
-        <Flex container>
-          <Flex container direction="vertical">
-            <Flex container>
-              <Canvas values={ values } />
-            </Flex>
-
-            <Flex shrink>
-              <Console />
-            </Flex>
-
-            <Flex shrink>
-              <Scoreboard />
-            </Flex>
-
-            <Flex shrink>
-              <Controller
-                  onRefresh={ () => this.handleRefresh() }
-                  onReset={ () => this.handleReset() }
-                  onStepBackwards={ () => this.handleStepBackwards() }
-                  onStepForwards={ () => this.handleStepForwards() } />
-            </Flex>
+        <Flex container direction="vertical">
+          <Flex shrink>
+            <SolutionTitle />
           </Flex>
 
           <Flex>

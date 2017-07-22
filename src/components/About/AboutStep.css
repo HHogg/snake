@@ -1,0 +1,74 @@
+@keyframes bounce {
+  0%   { transform: translate3d(0,  0%, 0); }
+  25%  { transform: translate3d(0, 25%, 0); }
+  100% { transform: translate3d(0,  0%, 0); }
+}
+
+.sh-about-step__steps {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sh-about-step {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem;
+  transform: translate3d(-50%, -50%, 0);
+  transition-property: opacity;
+  transition-duration: var(--transition-time-slow);
+  transition-timing-function: var(--transition-function);
+  opacity: 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.sh-about-step--active {
+  opacity: 1;
+  pointer-events: initial;
+  transition-delay: var(--transition-time-slow);
+}
+
+.sh-about-step__controls {
+  display: flex;
+  justify-content: space-between;
+  margin: 3rem 0 0;
+}
+
+.sh-about-step__control {
+  flex: 1 1 0%;
+}
+
+.sh-about-step__control:nth-child(2) {
+  margin-top: 2rem;
+  color: var(--text-color-subtle);
+}
+
+.sh-about-step__control:last-child {
+  animation-name: bounce;
+  animation-duration: calc(var(--transition-time-slow) * 2);
+  animation-timing-function: var(--transition-function);
+  animation-iteration-count: infinite;
+}
+
+.sh-about__image {
+  padding: 1rem 3rem;
+}
+
+.sh-svg--animate {
+  animation: logoIn 10000ms var(--transition-function) 1000ms forwards;
+  stroke-dasharray: 2590 2592;
+  stroke-dashoffset: 2591;
+  transform: scale(0.8);
+  transform-origin: center;
+}
+
+@keyframes logoIn {
+  100% {
+    stroke-dashoffset: 0;
+    transform: scale(1);
+  }
+}

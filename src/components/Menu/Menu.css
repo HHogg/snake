@@ -6,7 +6,6 @@
 .sh-menu {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
 }
 
 .sh-menu__item {
@@ -19,6 +18,14 @@
     margin-right: 0;
     padding-right: 0;
     border-right: 0;
+
+    &::before {
+      right: 0;
+    }
+
+    &::after {
+      width: calc(80% - (var(--menu-snake-size) * 2));
+    }
   }
 
   &::before,
@@ -62,5 +69,9 @@
 .sh-menu__item--activatable.sh-menu__item--active:hover {
   &::after {
     width: calc(100% - var(--menu-item-spacing));
+  }
+
+  &:last-child::after {
+    width: 100%;
   }
 }

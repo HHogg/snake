@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { database } from 'firebase';
 import { createSelector } from 'reselect';
-import { applicationShowGame } from '../store/application';
+import { applicationShowGame, applicationShowLeaderboard } from '../store/application';
 import { editorSelectSolution } from '../store/editor';
 import {
   notifierAddErrorNotification,
@@ -15,6 +15,7 @@ import {
 } from '../store/solutions';
 import Flex from '../components/Flex/Flex';
 import Link from '../components/Link/Link';
+import Paragraph from '../components/Paragraph/Paragraph';
 import Solutions from '../components/Solutions/Solutions';
 import Solution from '../components/Solutions/Solution';
 
@@ -24,6 +25,7 @@ class SavedSolutions extends Component {
     displayName: PropTypes.string.isRequired,
     onBackToGame: PropTypes.func.isRequired,
     onErrorNotification: PropTypes.func.isRequired,
+    onShowLeaderboard: PropTypes.func.isRequired,
     onSolutionAdded: PropTypes.func.isRequired,
     onSolutionLoad: PropTypes.func.isRequired,
     onSolutionRemoved: PropTypes.func.isRequired,
@@ -111,16 +113,29 @@ class SavedSolutions extends Component {
     const {
       avatar,
       displayName,
-      onBackToGame,
+      onShowLeaderboard,
       solutions,
     } = this.props;
 
     return (
-      <Flex container direction="vertical">
+      <Flex container>
+        <Flex alignSelf="end">
+          <Paragraph>
+            'My Saved Solutions' is a place to store your attempted solutions.
+            Once a solution has been saved, you can then submit it to
+            the <Link onClick={ () => onShowLeaderboard() }>Leaderboard</Link>.
+          </Paragraph>
+
+          <Paragraph>
+            At this time a maximum of 5 solutions can be saved.
+          </Paragraph>
+        </Flex>
+
         <Flex
             centerChildren={ !solutions.length }
             container
-            direction="vertical">
+            direction="vertical"
+            priority="2">
           { !!solutions.length && (
             <Solutions>
               { solutions.map((solution) =>
@@ -147,12 +162,6 @@ class SavedSolutions extends Component {
             </Flex>
           ) }
         </Flex>
-
-        <Flex shrink>
-          <Link onClick={ () => onBackToGame() }>
-            {'<'} Back to Game
-          </Link>
-        </Flex>
       </Flex>
     );
   }
@@ -172,6 +181,7 @@ export default connect((state) => ({
 }), {
   onBackToGame: applicationShowGame,
   onErrorNotification: notifierAddErrorNotification,
+  onShowLeaderboard: applicationShowLeaderboard,
   onSolutionAdded: solutionsAddSaved,
   onSolutionLoad: editorSelectSolution,
   onSolutionRemoved: solutionsRemoveSaved,

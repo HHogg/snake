@@ -22,11 +22,18 @@ class CanvasC extends Component {
 
   componentDidMount() {
     const { canvasSetSize } = this.props;
+
     const width = this.el.clientWidth;
     const height = this.el.clientHeight;
+    const xMax = Math.floor((width + CELL_PADDING) / (CELL_SIZE + CELL_PADDING));
+    const yMax = Math.floor((height + CELL_PADDING) / (CELL_SIZE + CELL_PADDING));
+
+    this.padX = (CELL_SIZE + (width - (CELL_SIZE * xMax)) / (xMax - 1));
+    this.padY = (CELL_SIZE + (height - (CELL_SIZE * yMax)) / (yMax - 1));
 
     this.width = this.el.clientWidth;
     this.height = this.el.clientHeight;
+
     this.el.width = width * window.devicePixelRatio;
     this.el.height = height * window.devicePixelRatio;
     this.el.style.width = `${width}px`;
@@ -39,13 +46,11 @@ class CanvasC extends Component {
       [CHAR_SNAKE_TAIL]: getCSSVar('cell-snake-tail-color'),
       [CHAR_POINT]: getCSSVar('cell-point-color'),
       inactive: getCSSVar('cell-inactive-color'),
+      error: getCSSVar('cell-error-color'),
       text: getCSSVar('cell-text-color'),
     };
 
-    canvasSetSize({
-      xMax: Math.floor((this.width + CELL_PADDING) / (CELL_SIZE + CELL_PADDING)),
-      yMax: Math.floor((this.height + CELL_PADDING) / (CELL_SIZE + CELL_PADDING)),
-    });
+    canvasSetSize({ xMax, yMax });
   }
 
   componentDidUpdate() {
@@ -53,40 +58,48 @@ class CanvasC extends Component {
     this.redraw();
   }
 
+  drawCell(x, y, color) {
+    this.context.fillStyle = color;
+    this.context.fillRect(x * this.padX, y * this.padY, CELL_SIZE, CELL_SIZE);
+  }
+
   redraw() {
     const { point, snake, values, xMax, yMax } = this.props;
-    const paddedX = (CELL_SIZE + (this.width - (CELL_SIZE * xMax)) / (xMax - 1));
-    const paddedY = (CELL_SIZE + (this.height - (CELL_SIZE * yMax)) / (yMax - 1));
 
     this.context.clearRect(0, 0, this.width, this.height);
 
     for (let y = 0; y < yMax; y++) {
       for (let x = 0; x < xMax; x++) {
-        const value = values && values[y][x];
+        const value = values && values[y] && values[y][x];
+        const color = isNaN(value) ? this.colorMap.error : this.colorMap.inactive;
 
-        this.context.fillStyle = this.colorMap.inactive;
-        this.context.fillRect(x * paddedX, y * paddedY, CELL_SIZE, CELL_SIZE);
+        this.drawCell(x, y, color);
+      }
+    }
 
-        if (!isNaN(parseInt(value))) {
+    if (point) {
+      this.drawCell(point[0], point[1], this.colorMap[CHAR_POINT]);
+    }
+
+    for (let y = 0; y < yMax; y++) {
+      for (let x = 0; x < xMax; x++) {
+        const value = values && values[y] && values[y][x];
+
+        if (value !== null) {
           this.context.fillStyle = this.colorMap.text;
           this.context.textAlign = 'center';
           this.context.font = '"Courier New", Courier, monospace';
-          this.context.fillText(+value.toFixed(2),
-            Math.floor((x * paddedX) + (CELL_SIZE / 2)),
-            Math.floor((y * paddedY) + (CELL_SIZE / 2)) + 5
+          this.context.fillText(isNaN(value) ? 'NaN' : +value.toFixed(2),
+            Math.floor((x * this.padX) + (CELL_SIZE / 2)),
+            Math.floor((y * this.padY) + (CELL_SIZE / 2)) + 5
           );
         }
       }
     }
 
     for (let i = 0; i < snake.length; i++) {
-      this.context.fillStyle = this.colorMap[i === 0 ? CHAR_SNAKE_HEAD : CHAR_SNAKE_TAIL];
-      this.context.fillRect(snake[i][0] * paddedX, snake[i][1] * paddedY, CELL_SIZE, CELL_SIZE);
-    }
-
-    if (point) {
-      this.context.fillStyle = this.colorMap[CHAR_POINT];
-      this.context.fillRect(point[0] * paddedX, point[1] * paddedY, CELL_SIZE, CELL_SIZE);
+      this.drawCell(snake[i][0], snake[i][1],
+        this.colorMap[i === 0 ? CHAR_SNAKE_HEAD : CHAR_SNAKE_TAIL]);
     }
   }
 

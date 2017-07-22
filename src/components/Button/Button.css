@@ -7,6 +7,7 @@
   border-radius: 0.1875rem;
   background-color: transparent;
   color: var(--text-color);
+  font-weight: 600;
   appearance: none;
   transition: opacity 300ms ease,
               background-color 300ms ease,
@@ -19,6 +20,8 @@
   &:active { box-shadow: inset 0.125rem 0.125rem 0.1875rem rgba(0, 0, 0, 0.5); }
   &:disabled { opacity: .2; box-shadow: none; }
 }
+
+.sh-button--shrink { width: auto; }
 
 .sh-button--gray {
   background-color: var(--oc-gray-2);
@@ -63,6 +66,7 @@
 
 .sh-button-group {
   display: flex;
+  justify-content: center;
 
   & .sh-button {
     border-radius: 0;

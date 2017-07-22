@@ -7,6 +7,7 @@ import editor from './editor';
 import game from './game';
 import notifier from './notifier';
 import solutions from './solutions';
+import ui from './ui';
 import user from './user';
 import localStore from './localStore';
 
@@ -20,6 +21,7 @@ export default function configureStore(initialState) {
       game,
       notifier,
       solutions,
+      ui,
       user,
     }),
     initialState,
