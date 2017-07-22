@@ -48,7 +48,8 @@ class Controller extends Component {
             <Button
                 color="green"
                 disabled={ isGameOver || isPlaying }
-                onClick={ () => onStart() }>
+                onClick={ () => onStart() }
+                title="Start the game">
               Start
             </Button>
           </ButtonGroup>
@@ -59,28 +60,32 @@ class Controller extends Component {
             <Button
                 color="blue"
                 disabled={ !canGoBackwards || !isPlaying || isRunning }
-                onClick={ () => onStepBackwards() }>
+                onClick={ () => onStepBackwards() }
+                title="Rewind one cell at a time">
               <Icon name="step-backwards" />
             </Button>
 
             <Button
                 color="blue"
                 disabled={ isGameOver || !isPlaying || isRunning }
-                onClick={ () => onPlay() }>
+                onClick={ () => onPlay() }
+                title="Run the solution and move Snake">
               <Icon name="play" />
             </Button>
 
             <Button
                 color="blue"
                 disabled={ isGameOver || !isPlaying || !isRunning }
-                onClick={ () => onPause() }>
+                onClick={ () => onPause() }
+                title="Pause the solution from being run">
               <Icon name="pause" />
             </Button>
 
             <Button
                 color="blue"
                 disabled={ isGameOver || !isPlaying || isRunning }
-                onClick={ () => onStepForwards() }>
+                onClick={ () => onStepForwards() }
+                title="Move the cell snake forward one cell at a time">
               <Icon name="step-forwards" />
             </Button>
           </ButtonGroup>
@@ -91,7 +96,8 @@ class Controller extends Component {
             <Button
                 color="blue"
                 disabled={ isGameOver || !isPlaying || isRunning }
-                onClick={ () => onRefresh() }>
+                onClick={ () => onRefresh() }
+                title="Rerun the solution with the current snakes position">
               <Icon name="refresh" />
             </Button>
           </ButtonGroup>
@@ -102,7 +108,8 @@ class Controller extends Component {
             <Button
                 color="red"
                 disabled={ !isPlaying }
-                onClick={ () => onReset() }>
+                onClick={ () => onReset() }
+                title="Reset the Snake back to starting position">
               Reset
             </Button>
           </ButtonGroup>
