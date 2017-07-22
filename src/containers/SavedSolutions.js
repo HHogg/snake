@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { database } from 'firebase';
 import { createSelector } from 'reselect';
+import { MAX_USER_SOLUTIONS } from '../../functions/config';
 import { applicationShowGame, applicationShowLeaderboard } from '../store/application';
 import { editorSelectSolution } from '../store/editor';
 import {
@@ -127,7 +128,7 @@ class SavedSolutions extends Component {
           </Paragraph>
 
           <Paragraph>
-            At this time a maximum of 5 solutions can be saved.
+            At this time a maximum of { MAX_USER_SOLUTIONS } solutions can be saved.
           </Paragraph>
         </Flex>
 

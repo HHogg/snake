@@ -7,4 +7,5 @@ module.exports = {
   FN_TIMEOUT_SECONDS: 10,
   LOCAL_STORAGE_REDUX_KEY: 'snake-heuristics:redux',
   SNAKE_LENGTH: 4,
+  MAX_USER_SOLUTIONS: 5,
 };
