@@ -8,7 +8,7 @@ module.exports = {
   CLOUD_RUN_TIMES: 3,
   FN_TIMEOUT_SECONDS: 10,
   LEADERBOARD_LIMIT: 20,
-  LOCAL_STORAGE_REDUX_KEY: 'snake-heuristics:redux',
+  LOCAL_STORAGE_REDUX_KEY: 'snake-heuristics:redux:v1',
   MAX_USER_SOLUTIONS: 5,
   SNAKE_LENGTH: 4,
 };
