@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { database } from 'firebase';
 import { createSelector } from 'reselect';
-import { CLOUD_CANVAS_SIZE, CLOUD_RUN_TIMES } from '../../functions/config';
+import { CLOUD_CANVAS_SIZE, CLOUD_RUN_TIMES, LEADERBOARD_LIMIT } from '../../functions/config';
 import { applicationShowGame, applicationShowSavedSolutions } from '../store/application';
 import { editorSelectSolution } from '../store/editor';
 import { notifierAddErrorNotification } from '../store/notifier';
@@ -42,7 +42,7 @@ class Leaderboard extends Component {
       .ref('leaderboard')
       .orderByChild('score')
       .startAt(0)
-      .limitToLast(20);
+      .limitToLast(LEADERBOARD_LIMIT);
 
     this.solutionsRef.on('child_added',
       (data) => onSolutionAdded({ solution: data.val(), key: data.key }),
