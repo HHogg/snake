@@ -1,9 +1,9 @@
+import { VM } from 'vm2';
+import { CLOUD_CANVAS_SIZE, FN_TIMEOUT_SECONDS } from '../config';
 import {
   createGetValues,
   getStats,
   runSolution,
-  xMax,
-  yMax,
 } from './addLeaderboardStats';
 
 const mockSnake = [[0, 0], [1, 0], [2, 0], [3, 0]];
@@ -29,24 +29,32 @@ const invalidSolution = `
 `;
 
 const emptySolution = '';
+let vm;
 
 describe('addLeaderboardStats:', () => {
+  beforeEach(() => {
+    vm = new VM({
+      timeout: FN_TIMEOUT_SECONDS * 1000,
+      sandbox: {},
+    });
+  });
+
   describe('createGetValues:', () => {
     it('creates a callable function', () => {
-      expect(typeof createGetValues(validSolution)).toBe('function');
+      expect(typeof createGetValues(vm, validSolution)).toBe('function');
     });
 
     it('returns correct number of rows and columns', () => {
-      const values = createGetValues(validSolution)(mockSnake, mockPoint);
+      const values = createGetValues(vm, validSolution)(mockSnake, mockPoint);
 
-      expect(values.length).toBe(yMax);
+      expect(values.length).toBe(CLOUD_CANVAS_SIZE);
       values.forEach((columns) => {
-        expect(columns.length).toBe(xMax);
+        expect(columns.length).toBe(CLOUD_CANVAS_SIZE);
       });
     });
 
     it('returns the value from the heuristic function', () => {
-      createGetValues(validSolution)(mockSnake, mockPoint).forEach((columns) => {
+      createGetValues(vm, validSolution)(mockSnake, mockPoint).forEach((columns) => {
         columns.forEach((value) => {
           expect(isNaN(value)).toBe(false);
         });
@@ -54,21 +62,21 @@ describe('addLeaderboardStats:', () => {
     });
 
     it('handles non-integer solution', () => {
-      expect(createGetValues(nonIntegerSolution)(mockSnake, mockPoint)).toBe(null);
+      expect(createGetValues(vm, nonIntegerSolution)(mockSnake, mockPoint)).toBe(null);
     });
 
     it('handles invalid solution', () => {
-      expect(createGetValues(invalidSolution)(mockSnake, mockPoint)).toBe(null);
+      expect(createGetValues(vm, invalidSolution)(mockSnake, mockPoint)).toBe(null);
     });
 
     it('handles empty solution', () => {
-      expect(createGetValues(emptySolution)(mockSnake, mockPoint)).toBe(null);
+      expect(createGetValues(vm, emptySolution)(mockSnake, mockPoint)).toBe(null);
     });
   });
 
   describe('runSolution:', () => {
     it('handles valid solution', () => {
-      const { average, points, score } = runSolution(createGetValues(validSolution));
+      const { average, points, score } = runSolution(createGetValues(vm, validSolution));
 
       expect(average).toBeGreaterThan(0);
       expect(points).toBeGreaterThan(0);
@@ -76,7 +84,7 @@ describe('addLeaderboardStats:', () => {
     });
 
     it('handles non-integer solution', () => {
-      const { average, points, score } = runSolution(createGetValues(nonIntegerSolution));
+      const { average, points, score } = runSolution(createGetValues(vm, nonIntegerSolution));
 
       expect(average).toBe(0);
       expect(points).toBe(0);
@@ -84,7 +92,7 @@ describe('addLeaderboardStats:', () => {
     });
 
     it('handles invalid solution', () => {
-      const { average, points, score } = runSolution(createGetValues(invalidSolution));
+      const { average, points, score } = runSolution(createGetValues(vm, invalidSolution));
 
       expect(average).toBe(0);
       expect(points).toBe(0);
@@ -92,7 +100,7 @@ describe('addLeaderboardStats:', () => {
     });
 
     it('handles empty solution', () => {
-      const { average, points, score } = runSolution(createGetValues(emptySolution));
+      const { average, points, score } = runSolution(createGetValues(vm, emptySolution));
 
       expect(average).toBe(0);
       expect(points).toBe(0);

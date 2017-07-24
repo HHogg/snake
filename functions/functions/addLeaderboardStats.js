@@ -1,28 +1,26 @@
 /* eslint-disable no-console */
 
 const { VM } = require('vm2');
-const { FN_TIMEOUT_SECONDS } = require('../config');
+const { FN_TIMEOUT_SECONDS, CLOUD_RUN_TIMES, CLOUD_CANVAS_SIZE } = require('../config');
 const calculateAverage = require('../common/calculateAverage');
 const calculateScore = require('../common/calculateScore');
 const containsCoordinates = require('../common/containsCoordinates');
 const { createEnvironment, createPoint } = require('../common/createEnvironment');
 const getSurroundingCells = require('../common/getSurroundingCells');
 
-const xMax = 15;
-const yMax = 15;
-const averageCount = 5;
+const xMax = CLOUD_CANVAS_SIZE;
+const yMax = CLOUD_CANVAS_SIZE;
 
-const createGetValues = (solution) => (snake, point) => {
+const createGetValues = (vm, solution) => (snake, point) => {
   try {
-    return new VM({
-      timeout: FN_TIMEOUT_SECONDS * 1000,
-      sandbox: {},
-    }).run(`
+    return vm.run(`
 
-var heuristicFn = (function() {
-  ${solution};
-  return heuristic;
-})();
+${solution};
+
+
+if (typeof heuristic === 'undefined') {
+  throw 'No function called "heuristic" was found.';
+}
 
 var xMax = ${xMax};
 var yMax = ${yMax};
@@ -34,10 +32,10 @@ var values = [];
 for (let y = 0; y < yMax; y++) {
   values[y] = [];
   for (let x = 0; x < xMax; x++) {
-    values[y][x] = heuristicFn(x, y, xMax, yMax, snake, point);
+    values[y][x] = heuristic(x, y, xMax, yMax, snake, point);
 
     if (isNaN(parseInt(values[y][x]))) {
-      throw new Error();
+      throw 'NaN was given';
     }
   }
 }
@@ -54,9 +52,7 @@ const runSolution = (getValues, env) => {
   let {
     snake,
     point,
-    /* eslint-disable prefer-const */
     history,
-    /* eslint-enable prefer-const */
     average,
     points,
     score,
@@ -80,17 +76,17 @@ const runSolution = (getValues, env) => {
     return { average, points, score };
   }
 
-  if (containsCoordinates(cells, point)) {
-    snake = [point, ...snake];
-    point = createPoint(xMax, yMax, snake);
-    history[0].unshift(point);
-    points++;
+  history = [[nextCell, ...history[0]], ...history.slice(1)];
+
+  if (containsCoordinates([nextCell], point)) {
+    snake = [nextCell, ...snake];
     average = calculateAverage(history);
-    score += calculateScore(xMax * yMax, average, history[0].length, points);
-    history.unshift([]);
+    score = score + calculateScore(xMax * yMax, average, history[0].length, points);
+    points = points + 1;
+    point = createPoint(xMax, yMax, snake);
+    history = [[], ...history];
   } else {
     snake = [nextCell, ...snake.slice(0, -1)];
-    history[0].unshift(nextCell);
   }
 
   return runSolution(getValues, {
@@ -105,9 +101,14 @@ const runSolution = (getValues, env) => {
 
 const getStats = (solution) => {
   const runs = [];
-  const getValues = createGetValues(solution);
+  const vm = new VM({
+    timeout: FN_TIMEOUT_SECONDS * 1000,
+    sandbox: {},
+  });
 
-  for (let i = 0; i < averageCount; i++) {
+  const getValues = createGetValues(vm, solution);
+
+  for (let i = 0; i < CLOUD_RUN_TIMES; i++) {
     runs.push(runSolution(getValues));
   }
 
@@ -119,6 +120,4 @@ module.exports = {
   createGetValues,
   getStats,
   runSolution,
-  xMax,
-  yMax,
 };

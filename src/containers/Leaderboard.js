@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { database } from 'firebase';
 import { createSelector } from 'reselect';
+import { CLOUD_CANVAS_SIZE, CLOUD_RUN_TIMES } from '../../functions/config';
 import { applicationShowGame, applicationShowSavedSolutions } from '../store/application';
 import { editorSelectSolution } from '../store/editor';
 import { notifierAddErrorNotification } from '../store/notifier';
@@ -85,10 +86,11 @@ class Leaderboard extends Component {
           </Paragraph>
 
           <Paragraph>
-            All solutions are run 5 times
+            All solutions are run { CLOUD_RUN_TIMES } times
             using <Link href="https://firebase.google.com/products/functions/">Firebase
-            cloud functions</Link> on a 15 x 15 grid. Out of those 5 runs, the highest
-            score is what is taken for the Leaderboard.
+            cloud functions</Link> on a { CLOUD_CANVAS_SIZE } x { CLOUD_CANVAS_SIZE } grid.
+            Out of those { CLOUD_RUN_TIMES } runs, the highest score is what is taken for the
+            Leaderboard.
           </Paragraph>
 
           <Paragraph>

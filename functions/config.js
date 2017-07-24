@@ -8,4 +8,6 @@ module.exports = {
   LOCAL_STORAGE_REDUX_KEY: 'snake-heuristics:redux',
   SNAKE_LENGTH: 4,
   MAX_USER_SOLUTIONS: 5,
+  CLOUD_CANVAS_SIZE: 15,
+  CLOUD_RUN_TIMES: 3,
 };
