@@ -10,7 +10,7 @@ onmessage = ({ data }) => {
       values[y] = [];
 
       for (let x = 0; x < xMax; x++) {
-        values[y][x] = heuristicFn(x, y, xMax, yMax, snake, point);
+        values[y][x] = heuristicFn([x, y], xMax, yMax, snake, point);
 
         if (isNaN(parseInt(values[y][x]))) {
           values[y][x] = NaN;

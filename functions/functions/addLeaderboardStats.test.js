@@ -11,8 +11,8 @@ const mockPoint = [5, 5];
 
 const validSolution = `
   function randomFn() {}
-  function heuristic(x, y, xMax, yMax, snake, point) {
-    return Math.abs(x - point[0]) + Math.abs(y - point[1]);
+  function heuristic(cell, xMax, yMax, snake, point) {
+    return Math.abs(cell[0] - point[0]) + Math.abs(cell[1] - point[1]);
   }
 `;
 

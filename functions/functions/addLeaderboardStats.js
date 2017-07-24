@@ -32,7 +32,7 @@ var values = [];
 for (let y = 0; y < yMax; y++) {
   values[y] = [];
   for (let x = 0; x < xMax; x++) {
-    values[y][x] = heuristic(x, y, xMax, yMax, snake, point);
+    values[y][x] = heuristic([x, y], xMax, yMax, snake, point);
 
     if (isNaN(parseInt(values[y][x]))) {
       throw 'NaN was given';
