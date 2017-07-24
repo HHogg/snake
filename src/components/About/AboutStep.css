@@ -40,18 +40,30 @@
 
 .sh-about-step__control {
   flex: 1 1 0%;
+  transition-property: opacity;
+  transition-duration: var(--transition-time-slow);
+  transition-timing-function: var(--transition-function);
 }
 
-.sh-about-step__control:nth-child(2) {
-  margin-top: 2rem;
-  color: var(--text-color-subtle);
+.sh-about-step__control-text {
+  padding: 0.25rem;
 }
 
-.sh-about-step__control:last-child {
+.sh-about-step__control--attention .sh-about-step__control-text {
   animation-name: bounce;
   animation-duration: calc(var(--transition-time-slow) * 2);
   animation-timing-function: var(--transition-function);
   animation-iteration-count: infinite;
+}
+
+.sh-about-step__control--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sh-about-step__control--inattention {
+  margin-top: 2rem;
+  color: var(--text-color-subtle);
 }
 
 .sh-about__image {

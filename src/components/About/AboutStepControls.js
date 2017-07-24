@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Link from '../Link/Link';
+import AboutStepControl from './AboutStepControl';
 
 export default class AboutStepControls extends Component {
   static propTypes = {
@@ -14,29 +14,25 @@ export default class AboutStepControls extends Component {
 
     return (
       <div className="sh-about-step__controls">
-        <div className="sh-about-step__control">
-          { step > 0 && (
-            <Link onClick={ () => onStepChange(step - 1) }>
-              Previous
-            </Link>
-          ) }
-        </div>
+        <AboutStepControl
+            hidden={ step < 1 }
+            onClick={ () => onStepChange(step - 1) }>
+          Previous
+        </AboutStepControl>
 
-        <div className="sh-about-step__control">
-          { onSkip && step < maxSteps && (
-            <Link onClick={ () => onSkip() }>
-              Skip (and don't show again)
-            </Link>
-          ) }
-        </div>
+        <AboutStepControl
+            hidden={ !onSkip || step >= maxSteps }
+            inattention={ true }
+            onClick={ () => onSkip() }>
+          Skip (and don't show again)
+        </AboutStepControl>
 
-        <div className="sh-about-step__control">
-          { step < maxSteps && (
-            <Link onClick={ () => onStepChange(step + 1) }>
-              Next
-            </Link>
-          ) }
-        </div>
+        <AboutStepControl
+            attention={ true }
+            hidden={ step >= maxSteps }
+            onClick={ () => onStepChange(step + 1) }>
+          Next
+        </AboutStepControl>
       </div>
     );
   }
