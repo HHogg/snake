@@ -8,11 +8,13 @@ import {
   CHAR_POINT,
 } from '../../functions/config';
 import { canvasSetSize } from '../store/canvas';
+import { gameResetGame } from '../store/game';
 import getCSSVar from '../utils/getCSSVar';
 
 class CanvasC extends Component {
   static propTypes = {
     canvasSetSize: PropTypes.func.isRequired,
+    gameResetGame: PropTypes.func.isRequired,
     point: PropTypes.array,
     snake: PropTypes.array,
     values: PropTypes.array,
@@ -20,8 +22,31 @@ class CanvasC extends Component {
     yMax: PropTypes.number.isRequired,
   };
 
+  static contextTypes = {
+    registerResizeCanvas: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
-    const { canvasSetSize } = this.props;
+    this.colorMap = {
+      [CHAR_SNAKE_HEAD]: getCSSVar('cell-snake-head-color'),
+      [CHAR_SNAKE_TAIL]: getCSSVar('cell-snake-tail-color'),
+      [CHAR_POINT]: getCSSVar('cell-point-color'),
+      inactive: getCSSVar('cell-inactive-color'),
+      error: getCSSVar('cell-error-color'),
+      text: getCSSVar('cell-text-color'),
+    };
+
+    this.initDimensions();
+    this.context.registerResizeCanvas(() => this.reinitDimensions());
+  }
+
+  componentDidUpdate() {
+    this.context = this.el.getContext('2d');
+    this.redraw(this.props.values);
+  }
+
+  initDimensions() {
+    const { canvasSetSize, gameResetGame } = this.props;
 
     const width = this.el.clientWidth;
     const height = this.el.clientHeight;
@@ -38,35 +63,30 @@ class CanvasC extends Component {
     this.el.height = height * window.devicePixelRatio;
     this.el.style.width = `${width}px`;
     this.el.style.height = `${height}px`;
-    this.context = this.el.getContext('2d');
-    this.context.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-    this.colorMap = {
-      [CHAR_SNAKE_HEAD]: getCSSVar('cell-snake-head-color'),
-      [CHAR_SNAKE_TAIL]: getCSSVar('cell-snake-tail-color'),
-      [CHAR_POINT]: getCSSVar('cell-point-color'),
-      inactive: getCSSVar('cell-inactive-color'),
-      error: getCSSVar('cell-error-color'),
-      text: getCSSVar('cell-text-color'),
-    };
+    this.ctx = this.el.getContext('2d');
+    this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 
     canvasSetSize({ xMax, yMax });
+    gameResetGame();
   }
 
-  componentDidUpdate() {
-    this.context = this.el.getContext('2d');
-    this.redraw();
+  reinitDimensions() {
+    this.el.removeAttribute('width');
+    this.el.removeAttribute('height');
+    this.el.style.width = 'auto';
+    this.el.style.height = 'auto';
+    this.initDimensions();
   }
 
   drawCell(x, y, color) {
-    this.context.fillStyle = color;
-    this.context.fillRect(x * this.padX, y * this.padY, CELL_SIZE, CELL_SIZE);
+    this.ctx.fillStyle = color;
+    this.ctx.fillRect(x * this.padX, y * this.padY, CELL_SIZE, CELL_SIZE);
   }
 
-  redraw() {
-    const { point, snake, values, xMax, yMax } = this.props;
+  redraw(values) {
+    const { point, snake, xMax, yMax } = this.props;
 
-    this.context.clearRect(0, 0, this.width, this.height);
+    this.ctx.clearRect(0, 0, this.width, this.height);
 
     for (let y = 0; y < yMax; y++) {
       for (let x = 0; x < xMax; x++) {
@@ -86,10 +106,10 @@ class CanvasC extends Component {
         const value = values && values[y] && values[y][x];
 
         if (value !== null) {
-          this.context.fillStyle = this.colorMap.text;
-          this.context.textAlign = 'center';
-          this.context.font = '"Courier New", Courier, monospace';
-          this.context.fillText(isNaN(value) ? 'NaN' : +value.toFixed(2),
+          this.ctx.fillStyle = this.colorMap.text;
+          this.ctx.textAlign = 'center';
+          this.ctx.font = '"Courier New", Courier, monospace';
+          this.ctx.fillText(isNaN(value) ? 'NaN' : +value.toFixed(2),
             Math.floor((x * this.padX) + (CELL_SIZE / 2)),
             Math.floor((y * this.padY) + (CELL_SIZE / 2)) + 5
           );
@@ -106,7 +126,6 @@ class CanvasC extends Component {
   render() {
     return (
       <canvas
-          className="sh-canvas"
           ref={ (el) => this.el = el }
           style={ { flex: '1 1 0%' } } />
     );
@@ -120,4 +139,5 @@ export default connect((state) => ({
   yMax: state.canvas.yMax,
 }), {
   canvasSetSize,
+  gameResetGame,
 })(CanvasC);

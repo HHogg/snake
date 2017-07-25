@@ -18,6 +18,10 @@ export default class Editor extends Component {
     onChange: PropTypes.func.isRequired,
   };
 
+  static contextTypes = {
+    registerResizeEditor: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
     const { initialValue, onChange } = this.props;
 
@@ -37,6 +41,7 @@ export default class Editor extends Component {
     this.ide.setValue(initialValue, 1);
     this.ide.getSession().setUndoManager(new brace.UndoManager());
     this.ide.on('change', () => onChange({ content: this.ide.getValue() }));
+    this.context.registerResizeEditor(() => this.ide.resize());
   }
 
   componentWillReceiveProps({ initialValue }) {

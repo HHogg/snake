@@ -58,6 +58,7 @@ class Game extends Component {
     const { onGameInit, isRunning, isPlaying } = this.props;
 
     if (!next.snake && !next.point) {
+      this.setState({ values: null });
       onGameInit(createEnvironment(next.xMax, next.yMax));
     }
 

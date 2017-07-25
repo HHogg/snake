@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { auth } from 'firebase';
+import debounce from 'lodash.debounce';
 import Flex from '../components/Flex/Flex';
 import IntroModal from '../components/Intro/IntroModal';
 import Page from '../components/Page/Page';
@@ -29,6 +30,18 @@ class Application extends Component {
     skipIntro: PropTypes.bool.isRequired,
   };
 
+  static childContextTypes = {
+    registerResizeCanvas: PropTypes.func.isRequired,
+    registerResizeEditor: PropTypes.func.isRequired,
+  };
+
+  getChildContext() {
+    return {
+      registerResizeCanvas: (func) => this.resizeCanvas = func,
+      registerResizeEditor: (func) => this.resizeEditor = func,
+    };
+  }
+
   componentDidMount() {
     const { onLogin } = this.props;
 
@@ -41,6 +54,11 @@ class Application extends Component {
         });
       }
     });
+
+    window.addEventListener('resize', debounce(() => {
+      this.resizeCanvas && this.resizeCanvas();
+      this.resizeEditor && this.resizeEditor();
+    }, 500));
   }
 
   render() {
