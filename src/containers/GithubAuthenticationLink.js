@@ -2,6 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { auth } from 'firebase';
 import { applicationShowSavedSolutions } from '../store/application';
+import {
+  notifierAddErrorNotification,
+  notifierAddSuccessNotification,
+} from '../store/notifier';
 import { userLoginSuccessful } from '../store/user';
 import Link from '../components/Link/Link';
 
@@ -13,8 +17,10 @@ class GithubAuthenticationLink extends Component {
     displayName: PropTypes.string,
     isLoggedIn: PropTypes.bool.isRequired,
     isSavedSolutionsActive: PropTypes.bool.isRequired,
+    onErrorNotification: PropTypes.func.isRequired,
     onLogin: PropTypes.func.isRequired,
     onShowSavedSolutions: PropTypes.func.isRequired,
+    onSuccessNotification: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -26,7 +32,7 @@ class GithubAuthenticationLink extends Component {
 
   handleOnClick() {
     const { authenticating } = this.state;
-    const { onLogin } = this.props;
+    const { onLogin, onErrorNotification, onSuccessNotification } = this.props;
 
     if (authenticating) {
       return;
@@ -39,8 +45,11 @@ class GithubAuthenticationLink extends Component {
         avatar: result.user.photoURL,
         displayName: result.user.displayName,
       });
-    }).catch(() => {
+      onSuccessNotification(`You are now signed in with GitHub.
+        Get yourself up on the Leaderboard!`);
+    }).catch((error) => {
       this.setState({ authenticating: false });
+      onErrorNotification(`GitHub signin failed: ${error}`);
     });
   }
 
@@ -59,6 +68,8 @@ export default connect((state) => ({
   isLoggedIn: !!state.user.id,
   isSavedSolutionsActive: state.application.savedSolutions,
 }), {
+  onErrorNotification: notifierAddErrorNotification,
   onLogin: userLoginSuccessful,
   onShowSavedSolutions: applicationShowSavedSolutions,
+  onSuccessNotification: notifierAddSuccessNotification,
 })(GithubAuthenticationLink);

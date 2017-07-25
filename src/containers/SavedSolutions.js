@@ -49,15 +49,15 @@ class SavedSolutions extends Component {
 
     this.solutionsRef.on('child_added',
       (data) => onSolutionAdded({ solution: data.val(), key: data.key }),
-      (error) => onErrorNotification(error.message));
+      (error) => onErrorNotification(`Firebase: ${error.message}`));
 
     this.solutionsRef.on('child_changed',
       (data) => onSolutionUpdated({ solution: data.val(), key: data.key }),
-      (error) => onErrorNotification(error.message));
+      (error) => onErrorNotification(`Firebase: ${error.message}`));
 
     this.solutionsRef.on('child_removed',
       (data) => onSolutionRemoved({ solution: data.val(), key: data.key }),
-      (error) => onErrorNotification(error.message));
+      (error) => onErrorNotification(`Firebase: ${error.message}`));
   }
 
   componentWillUnmount() {
@@ -74,7 +74,7 @@ class SavedSolutions extends Component {
     database()
       .ref(`solutions/${userId}/${solution.key}`)
       .remove()
-      .then(() => onSuccessNotification('Solution removed'))
+      .then(() => onSuccessNotification('That solution has been removed.'))
       .catch((error) => onErrorNotification(error.message));
   }
 
@@ -106,8 +106,9 @@ class SavedSolutions extends Component {
         modified: database.ServerValue.TIMESTAMP,
         uid: userId,
       })
-      .then(() => onSuccessNotification('Solution submitted to leaderboard'))
-      .catch((error) => onErrorNotification(error.message));
+      .then(() => onSuccessNotification(`Solution submitted to Leaderboard! It will take a
+          minute to update while the scores are generated.`))
+      .catch((error) => onErrorNotification(`Failed to submit to Leaderboard: ${error.message}`));
   }
 
   render() {

@@ -46,15 +46,15 @@ class Leaderboard extends Component {
 
     this.solutionsRef.on('child_added',
       (data) => onSolutionAdded({ solution: data.val(), key: data.key }),
-      (error) => onErrorNotification(error.message));
+      (error) => onErrorNotification(`Firebase: ${error.message}`));
 
     this.solutionsRef.on('child_changed',
       (data) => onSolutionUpdated({ solution: data.val(), key: data.key }),
-      (error) => onErrorNotification(error.message));
+      (error) => onErrorNotification(`Firebase: ${error.message}`));
 
     this.solutionsRef.on('child_removed',
       (data) => onSolutionRemoved({ solution: data.val(), key: data.key }),
-      (error) => onErrorNotification(error.message));
+      (error) => onErrorNotification(`Firebase: ${error.message}`));
   }
 
   componentWillUnmount() {

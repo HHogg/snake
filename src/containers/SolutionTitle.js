@@ -46,16 +46,17 @@ class SolutionTitle extends Component {
         .ref(`solutions/${userId}/${selectedSolutionKey}`)
         .update({ title, content, modified: database.ServerValue.TIMESTAMP })
         .then(() => onSolutionUpdate())
-        .then(() => onSuccessNotification('Solution updated'))
-        .catch((error) => onErrorNotifcation(error.message));
+        .then(() => onSuccessNotification(`Solution "${title}" has been updated`))
+        .catch((error) => onErrorNotifcation(`Failed to update solution: ${error.message}`));
     } else {
       const newSolution = database().ref(`solutions/${userId}`).push();
 
       newSolution
         .set({ title, content, modified: database.ServerValue.TIMESTAMP })
         .then(() => onSolutionSelect({ title, content, key: newSolution.key }))
-        .then(() => onSuccessNotification('Solution saved'))
-        .catch((error) => onErrorNotifcation(error.message));
+        .then(() => onSuccessNotification(`Solution "${title}" is now
+            saved under 'My Saved Solutions'`))
+        .catch((error) => onErrorNotifcation(`Failed to save solution: ${error.message}`));
     }
   }
 
