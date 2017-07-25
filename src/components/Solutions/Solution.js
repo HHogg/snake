@@ -10,7 +10,7 @@ export default class Solution extends Component {
     displayName: PropTypes.string.isRequired,
     modified: PropTypes.number.isRequired,
     onSubmit: PropTypes.func,
-    onLoad: PropTypes.func.isRequired,
+    onLoad: PropTypes.func,
     onDelete: PropTypes.func,
     points: PropTypes.number,
     score: PropTypes.number,

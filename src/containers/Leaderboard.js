@@ -116,7 +116,6 @@ class Leaderboard extends Component {
                     displayName={ solution.displayName }
                     key={ solution.key }
                     modified={ solution.modified }
-                    onLoad={ () => this.handleLoad(solution) }
                     points={ solution.points }
                     score={ solution.score }
                     title={ solution.title } />
