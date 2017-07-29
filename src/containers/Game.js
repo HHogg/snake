@@ -154,8 +154,8 @@ class Game extends Component {
     consoleLog({ message });
   }
 
-  handleRefresh() {
-    this.run(this.props);
+  handleRefresh(snake = this.props.snake) {
+    this.run({ ...this.props, snake });
   }
 
   handleStepForwards() {
@@ -163,9 +163,11 @@ class Game extends Component {
   }
 
   handleStepBackwards() {
-    const { onStepBackwards } = this.props;
+    const { onStepBackwards, snake, tails } = this.props;
+    const nextSnake = [...snake.slice(1), tails[0]];
 
     onStepBackwards();
+    this.handleRefresh(nextSnake);
   }
 
   handleReset() {
