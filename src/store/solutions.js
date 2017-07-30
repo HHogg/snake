@@ -3,6 +3,7 @@ import actionCreator from '../utils/actionCreator';
 
 const initialState = {
   leaderboard: {},
+  leaderboardUsers: {},
   saved: {},
 };
 
@@ -11,6 +12,7 @@ const SOLUTIONS_UPDATE_SAVED = 'SOLUTIONS_UPDATE_SAVED';
 const SOLUTIONS_REMOVE_SAVED = 'SOLUTIONS_REMOVE_SAVED';
 
 const SOLUTIONS_ADD_LEADERBOARD = 'SOLUTIONS_ADD_LEADERBOARD';
+const SOLUTIONS_ADD_LEADERBOARD_USER = 'SOLUTIONS_ADD_LEADERBOARD_USER';
 const SOLUTIONS_UPDATE_LEADERBOARD = 'SOLUTIONS_UPDATE_LEADERBOARD';
 const SOLUTIONS_REMOVE_LEADERBOARD = 'SOLUTIONS_REMOVE_LEADERBOARD';
 
@@ -19,6 +21,7 @@ export const solutionsUpdateSaved = actionCreator(SOLUTIONS_UPDATE_SAVED);
 export const solutionsRemoveSaved = actionCreator(SOLUTIONS_REMOVE_SAVED);
 
 export const solutionsAddLeaderboard = actionCreator(SOLUTIONS_ADD_LEADERBOARD);
+export const solutionsAddLeaderboardUser = actionCreator(SOLUTIONS_ADD_LEADERBOARD_USER);
 export const solutionsUpdateLeaderboard = actionCreator(SOLUTIONS_UPDATE_LEADERBOARD);
 export const solutionsRemoveLeaderboard = actionCreator(SOLUTIONS_REMOVE_LEADERBOARD);
 
@@ -45,6 +48,14 @@ export default (state = initialState, { type, payload }) => {
       leaderboard: {
         ...state.leaderboard,
         [payload.key]: payload.solution,
+      },
+    };
+  case SOLUTIONS_ADD_LEADERBOARD_USER:
+    return {
+      ...state,
+      leaderboardUsers: {
+        ...state.leaderboardUsers,
+        [payload.key]: payload.user,
       },
     };
   case SOLUTIONS_REMOVE_LEADERBOARD:

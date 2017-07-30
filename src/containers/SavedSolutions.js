@@ -90,25 +90,26 @@ class SavedSolutions extends Component {
 
   handleSubmit(solution) {
     const {
-      avatar,
-      displayName,
       onErrorNotification,
       onSuccessNotification,
       userId,
     } = this.props;
 
-    database()
-      .ref(`leaderboard/${solution.key}`)
-      .set({
-        ...solution,
-        avatar,
-        displayName,
-        modified: database.ServerValue.TIMESTAMP,
-        uid: userId,
-      })
-      .then(() => onSuccessNotification(`Solution submitted to Leaderboard! It will take a
-          minute to update while the scores are generated.`))
-      .catch((error) => onErrorNotification(`Failed to submit to Leaderboard: ${error.message}`));
+    Promise.all([
+      database()
+        .ref(`leaderboard/${solution.key}`)
+        .update({
+          title: solution.title,
+          modified: database.ServerValue.TIMESTAMP,
+          uid: userId,
+        }),
+      database()
+        .ref(`leaderboardSolutions/${userId}/${solution.key}`)
+        .set(solution.content),
+    ])
+    .then(() => onSuccessNotification(`Solution submitted to Leaderboard! It will take a
+      minute to update while the scores are generated.`))
+    .catch((error) => onErrorNotification(`Failed to submit to Leaderboard: ${error.message}`));
   }
 
   render() {

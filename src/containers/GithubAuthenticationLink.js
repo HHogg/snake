@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { auth } from 'firebase';
+import { auth, database } from 'firebase';
 import { applicationShowSavedSolutions } from '../store/application';
 import {
   notifierAddErrorNotification,
@@ -39,15 +39,22 @@ class GithubAuthenticationLink extends Component {
     }
 
     this.setState({ authenticating: true });
-    auth().signInWithPopup(provider).then((result) => {
-      onLogin({
-        id: result.user.uid,
-        avatar: result.user.photoURL,
-        displayName: result.user.displayName,
-      });
-      onSuccessNotification(`You are now signed in with GitHub.
-        Get yourself up on the Leaderboard!`);
-    }).catch((error) => {
+    auth().signInWithPopup(provider).then((result) =>
+      database()
+        .ref(`users/${result.user.uid}`)
+        .update({
+          avatar: result.user.photoURL,
+          displayName: result.user.displayName,
+        }).then(() => {
+          onLogin({
+            id: result.user.uid,
+            avatar: result.user.photoURL,
+            displayName: result.user.displayName,
+          });
+          onSuccessNotification(`You are now signed in with GitHub.
+            Get yourself up on the Leaderboard!`);
+        })
+    ).catch((error) => {
       this.setState({ authenticating: false });
       onErrorNotification(`GitHub signin failed: ${error}`);
     });

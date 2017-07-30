@@ -8,8 +8,9 @@ import { editorSelectSolution } from '../store/editor';
 import { notifierAddErrorNotification } from '../store/notifier';
 import {
   solutionsAddLeaderboard,
-  solutionsUpdateLeaderboard,
+  solutionsAddLeaderboardUser,
   solutionsRemoveLeaderboard,
+  solutionsUpdateLeaderboard,
 } from '../store/solutions';
 import Flex from '../components/Flex/Flex';
 import Link from '../components/Link/Link';
@@ -21,21 +22,24 @@ class Leaderboard extends Component {
   static propTypes = {
     solutions: PropTypes.array.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
+    leaderboardUsers: PropTypes.object.isRequired,
     onBackToGame: PropTypes.func.isRequired,
     onErrorNotification: PropTypes.func.isRequired,
     onShowSavedSolutions: PropTypes.func.isRequired,
     onSolutionAdded: PropTypes.func.isRequired,
     onSolutionLoad: PropTypes.func.isRequired,
-    onSolutionUpdated: PropTypes.func.isRequired,
     onSolutionRemoved: PropTypes.func.isRequired,
+    onSolutionUpdated: PropTypes.func.isRequired,
+    onSolutionUserAdded: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     const {
       onErrorNotification,
       onSolutionAdded,
-      onSolutionUpdated,
       onSolutionRemoved,
+      onSolutionUpdated,
+      onSolutionUserAdded,
     } = this.props;
 
     this.solutionsRef = database()
@@ -45,7 +49,20 @@ class Leaderboard extends Component {
       .limitToLast(LEADERBOARD_LIMIT);
 
     this.solutionsRef.on('child_added',
-      (data) => onSolutionAdded({ solution: data.val(), key: data.key }),
+      (data) => {
+        const solution = data.val();
+
+        if (!this.props.leaderboardUsers[solution.uid]) {
+          database()
+            .ref(`/users/${solution.uid}`)
+            .once('value', (user) => {
+              onSolutionUserAdded({ user: user.val(), key: solution.uid });
+              onSolutionAdded({ solution, key: data.key });
+            });
+        } else {
+          onSolutionAdded({ solution, key: data.key });
+        }
+      },
       (error) => onErrorNotification(`Firebase: ${error.message}`));
 
     this.solutionsRef.on('child_changed',
@@ -136,13 +153,15 @@ class Leaderboard extends Component {
 
 const solutionsSelector = createSelector(
   (state) => state.solutions.leaderboard,
-  (solutions) => Object.keys(solutions)
-    .map((key) => ({ ...solutions[key], key }))
+  (state) => state.solutions.leaderboardUsers,
+  (solutions, users) => Object.keys(solutions)
+    .map((key) => ({ ...solutions[key], ...users[solutions[key].uid], key }))
     .sort((a, b) => b.score - a.score),
 );
 
 export default connect((state) => ({
   isLoggedIn: !!state.user.id,
+  leaderboardUsers: state.solutions.leaderboardUsers,
   solutions: solutionsSelector(state),
 }), {
   onBackToGame: applicationShowGame,
@@ -150,6 +169,7 @@ export default connect((state) => ({
   onShowSavedSolutions: applicationShowSavedSolutions,
   onSolutionAdded: solutionsAddLeaderboard,
   onSolutionLoad: editorSelectSolution,
-  onSolutionUpdated: solutionsUpdateLeaderboard,
   onSolutionRemoved: solutionsRemoveLeaderboard,
+  onSolutionUpdated: solutionsUpdateLeaderboard,
+  onSolutionUserAdded: solutionsAddLeaderboardUser,
 })(Leaderboard);

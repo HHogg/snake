@@ -12,14 +12,13 @@ const xMax = CLOUD_CANVAS_SIZE;
 const yMax = CLOUD_CANVAS_SIZE;
 
 const createGetValues = (vm, solution) => (snake, point) => {
-  try {
-    return vm.run(`
+  return vm.run(`
 
 ${solution};
 
 
 if (typeof heuristic === 'undefined') {
-  throw 'No function called "heuristic" was found.';
+  throw new Error('No function called "heuristic" was found.');
 }
 
 var xMax = ${xMax};
@@ -35,17 +34,14 @@ for (let y = 0; y < yMax; y++) {
     values[y][x] = heuristic([x, y], xMax, yMax, snake, point);
 
     if (isNaN(parseInt(values[y][x]))) {
-      throw 'NaN was given';
+      throw new Error('The heuristic function returned NaN.');
     }
   }
 }
 
 values;
 
-    `);
-  } catch (e) {
-    return null;
-  }
+  `);
 };
 
 const runSolution = (getValues, env) => {
@@ -64,11 +60,6 @@ const runSolution = (getValues, env) => {
   }));
 
   const values = getValues(snake, point);
-
-  if (!Array.isArray(values)) {
-    return { average, points, score };
-  }
-
   const cells = getSurroundingCells(snake, xMax, yMax);
   const nextCell = cells.sort(([ax, ay], [bx, by]) => values[ay][ax] - values[by][bx])[0];
 

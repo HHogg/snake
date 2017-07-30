@@ -7,16 +7,22 @@ admin.initializeApp(functions.config().firebase);
 
 exports.addLeaderboardStats = functions
   .database
-  .ref('/leaderboard/{solutionId}/content')
+  .ref('/leaderboardSolutions/{userId}/{solutionId}')
   .onWrite((event) => {
     const solution = event.data.val();
-    const stats = getStats(solution);
+    const solutionRef = admin
+      .database()
+      .ref(`/leaderboard/${event.data.key}`);
 
-    if (stats.score === 0) {
-      return event.data.ref.parent.remove();
+    let stats;
+
+    try {
+      stats = getStats(solution);
+    } catch (error) {
+      return solutionRef.update({ error: error.toString() });
     }
 
-    return event.data.ref.parent.update(stats);
+    return solutionRef.update(stats);
   });
 
 exports.limitSolutions = functions

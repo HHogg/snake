@@ -62,15 +62,18 @@ describe('addLeaderboardStats:', () => {
     });
 
     it('handles non-integer solution', () => {
-      expect(createGetValues(vm, nonIntegerSolution)(mockSnake, mockPoint)).toBe(null);
+      expect(() => createGetValues(vm, nonIntegerSolution)(mockSnake, mockPoint))
+        .toThrow('The heuristic function returned NaN.');
     });
 
     it('handles invalid solution', () => {
-      expect(createGetValues(vm, invalidSolution)(mockSnake, mockPoint)).toBe(null);
+      expect(() => createGetValues(vm, invalidSolution)(mockSnake, mockPoint))
+        .toThrow('No function called "heuristic" was found.');
     });
 
     it('handles empty solution', () => {
-      expect(createGetValues(vm, emptySolution)(mockSnake, mockPoint)).toBe(null);
+      expect(() => createGetValues(vm, emptySolution)(mockSnake, mockPoint))
+        .toThrow('No function called "heuristic" was found.');
     });
   });
 
@@ -84,27 +87,18 @@ describe('addLeaderboardStats:', () => {
     });
 
     it('handles non-integer solution', () => {
-      const { average, points, score } = runSolution(createGetValues(vm, nonIntegerSolution));
-
-      expect(average).toBe(0);
-      expect(points).toBe(0);
-      expect(score).toBe(0);
+      expect(() => runSolution(createGetValues(vm, nonIntegerSolution)))
+        .toThrow('The heuristic function returned NaN.');
     });
 
     it('handles invalid solution', () => {
-      const { average, points, score } = runSolution(createGetValues(vm, invalidSolution));
-
-      expect(average).toBe(0);
-      expect(points).toBe(0);
-      expect(score).toBe(0);
+      expect(() => runSolution(createGetValues(vm, invalidSolution)))
+        .toThrow('No function called "heuristic" was found.');
     });
 
     it('handles empty solution', () => {
-      const { average, points, score } = runSolution(createGetValues(vm, emptySolution));
-
-      expect(average).toBe(0);
-      expect(points).toBe(0);
-      expect(score).toBe(0);
+      expect(() => runSolution(createGetValues(vm, emptySolution)))
+        .toThrow('No function called "heuristic" was found.');
     });
   });
 
@@ -118,27 +112,18 @@ describe('addLeaderboardStats:', () => {
     });
 
     it('handles non-integer solution', () => {
-      const { average, points, score } = getStats(nonIntegerSolution);
-
-      expect(average).toBe(0);
-      expect(points).toBe(0);
-      expect(score).toBe(0);
+      expect(() => getStats(nonIntegerSolution))
+        .toThrow('The heuristic function returned NaN.');
     });
 
     it('handles invalid solution', () => {
-      const { average, points, score } = getStats(invalidSolution);
-
-      expect(average).toBe(0);
-      expect(points).toBe(0);
-      expect(score).toBe(0);
+      expect(() => getStats(invalidSolution))
+        .toThrow('No function called "heuristic" was found.');
     });
 
     it('handles empty solution', () => {
-      const { average, points, score } = getStats(emptySolution);
-
-      expect(average).toBe(0);
-      expect(points).toBe(0);
-      expect(score).toBe(0);
+      expect(() => getStats(emptySolution))
+        .toThrow('No function called "heuristic" was found.');
     });
   });
 });
