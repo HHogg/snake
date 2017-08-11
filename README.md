@@ -18,7 +18,7 @@ Pathfinding is ["the problem of finding a good path from the starting point to t
 
 The goal is to move the snake across the cells to the point by returning a number from the heuristic() function. The function is called for every cell every time the snake needs to move, and is provided with information of the environment.
 
-The lowest number given for the 3 cells around the snakes head will be the next position the snake will take. If two cells have the same value, the first cell c lockwise from the top cell will be selected. Cells that are out of bounds and contain the snake are already excluded from selection.
+The lowest number given for the 3 cells around the snakes head will be the next position the snake will take. If two cells have the same value, the first cell clockwise from the top cell will be selected. Cells that are out of bounds and contain the snake are already excluded from selection.
 
 #### Scoring
 
