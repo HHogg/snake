@@ -21,25 +21,19 @@ if (typeof heuristic === 'undefined') {
   throw new Error('No function called "heuristic" was found.');
 }
 
-var xMax = ${xMax};
-var yMax = ${yMax};
+var cells = ${JSON.stringify(getSurroundingCells(snake, xMax, yMax))};
 var snake = JSON.parse('${JSON.stringify(snake)}');
 var point = JSON.parse('${JSON.stringify(point)}');
 
-var values = [];
+cells.map(function(cell) {
+  const value = heuristic(cell, ${xMax}, ${yMax}, snake, point);
 
-for (let y = 0; y < yMax; y++) {
-  values[y] = [];
-  for (let x = 0; x < xMax; x++) {
-    values[y][x] = heuristic([x, y], xMax, yMax, snake, point);
-
-    if (isNaN(parseInt(values[y][x]))) {
-      throw new Error('The heuristic function returned NaN.');
-    }
+  if (isNaN(parseInt(value))) {
+    throw new Error('The heuristic function returned NaN.');
   }
-}
 
-values;
+  return { cell, value };
+});
 
   `);
 };
@@ -59,13 +53,13 @@ const runSolution = (getValues, env) => {
     score: 0,
   }));
 
-  const values = getValues(snake, point);
-  const cells = getSurroundingCells(snake, xMax, yMax);
-  const nextCell = cells.sort(([ax, ay], [bx, by]) => values[ay][ax] - values[by][bx])[0];
+  const nextMatch = getValues(snake, point).sort((a, b) => a.value - b.value)[0];
 
-  if (!nextCell) {
+  if (!nextMatch) {
     return { average, points, score };
   }
+
+  const nextCell = nextMatch.cell;
 
   history = [[nextCell, ...history[0]], ...history.slice(1)];
 

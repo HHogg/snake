@@ -1,12 +1,9 @@
 import { VM } from 'vm2';
 import { CLOUD_CANVAS_SIZE, FN_TIMEOUT_SECONDS } from '../config';
-import {
-  createGetValues,
-  getStats,
-  runSolution,
-} from './addLeaderboardStats';
+import { createGetValues, getStats, runSolution } from './addLeaderboardStats';
+import getSurroundingCells from '../common/getSurroundingCells';
 
-const mockSnake = [[0, 0], [1, 0], [2, 0], [3, 0]];
+const mockSnake = [[8, 4], [7, 4], [6, 4], [5, 4]];
 const mockPoint = [5, 5];
 
 const validSolution = `
@@ -46,18 +43,13 @@ describe('addLeaderboardStats:', () => {
 
     it('returns correct number of rows and columns', () => {
       const values = createGetValues(vm, validSolution)(mockSnake, mockPoint);
-
-      expect(values.length).toBe(CLOUD_CANVAS_SIZE);
-      values.forEach((columns) => {
-        expect(columns.length).toBe(CLOUD_CANVAS_SIZE);
-      });
+      expect(values.length)
+        .toBe(getSurroundingCells(mockSnake, CLOUD_CANVAS_SIZE, CLOUD_CANVAS_SIZE).length);
     });
 
     it('returns the value from the heuristic function', () => {
-      createGetValues(vm, validSolution)(mockSnake, mockPoint).forEach((columns) => {
-        columns.forEach((value) => {
-          expect(isNaN(value)).toBe(false);
-        });
+      createGetValues(vm, validSolution)(mockSnake, mockPoint).forEach(({ value }) => {
+        expect(isNaN(value)).toBe(false);
       });
     });
 
