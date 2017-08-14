@@ -28,6 +28,7 @@
     "object-curly-spacing": [2, "always"],
     "prefer-const": [2],
     "quotes": [2, "single"],
+    "react/jsx-indent-props": [2, 4],
     "semi": [2, "always"]
   }
 }

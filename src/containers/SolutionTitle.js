@@ -17,7 +17,6 @@ class SolutionTitle extends Component {
   static propTypes = {
     content: PropTypes.string,
     edited: PropTypes.bool.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired,
     onErrorNotifcation: PropTypes.func.isRequired,
     onNew: PropTypes.func.isRequired,
     onSolutionSelect: PropTypes.func.isRequired,
@@ -65,7 +64,6 @@ class SolutionTitle extends Component {
       edited,
       onTitleChange,
       onNew,
-      isLoggedIn,
       title,
     } = this.props;
 
@@ -73,7 +71,7 @@ class SolutionTitle extends Component {
       <TitleSaver
           edited={ edited }
           onNew={ onNew }
-          onSave={ isLoggedIn ? () => this.handleSave() : undefined }
+          onSave={ () => this.handleSave() }
           onTitleChange={ onTitleChange }
           value={ title } />
     );
@@ -83,7 +81,6 @@ class SolutionTitle extends Component {
 export default connect((state) => ({
   content: state.editor.content,
   edited: state.editor.edited,
-  isLoggedIn: !!state.user.id,
   selectedSolutionKey: state.editor.selectedSolutionKey,
   title: state.editor.title,
   userId: state.user.id,

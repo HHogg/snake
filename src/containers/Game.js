@@ -27,6 +27,7 @@ class Game extends Component {
     consoleLog: PropTypes.func.isRequired,
     content: PropTypes.string.isRequired,
     history: PropTypes.array.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     isRunning: PropTypes.bool.isRequired,
     onCollectPoint: PropTypes.func.isRequired,
@@ -178,6 +179,7 @@ class Game extends Component {
   }
 
   render() {
+    const { isLoggedIn } = this.props;
     const { values } = this.state;
 
     return (
@@ -205,9 +207,11 @@ class Game extends Component {
         </Flex>
 
         <Flex container direction="vertical">
-          <Flex shrink>
-            <SolutionTitle />
-          </Flex>
+          { isLoggedIn && (
+            <Flex shrink>
+              <SolutionTitle />
+            </Flex>
+          ) }
 
           <Flex>
             <Editor />
@@ -221,6 +225,7 @@ class Game extends Component {
 export default connect((state) => ({
   content: state.editor.content,
   history: state.game.history,
+  isLoggedIn: !!state.user.id,
   isPlaying: state.game.isPlaying,
   isRunning: state.game.isRunning,
   point: state.game.point,
