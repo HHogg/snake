@@ -1,8 +1,8 @@
 import { VM } from 'vm2';
-import { CLOUD_CANVAS_SIZE, FN_TIMEOUT_SECONDS } from '../config';
+import { FN_TIMEOUT_SECONDS } from '../config';
 import { createGetValues, getStats, runSolution } from './addLeaderboardStats';
-import getSurroundingCells from '../common/getSurroundingCells';
 
+const mockCell = [4, 4];
 const mockSnake = [[8, 4], [7, 4], [6, 4], [5, 4]];
 const mockPoint = [5, 5];
 
@@ -41,30 +41,17 @@ describe('addLeaderboardStats:', () => {
       expect(typeof createGetValues(vm, validSolution)).toBe('function');
     });
 
-    it('returns correct number of rows and columns', () => {
-      const values = createGetValues(vm, validSolution)(mockSnake, mockPoint);
-      expect(values.length)
-        .toBe(getSurroundingCells(mockSnake, CLOUD_CANVAS_SIZE, CLOUD_CANVAS_SIZE).length);
-    });
-
     it('returns the value from the heuristic function', () => {
-      createGetValues(vm, validSolution)(mockSnake, mockPoint).forEach(({ value }) => {
-        expect(isNaN(value)).toBe(false);
-      });
-    });
-
-    it('handles non-integer solution', () => {
-      expect(() => createGetValues(vm, nonIntegerSolution)(mockSnake, mockPoint))
-        .toThrow('The heuristic function returned NaN.');
+      expect(isNaN(createGetValues(vm, validSolution)(mockCell, mockSnake, mockPoint))).toBe(false);
     });
 
     it('handles invalid solution', () => {
-      expect(() => createGetValues(vm, invalidSolution)(mockSnake, mockPoint))
+      expect(() => createGetValues(vm, invalidSolution)(mockCell, mockSnake, mockPoint))
         .toThrow('No function called "heuristic" was found.');
     });
 
     it('handles empty solution', () => {
-      expect(() => createGetValues(vm, emptySolution)(mockSnake, mockPoint))
+      expect(() => createGetValues(vm, emptySolution)(mockCell, mockSnake, mockPoint))
         .toThrow('No function called "heuristic" was found.');
     });
   });

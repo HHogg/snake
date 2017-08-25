@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-const { VM } = require('vm2');
+const { VM, VMScript } = require('vm2');
 const { FN_TIMEOUT_SECONDS, CLOUD_RUN_TIMES, CLOUD_CANVAS_SIZE } = require('../config');
 const calculateAverage = require('../common/calculateAverage');
 const calculateScore = require('../common/calculateScore');
@@ -11,30 +11,22 @@ const getSurroundingCells = require('../common/getSurroundingCells');
 const xMax = CLOUD_CANVAS_SIZE;
 const yMax = CLOUD_CANVAS_SIZE;
 
-const createGetValues = (vm, solution) => (snake, point) => {
+const createGetValues = (vm, solution) => (cell, snake, point) => {
   return vm.run(`
 
 ${solution};
-
 
 if (typeof heuristic === 'undefined') {
   throw new Error('No function called "heuristic" was found.');
 }
 
-var cells = ${JSON.stringify(getSurroundingCells(snake, xMax, yMax))};
-var snake = JSON.parse('${JSON.stringify(snake)}');
-var point = JSON.parse('${JSON.stringify(point)}');
-
-cells.map(function(cell) {
-  const value = heuristic(cell, ${xMax}, ${yMax}, snake, point);
-
-  if (isNaN(parseInt(value))) {
-    throw new Error('The heuristic function returned NaN.');
-  }
-
-  return { cell, value };
-});
-
+heuristic(
+  JSON.parse('${JSON.stringify(cell)}'),
+  ${xMax},
+  ${yMax},
+  JSON.parse('${JSON.stringify(snake)}'),
+  JSON.parse('${JSON.stringify(point)}')
+);
   `);
 };
 
@@ -53,7 +45,15 @@ const runSolution = (getValues, env) => {
     score: 0,
   }));
 
-  const nextMatch = getValues(snake, point).sort((a, b) => a.value - b.value)[0];
+  const nextMatch = getSurroundingCells(snake, xMax, yMax).map((cell) => {
+    const value = getValues(cell, snake, point);
+
+    if (isNaN(parseInt(value))) {
+      throw new Error('The heuristic function returned NaN.');
+    }
+
+    return { cell, value };
+  }).sort((a, b) => a.value - b.value)[0];
 
   if (!nextMatch) {
     return { average, points, score };
@@ -89,7 +89,15 @@ const getStats = (solution) => {
   const vm = new VM({
     timeout: FN_TIMEOUT_SECONDS * 1000,
     sandbox: {},
+    wrapper: 'none',
+    console: 'off',
   });
+
+  try {
+    solution = new VMScript(solution).compile().code;
+  } catch (e) {
+    throw new Error('Failed to compile solution.');
+  }
 
   const getValues = createGetValues(vm, solution);
 
