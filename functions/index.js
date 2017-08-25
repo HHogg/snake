@@ -27,7 +27,7 @@ exports.addLeaderboardStats = functions
       });
     }
 
-    userSolutionRef.update({ running: false });
+    userSolutionRef.update({ error: null, running: false });
     return leaderboardSolutionRef.update(stats);
   });
 

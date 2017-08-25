@@ -98,7 +98,7 @@ class SavedSolutions extends Component {
     Promise.all([
       database()
         .ref(`leaderboard/${solution.key}`)
-        .update({
+        .set({
           title: solution.title,
           modified: database.ServerValue.TIMESTAMP,
           uid: userId,
@@ -147,6 +147,8 @@ class SavedSolutions extends Component {
                     average={ solution.average }
                     content={ solution.content }
                     displayName={ displayName }
+                    error={ solution.error }
+                    isRunning={ solution.running }
                     key={ solution.key }
                     modified={ solution.modified }
                     onDelete={ () => this.handleDelete(solution) }
