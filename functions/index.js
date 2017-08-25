@@ -10,19 +10,25 @@ exports.addLeaderboardStats = functions
   .ref('/leaderboardSolutions/{userId}/{solutionId}')
   .onWrite((event) => {
     const solution = event.data.val();
-    const solutionRef = admin
-      .database()
-      .ref(`/leaderboard/${event.data.key}`);
+    const { userId, solutionId } = event.params;
+    const leaderboardSolutionRef = admin.database().ref(`/leaderboard/${solutionId}`);
+    const userSolutionRef = admin.database().ref(`/solutions/${userId}/${solutionId}`);
+
+    userSolutionRef.update({ running: true });
 
     let stats;
 
     try {
       stats = getStats(solution);
     } catch (error) {
-      return solutionRef.update({ error: error.toString() });
+      return userSolutionRef.update({
+        error: error.toString(),
+        running: false,
+      });
     }
 
-    return solutionRef.update(stats);
+    userSolutionRef.update({ running: false });
+    return leaderboardSolutionRef.update(stats);
   });
 
 exports.limitSolutions = functions
