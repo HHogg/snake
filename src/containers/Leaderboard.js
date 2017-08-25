@@ -18,6 +18,8 @@ import Paragraph from '../components/Paragraph/Paragraph';
 import Solutions from '../components/Solutions/Solutions';
 import Solution from '../components/Solutions/Solution';
 
+const plural = (n, s, p) => n === 1 ? s : p;
+
 class Leaderboard extends Component {
   static propTypes = {
     solutions: PropTypes.array.isRequired,
@@ -103,11 +105,11 @@ class Leaderboard extends Component {
           </Paragraph>
 
           <Paragraph>
-            All solutions are run { CLOUD_RUN_TIMES } times
+            All solutions are run { CLOUD_RUN_TIMES } { plural(CLOUD_RUN_TIMES, 'time', 'times') }
             using <Link href="https://firebase.google.com/products/functions/">Firebase
             cloud functions</Link> on a { CLOUD_CANVAS_SIZE } x { CLOUD_CANVAS_SIZE } grid.
-            Out of those { CLOUD_RUN_TIMES } runs, the highest score is what is taken for the
-            Leaderboard.
+            { plural(CLOUD_RUN_TIMES, '', `Out of those ${ CLOUD_RUN_TIMES } runs the highest
+              score is what is taken for the Leaderboard.`) },
           </Paragraph>
 
           <Paragraph>
