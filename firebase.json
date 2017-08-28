@@ -1,17 +1,14 @@
 {
   "rules": {
-    "users": {
-      "$userId": {
-        ".read": true,
-        ".write": "auth.uid === $userId"
-      }
-    },
     "leaderboard": {
       ".read": true,
-      ".indexOn": "score",
+      ".indexOn": "_score/score",
       "$solutionId": {
         ".write": "auth.uid !== null && (!data.exists() || auth.uid === data.child('uid').val())",
-        ".validate": "!newData.hasChild('average') && !newData.hasChild('points') && !newData.hasChild('score')"
+        "_score": {
+          ".read": true,
+          ".write": false
+        }
       }
     },
     "leaderboardSolutions": {
@@ -23,6 +20,12 @@
     "solutions": {
       "$userId": {
         ".read": "auth.uid === $userId",
+        ".write": "auth.uid === $userId"
+      }
+    },
+    "users": {
+      "$userId": {
+        ".read": true,
         ".write": "auth.uid === $userId"
       }
     }

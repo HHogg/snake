@@ -46,7 +46,7 @@ class Leaderboard extends Component {
 
     this.solutionsRef = database()
       .ref('leaderboard')
-      .orderByChild('score')
+      .orderByChild('_score/score')
       .startAt(0)
       .limitToLast(LEADERBOARD_LIMIT);
 
@@ -130,13 +130,13 @@ class Leaderboard extends Component {
               { solutions.map((solution) =>
                 <Solution
                     avatar={ solution.avatar }
-                    average={ solution.average }
+                    average={ (solution._score || {}).average }
                     content={ solution.content }
                     displayName={ solution.displayName }
                     key={ solution.key }
                     modified={ solution.modified }
-                    points={ solution.points }
-                    score={ solution.score }
+                    points={ (solution._score || {}).points }
+                    score={ (solution._score || {}).score }
                     title={ solution.title } />
               ) }
             </Solutions>

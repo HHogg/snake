@@ -11,7 +11,7 @@ exports.addLeaderboardStats = functions
   .onWrite((event) => {
     const solution = event.data.val();
     const { userId, solutionId } = event.params;
-    const leaderboardSolutionRef = admin.database().ref(`/leaderboard/${solutionId}`);
+    const leaderboardSolutionScoreRef = admin.database().ref(`/leaderboard/${solutionId}/_score`);
     const userSolutionRef = admin.database().ref(`/solutions/${userId}/${solutionId}`);
 
     userSolutionRef.update({ running: true });
@@ -28,7 +28,7 @@ exports.addLeaderboardStats = functions
     }
 
     userSolutionRef.update({ error: null, running: false });
-    return leaderboardSolutionRef.update(stats);
+    return leaderboardSolutionScoreRef.update(stats);
   });
 
 exports.limitSolutions = functions

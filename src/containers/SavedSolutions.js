@@ -98,7 +98,7 @@ class SavedSolutions extends Component {
     Promise.all([
       database()
         .ref(`leaderboard/${solution.key}`)
-        .set({
+        .update({
           title: solution.title,
           modified: database.ServerValue.TIMESTAMP,
           uid: userId,
