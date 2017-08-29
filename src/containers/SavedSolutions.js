@@ -129,9 +129,11 @@ class SavedSolutions extends Component {
             the <Link onClick={ () => onShowLeaderboard() }>Leaderboard</Link>.
           </Paragraph>
 
-          <Paragraph>
-            At this time a maximum of { MAX_USER_SOLUTIONS } solutions can be saved.
-          </Paragraph>
+          { MAX_USER_SOLUTIONS && (
+            <Paragraph>
+              At this time a maximum of { MAX_USER_SOLUTIONS } solutions can be saved.
+            </Paragraph>
+            ) }
         </Flex>
 
         <Flex

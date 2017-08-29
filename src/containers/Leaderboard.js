@@ -105,7 +105,7 @@ class Leaderboard extends Component {
           </Paragraph>
 
           <Paragraph>
-            All solutions are run { CLOUD_RUN_TIMES } { plural(CLOUD_RUN_TIMES, 'time', 'times') }
+            All solutions are run { CLOUD_RUN_TIMES } { plural(CLOUD_RUN_TIMES, 'time ', 'times ') }
             using <Link href="https://firebase.google.com/products/functions/">Firebase
             cloud functions</Link> on a { CLOUD_CANVAS_SIZE } x { CLOUD_CANVAS_SIZE } grid.
             { plural(CLOUD_RUN_TIMES, '', `Out of those ${ CLOUD_RUN_TIMES } runs the highest

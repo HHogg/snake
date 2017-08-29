@@ -3,6 +3,7 @@
   "description": "Snake Heuristics a game of pathfinding",
   "scripts": {
     "build:static": "NODE_ENV=production BABEL_ENV=production webpack --config webpack.static.config.js",
+    "deploy": "firebase deploy --project snake-heuristics",
     "gh-pages": "yarn build:static && gh-pages -d ./static --repo git@github.com:HHogg/snake-heuristics.git",
     "lint": "eslint --config .eslintrc ./src",
     "start": "webpack-dev-server --port 4000 --inline --hot --content-base src/",
