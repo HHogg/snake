@@ -158,7 +158,7 @@ const solutionsSelector = createSelector(
   (state) => state.solutions.leaderboardUsers,
   (solutions, users) => Object.keys(solutions)
     .map((key) => ({ ...solutions[key], ...users[solutions[key].uid], key }))
-    .sort((a, b) => b.score - a.score),
+    .sort((a, b) => b._score.score - a._score.score),
 );
 
 export default connect((state) => ({
