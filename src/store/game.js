@@ -1,18 +1,12 @@
+import { createSelector } from 'reselect';
 import actionCreator from '../utils/actionCreator';
-import calculateAverage from '../../functions/common/calculateAverage';
-import calculateScore from '../../functions/common/calculateScore';
+import { createBlock, moveForwards, moveBackwards } from '../utils/history';
 
 const initialState = {
-  average: 0,
-  history: [[]],
+  history: [],
   isPlaying: false,
   isRunning: false,
   isGameOver: false,
-  point: null,
-  points: 0,
-  score: 0,
-  snake: null,
-  tails: [],
 };
 
 const GAME_COLLECT_POINT = 'GAME_COLLECT_POINT';
@@ -20,6 +14,7 @@ const GAME_MOVE_SNAKE_BACKWARDS = 'GAME_MOVE_SNAKE_BACKWARDS';
 const GAME_MOVE_SNAKE_FORWARDS = 'GAME_MOVE_SNAKE_FORWARDS';
 const GAME_PAUSE_GAME = 'GAME_PAUSE_GAME';
 const GAME_PLAY_GAME = 'GAME_PLAY_GAME';
+const GAME_POP_HISTORY = 'GAME_POP_HISTORY';
 export const GAME_RESET_GAME = 'GAME_RESET_GAME';
 const GAME_SET_ENVIRONMENT = 'GAME_SET_ENVIRONMENT';
 const GAME_START_GAME = 'GAME_START_GAME';
@@ -30,58 +25,44 @@ export const gameMoveSnakeBackwards = actionCreator(GAME_MOVE_SNAKE_BACKWARDS);
 export const gameMoveSnakeForwards = actionCreator(GAME_MOVE_SNAKE_FORWARDS);
 export const gamePauseGame = actionCreator(GAME_PAUSE_GAME);
 export const gamePlayGame = actionCreator(GAME_PLAY_GAME);
+export const gamePopHistory = actionCreator(GAME_POP_HISTORY);
 export const gameResetGame = actionCreator(GAME_RESET_GAME);
 export const gameSetEnvironment = actionCreator(GAME_SET_ENVIRONMENT);
 export const gameStartGame = actionCreator(GAME_START_GAME);
 export const gameStopGame = actionCreator(GAME_STOP_GAME);
 
+export const selectGameHistory = ({ game }) => game.history;
+export const selectGameNow = createSelector(selectGameHistory, (h) => h[h.length - 1]);
+export const selectGamePrev = createSelector(selectGameHistory, (h) => h[h.length - 2]);
+export const selectGameNowPoint = createSelector(selectGameNow, (h) => h && h[0]);
+export const selectGameNowSnake = createSelector(selectGameNow, (h) => h && h[1]);
+export const selectGameNowTails = createSelector(selectGameNow, (h) => h && h[2]);
+export const selectGamePrevPoint = createSelector(selectGamePrev, (h) => h && h[0]);
+export const selectGamePrevSnake = createSelector(selectGamePrev, (h) => h && h[1]);
+export const selectGamePrevTails = createSelector(selectGamePrev, (h) => h && h[2]);
+
 export default (state = initialState, { type, payload }) => {
   switch (type) {
   case GAME_COLLECT_POINT:
-    const history = [
-      [payload.point, ...state.history[0]],
-      ...state.history.slice(1),
-    ];
-
     return {
       ...state,
-      average: calculateAverage(history),
-      history: [[], ...history],
-      point: payload.point,
-      points: state.points + 1,
-      score: state.score + calculateScore(payload.xMax * payload.yMax,
-        calculateAverage(history),
-        history[0].length,
-        state.points),
-      snake: payload.snake,
-      tails: [],
+      history: createBlock(
+        state.history,
+        state.history.length,
+        payload.snake,
+        payload.point,
+      ),
     };
   case GAME_MOVE_SNAKE_BACKWARDS:
     return {
       ...state,
-      history: [
-        state.history[0].slice(1),
-        ...state.history.slice(1),
-      ],
+      history: moveBackwards(state.history, state.history.length - 1),
       isGameOver: false,
-      snake: [
-        ...state.snake.slice(1),
-        state.tails[0],
-      ],
-      tails: state.tails.slice(1),
     };
   case GAME_MOVE_SNAKE_FORWARDS:
     return {
       ...state,
-      history: [
-        [payload.snake[0], ...state.history[0]],
-        ...state.history.slice(1),
-      ],
-      snake: payload.snake,
-      tails: [
-        payload.tail,
-        ...state.tails,
-      ],
+      history: moveForwards(state.history, state.history.length - 1, payload.snake, payload.tail),
     };
   case GAME_PAUSE_GAME:
     return {
@@ -93,13 +74,23 @@ export default (state = initialState, { type, payload }) => {
       ...state,
       isRunning: true,
     };
+  case GAME_POP_HISTORY:
+    return {
+      ...state,
+      history: state.history.slice(0, -1),
+      isGameOver: false,
+    };
   case GAME_RESET_GAME:
     return initialState;
   case GAME_SET_ENVIRONMENT:
     return {
       ...state,
-      point: payload.point,
-      snake: payload.snake,
+      history: createBlock(
+        state.history,
+        0,
+        payload.snake,
+        payload.point,
+      ),
     };
   case GAME_START_GAME:
     return {

@@ -6,9 +6,15 @@ import {
   gameMoveSnakeBackwards,
   gameMoveSnakeForwards,
   gamePauseGame,
+  gamePopHistory,
   gameResetGame,
   gameSetEnvironment,
   gameStopGame,
+  selectGameNowPoint,
+  selectGameNowSnake,
+  selectGameNowTails,
+  selectGamePrevPoint,
+  selectGamePrevSnake,
 } from '../store/game';
 import Flex from '../components/Flex/Flex';
 import Canvas from './Canvas';
@@ -26,20 +32,22 @@ class Game extends Component {
   static propTypes = {
     consoleLog: PropTypes.func.isRequired,
     content: PropTypes.string.isRequired,
-    history: PropTypes.array.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     isRunning: PropTypes.bool.isRequired,
     onCollectPoint: PropTypes.func.isRequired,
     onGameInit: PropTypes.func.isRequired,
     onPauseGame: PropTypes.func.isRequired,
+    onPreviousPoint: PropTypes.func.isRequired,
     onResetGame: PropTypes.func.isRequired,
     onStepBackwards: PropTypes.func.isRequired,
     onStepForwards: PropTypes.func.isRequired,
     onStopGame: PropTypes.func.isRequired,
     point: PropTypes.array,
+    previousPoint: PropTypes.array,
+    previousSnake: PropTypes.array,
     snake: PropTypes.array,
-    tails: PropTypes.array.isRequired,
+    tails: PropTypes.array,
     xMax: PropTypes.number.isRequired,
     yMax: PropTypes.number.isRequired,
   };
@@ -155,8 +163,8 @@ class Game extends Component {
     consoleLog({ message });
   }
 
-  handleRefresh(snake = this.props.snake) {
-    this.run({ ...this.props, snake });
+  handleRefresh(snake = this.props.snake, point = this.props.point) {
+    this.run({ ...this.props, point, snake });
   }
 
   handleStepForwards() {
@@ -164,11 +172,23 @@ class Game extends Component {
   }
 
   handleStepBackwards() {
-    const { onStepBackwards, snake, tails } = this.props;
-    const nextSnake = [...snake.slice(1), tails[0]];
+    const {
+      onPreviousPoint,
+      onStepBackwards,
+      previousPoint,
+      previousSnake,
+      snake,
+      tails,
+    } = this.props;
 
-    onStepBackwards();
-    this.handleRefresh(nextSnake);
+    if (tails.length) {
+      const nextSnake = [...snake.slice(1), tails[0]];
+      onStepBackwards();
+      this.handleRefresh(nextSnake);
+    } else if (previousSnake && previousPoint) {
+      onPreviousPoint();
+      this.handleRefresh(previousSnake, previousPoint);
+    }
   }
 
   handleReset() {
@@ -224,13 +244,14 @@ class Game extends Component {
 
 export default connect((state) => ({
   content: state.editor.content,
-  history: state.game.history,
   isLoggedIn: !!state.user.id,
   isPlaying: state.game.isPlaying,
   isRunning: state.game.isRunning,
-  point: state.game.point,
-  snake: state.game.snake,
-  tails: state.game.tails,
+  point: selectGameNowPoint(state),
+  previousPoint: selectGamePrevPoint(state),
+  previousSnake: selectGamePrevSnake(state),
+  snake: selectGameNowSnake(state),
+  tails: selectGameNowTails(state),
   xMax: state.canvas.xMax,
   yMax: state.canvas.yMax,
 }), {
@@ -238,6 +259,7 @@ export default connect((state) => ({
   onCollectPoint: gameCollectPoint,
   onGameInit: gameSetEnvironment,
   onPauseGame: gamePauseGame,
+  onPreviousPoint: gamePopHistory,
   onResetGame: gameResetGame,
   onStepBackwards: gameMoveSnakeBackwards,
   onStepForwards: gameMoveSnakeForwards,

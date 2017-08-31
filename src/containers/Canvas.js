@@ -8,7 +8,7 @@ import {
   CHAR_POINT,
 } from '../../functions/config';
 import { canvasSetSize } from '../store/canvas';
-import { gameResetGame } from '../store/game';
+import { gameResetGame, selectGameNowPoint, selectGameNowSnake } from '../store/game';
 import getCSSVar from '../utils/getCSSVar';
 
 class CanvasC extends Component {
@@ -133,8 +133,8 @@ class CanvasC extends Component {
 }
 
 export default connect((state) => ({
-  point: state.game.point,
-  snake: state.game.snake,
+  point: selectGameNowPoint(state),
+  snake: selectGameNowSnake(state),
   xMax: state.canvas.xMax,
   yMax: state.canvas.yMax,
 }), {
