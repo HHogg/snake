@@ -29,6 +29,7 @@
     "classnames": "^2.2.5",
     "clean-webpack-plugin": "^0.1.15",
     "compression-webpack-plugin": "^0.3.2",
+    "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "ejs-loader": "^0.3.0",
     "eslint": "^3.15.0",

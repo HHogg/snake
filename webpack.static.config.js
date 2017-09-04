@@ -3,6 +3,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/static.js',
@@ -56,5 +57,9 @@ module.exports = {
     new OfflinePlugin({
       publicPath: '/snake-heuristics',
     }),
+    new CopyWebpackPlugin([{
+      from: './src/assets',
+      to: './assets',
+    }]),
   ],
 };
