@@ -91,7 +91,9 @@ class CanvasC extends Component {
     for (let y = 0; y < yMax; y++) {
       for (let x = 0; x < xMax; x++) {
         const value = values && values[y] && values[y][x];
-        const color = isNaN(value) ? this.colorMap.error : this.colorMap.inactive;
+        const color = isNaN(value) && value !== '_S_'
+          ? this.colorMap.error
+          : this.colorMap.inactive;
 
         this.drawCell(x, y, color);
       }
