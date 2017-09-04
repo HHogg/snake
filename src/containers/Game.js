@@ -233,7 +233,7 @@ class Game extends Component {
             </Flex>
           ) }
 
-          <Flex>
+          <Flex container>
             <Editor />
           </Flex>
         </Flex>

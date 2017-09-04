@@ -1,6 +1,5 @@
 .sh-editor {
-  height: 100%;
-  flex: 1 1 0%;
+  flex: 1 1 100%;
 }
 
 .ace-sh .ace_gutter {

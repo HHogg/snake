@@ -4,9 +4,6 @@ import { Provider } from 'react-redux';
 import { initializeApp } from 'firebase';
 import configureStore from './store';
 import Application from './containers/Application';
-import 'normalize.css/normalize.css';
-import 'open-color/open-color.css';
-import './client.css';
 
 initializeApp({
   apiKey: 'AIzaSyDjffGgEF_020YYP4h5TjG8SUyzxd7EVi8',

@@ -10,9 +10,6 @@ import { initializeApp } from 'firebase';
 import configureStore from './store';
 import Application from './containers/Application';
 import template from './index.ejs';
-import 'normalize.css/normalize.css';
-import 'open-color/open-color.css';
-import './client.css';
 
 if (typeof document !== 'undefined') {
   initializeApp({

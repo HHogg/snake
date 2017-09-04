@@ -1,3 +1,7 @@
+import 'normalize.css/normalize.css';
+import 'open-color/open-color.css';
+import '../client.css';
+
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { auth } from 'firebase';
@@ -17,6 +21,7 @@ import Menu from './Menu';
 import Leaderboard from './Leaderboard';
 import SavedSolutions from './SavedSolutions';
 import UserMenu from './UserMenu';
+
 
 class Application extends Component {
   static propTypes = {
