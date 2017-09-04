@@ -34,18 +34,18 @@ export default class Icon extends Component {
   render() {
     const { name } = this.props;
     const { x, y, p } = ICONS[name];
-    const h = 1;
+    const h = 16;
     const w = h / ( x / y );
 
     return (
       <svg
           className="sh-icon"
           fill="currentColor"
-          height={ `${h}rem` }
+          height={ `${h}px` }
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
           viewBox={ `0 0 ${x} ${y}` }
-          width={ `${w}rem` }>
+          width={ `${w}px` }>
         <path d={ p } />
       </svg>
     );

@@ -75,6 +75,8 @@ class CanvasC extends Component {
     this.el.removeAttribute('height');
     this.el.style.width = 'auto';
     this.el.style.height = 'auto';
+    this.el.style.minHeight = '0';
+    this.el.style.minWidth = '0';
     this.initDimensions();
   }
 
@@ -129,7 +131,7 @@ class CanvasC extends Component {
     return (
       <canvas
           ref={ (el) => this.el = el }
-          style={ { flex: '1 1 0%' } } />
+          style={ { flex: '1 1 0%', minHeight: '0', minWidth: '0' } } />
     );
   }
 }
