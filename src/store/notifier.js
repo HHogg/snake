@@ -1,5 +1,5 @@
 import { v1 } from 'uuid';
-import actionCreator from '../utils/actionCreator';
+import { createAction, handleActions } from '../utils/reduxActions';
 
 const initialState = {
   notifications: [],
@@ -8,41 +8,24 @@ const initialState = {
 const NOTIFIER_ADD_NOTFICATION = 'NOTIFIER_ADD_NOTFICATION';
 const NOTIFIER_REMOVE_NOTIFICATION = 'NOTIFIER_REMOVE_NOTIFICATION';
 
-export const notifierAddNotfication = ({ notification, type }) =>
-  actionCreator(NOTIFIER_ADD_NOTFICATION)({
-    notification: {
-      notification,
-      type,
-      id: v1(),
-    },
-  });
-
+export const notifierAddNotfication = createAction(NOTIFIER_ADD_NOTFICATION,
+  ({ notification, type }) => ({ notification, type, id: v1() }));
+export const notifierRemoveNotification = createAction(NOTIFIER_REMOVE_NOTIFICATION,
+  ({ id }) => ({ id }));
 export const notifierAddSuccessNotification = (notification) =>
   notifierAddNotfication({ notification, type: 'success' });
-
 export const notifierAddErrorNotification = (notification) =>
   notifierAddNotfication({ notification, type: 'error' });
 
-
-export const notifierRemoveNotification = actionCreator(NOTIFIER_REMOVE_NOTIFICATION);
-
-export default (state = initialState, { type, payload }) => {
-  switch (type) {
-  case NOTIFIER_ADD_NOTFICATION:
-    return {
-      ...state,
-      notifications: [
-        payload.notification,
-        ...state.notifications,
-      ],
-    };
-  case NOTIFIER_REMOVE_NOTIFICATION:
-    return {
-      ...state,
-      notifications: state.notifications
-        .filter(({ id }) => id !== payload.id),
-    };
-  default:
-    return state;
-  }
-};
+export default handleActions({
+  [NOTIFIER_ADD_NOTFICATION]: ({ notifications }, { payload }) => ({
+    notifications: [{
+      notification: payload.notification,
+      type: payload.type,
+      id: payload.id,
+    }].concat(notifications),
+  }),
+  [NOTIFIER_REMOVE_NOTIFICATION]: ({ notifications }, { payload }) => ({
+    notifications: notifications.filter(({ id }) => id !== payload.id),
+  }),
+}, initialState);

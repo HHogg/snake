@@ -1,4 +1,4 @@
-import actionCreator from '../utils/actionCreator';
+import { createAction, handleActions } from '../utils/reduxActions';
 
 const initialState = {
   xMax: 0,
@@ -7,17 +7,12 @@ const initialState = {
 
 const CANVAS_SET_SIZE = 'CANVAS_SET_SIZE';
 
-export const canvasSetSize = actionCreator(CANVAS_SET_SIZE);
+export const canvasSetSize = createAction(CANVAS_SET_SIZE
+  , ({ xMax, yMax }) => ({ xMax, yMax }));
 
-export default (state = initialState, { type, payload }) => {
-  switch (type) {
-  case CANVAS_SET_SIZE:
-    return {
-      ...state,
-      xMax: payload.xMax,
-      yMax: payload.yMax,
-    };
-  default:
-    return state;
-  }
-};
+export default handleActions({
+  [CANVAS_SET_SIZE]: (_, { payload }) => ({
+    xMax: payload.xMax,
+    yMax: payload.yMax,
+  }),
+}, initialState);

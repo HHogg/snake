@@ -1,4 +1,4 @@
-import actionCreator from '../utils/actionCreator';
+import { createAction, handleActions } from '../utils/reduxActions';
 
 const initialState = {
   skipIntro: false,
@@ -6,16 +6,10 @@ const initialState = {
 
 const UI_SKIP_INTRO = 'UI_SKIP_INTRO';
 
-export const uiSkipIntro = actionCreator(UI_SKIP_INTRO);
+export const uiSkipIntro = createAction(UI_SKIP_INTRO);
 
-export default (state = initialState, { type }) => {
-  switch (type) {
-  case UI_SKIP_INTRO:
-    return {
-      ...state,
-      skipIntro: true,
-    };
-  default:
-    return state;
-  }
-};
+export default handleActions({
+  [UI_SKIP_INTRO]: () => ({
+    skipIntro: true,
+  }),
+}, initialState);

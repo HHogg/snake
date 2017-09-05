@@ -1,4 +1,4 @@
-import actionCreator from '../utils/actionCreator';
+import { createAction, handleActions } from '../utils/reduxActions';
 
 /* eslint-disable max-len */
 const initialState = {
@@ -31,42 +31,32 @@ const EDITOR_SET_TITLE = 'EDITOR_SET_TITLE';
 const EDITOR_SET_UNEDITED = 'EDITOR_SET_UNEDITED';
 const EDITOR_START_NEW = 'EDITOR_START_NEW';
 
-export const editorSelectSolution = actionCreator(EDITOR_SELECT_SOLUTION);
-export const editorSetContent = actionCreator(EDITOR_SET_CONTENT);
-export const editorSetTitle = actionCreator(EDITOR_SET_TITLE);
-export const editorSetUnedited = actionCreator(EDITOR_SET_UNEDITED);
-export const editorStartNew = actionCreator(EDITOR_START_NEW);
+export const editorSelectSolution = createAction(EDITOR_SELECT_SOLUTION,
+  ({ content, title, key }) => ({ content, title, key }));
+export const editorSetContent = createAction(EDITOR_SET_CONTENT,
+  ({ content }) => ({ content }));
+export const editorSetTitle = createAction(EDITOR_SET_TITLE,
+  ({ title }) => ({ title }));
+export const editorSetUnedited = createAction(EDITOR_SET_UNEDITED);
+export const editorStartNew = createAction(EDITOR_START_NEW);
 
-export default (state = initialState, { type, payload }) => {
-  switch (type) {
-  case EDITOR_SET_CONTENT:
-    return {
-      ...state,
-      content: payload.content,
-      edited: true,
-    };
-  case EDITOR_SET_TITLE:
-    return {
-      ...state,
-      edited: true,
-      title: payload.title,
-    };
-  case EDITOR_SET_UNEDITED:
-    return {
-      ...state,
-      edited: false,
-    };
-  case EDITOR_SELECT_SOLUTION:
-    return {
-      ...state,
-      edited: false,
-      content: payload.content,
-      title: payload.title,
-      selectedSolutionKey: payload.key,
-    };
-  case EDITOR_START_NEW:
-    return initialState;
-  default:
-    return state;
-  }
-};
+export default handleActions({
+  [EDITOR_SET_CONTENT]: (_, { payload }) => ({
+    content: payload.content,
+    edited: true,
+  }),
+  [EDITOR_SET_TITLE]: (_, { payload }) => ({
+    edited: true,
+    title: payload.title,
+  }),
+  [EDITOR_SET_UNEDITED]: () => ({
+    edited: false,
+  }),
+  [EDITOR_SELECT_SOLUTION]: (_, { payload }) => ({
+    content: payload.content,
+    edited: false,
+    selectedSolutionKey: payload.key,
+    title: payload.title,
+  }),
+  [EDITOR_START_NEW]: () => initialState,
+}, initialState);

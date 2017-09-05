@@ -1,4 +1,4 @@
-import actionCreator from '../utils/actionCreator';
+import { createAction, handleActions } from '../utils/reduxActions';
 
 const initialState = {
   id: undefined,
@@ -8,18 +8,13 @@ const initialState = {
 
 const USER_LOGIN_SUCCESSFUL = 'USER_LOGIN_SUCCESSFUL';
 
-export const userLoginSuccessful = actionCreator(USER_LOGIN_SUCCESSFUL);
+export const userLoginSuccessful = createAction(USER_LOGIN_SUCCESSFUL,
+  ({ id, avatar, displayName }) => ({ id, avatar, displayName }));
 
-export default (state = initialState, { type, payload }) => {
-  switch (type) {
-  case USER_LOGIN_SUCCESSFUL:
-    return {
-      ...state,
-      id: payload.id,
-      avatar: payload.avatar,
-      displayName: payload.displayName,
-    };
-  default:
-    return state;
-  }
-};
+export default handleActions({
+  [USER_LOGIN_SUCCESSFUL]: (_, { payload }) => ({
+    id: payload.id,
+    avatar: payload.avatar,
+    displayName: payload.displayName,
+  }),
+}, initialState);
