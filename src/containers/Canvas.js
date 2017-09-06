@@ -109,7 +109,7 @@ class CanvasC extends Component {
       for (let x = 0; x < xMax; x++) {
         const value = values && values[y] && values[y][x];
 
-        if (value !== null) {
+        if (value !== null && value !== '_S_') {
           this.ctx.fillStyle = this.colorMap.text;
           this.ctx.textAlign = 'center';
           this.ctx.font = '"Courier New", Courier, monospace';
