@@ -1,6 +1,9 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+import createHistory from 'history/createBrowserHistory';
 import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
 import { initializeApp } from 'firebase';
 import configureStore from './store';
 import Application from './components/Application';
@@ -14,8 +17,24 @@ initializeApp({
   messagingSenderId: '1049330516962',
 });
 
-render((
-  <Provider store={ configureStore() }>
-    <Application />
-  </Provider>
-), document.getElementById('react-root'));
+const history = createHistory();
+const store = configureStore(history);
+
+const render = (AppComponent) => {
+  ReactDOM.render(
+    <AppContainer>
+      <Provider store={ store }>
+        <ConnectedRouter history={ history }>
+          <AppComponent />
+        </ConnectedRouter>
+      </Provider>
+    </AppContainer>,
+    document.getElementById('react-root'));
+};
+
+render(Application);
+
+if (module.hot) {
+  module.hot.accept('./components/Application',
+    () => render(Application));
+}

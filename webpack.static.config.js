@@ -1,15 +1,20 @@
+const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  entry: './src/static.js',
+  entry: [
+    'babel-polyfill',
+    './src/static.js',
+  ],
   output: {
     filename: 'assets/snake-heuristics.[hash].min.js',
-    path: 'static',
+    path: path.resolve(__dirname, 'static'),
     publicPath: '/snake-heuristics',
     libraryTarget: 'umd',
   },
@@ -42,18 +47,17 @@ module.exports = {
       minimize: true,
       debug: false,
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
+    new UglifyJSPlugin({
+      uglifyOptions: {
+        ecma: 6,
       },
     }),
     new webpack.DefinePlugin({
-      __DEVELOPMENT__: false,
       'process.env': {
         NODE_ENV: '\'production\'',
       },
     }),
-    new StaticSiteGeneratorPlugin('main'),
+    new StaticSiteGeneratorPlugin(),
     new OfflinePlugin({
       publicPath: '/snake-heuristics',
     }),

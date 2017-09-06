@@ -3,7 +3,7 @@ import { LOCAL_STORAGE_REDUX_KEY } from '../../functions/config';
 
 const storeList = ['editor', 'ui'];
 
-export default function localStore() {
+export default () => {
   return (next) => (reducer, initialState, enhancer) => {
     let persistedState;
     let finalInitialState;
@@ -32,4 +32,4 @@ export default function localStore() {
 
     return store;
   };
-}
+};

@@ -1,32 +1,19 @@
-import { combineReducers, compose, createStore } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import application from './application';
-import canvas from './canvas';
-import console from './console';
-import editor from './editor';
-import game from './game';
-import notifier from './notifier';
-import solutions from './solutions';
-import ui from './ui';
-import user from './user';
+import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
 import localStore from './localStore';
+import rootReducer from './root';
 
-export default function configureStore(initialState) {
+export default function configureStore(history) {
+  const finalCompose = process.env.NODE_ENV === 'production'
+    ? compose
+    : composeWithDevTools;
+
   return createStore(
-    combineReducers({
-      application,
-      canvas,
-      console,
-      editor,
-      game,
-      notifier,
-      solutions,
-      ui,
-      user,
-    }),
-    initialState,
-    __DEVELOPMENT__
-      ? composeWithDevTools(localStore())
-      : compose(localStore()),
+    rootReducer,
+    finalCompose(
+      localStore(),
+      applyMiddleware(createRouterMiddleware(history))
+    ),
   );
 }

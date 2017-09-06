@@ -6,7 +6,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
+import { StaticRouter } from 'react-router';
+import { ConnectedRouter } from 'react-router-redux';
 import { initializeApp } from 'firebase';
+import createBrowserHistory from 'history/createBrowserHistory';
+import createMemoryHistory from 'history/createMemoryHistory';
 import configureStore from './store';
 import Application from './components/Application';
 import template from './index.ejs';
@@ -21,15 +25,22 @@ if (typeof document !== 'undefined') {
     messagingSenderId: '1049330516962',
   });
 
+  const history = createBrowserHistory();
+  const store = configureStore(history);
+
   render((
-    <Provider store={ configureStore() }>
-      <Application />
+    <Provider store={ store }>
+      <ConnectedRouter history={ history }>
+        <Application />
+      </ConnectedRouter>
     </Provider>
   ), document.getElementById('react-root'));
 }
 
-export default (locals) => {
-  const hash = locals.webpackStats.hash;
+export default ({ path, webpackStats }) => {
+  const history = createMemoryHistory();
+  const store = configureStore(history);
+  const hash = webpackStats.hash;
 
   return template({
     htmlWebpackPlugin: {
@@ -37,8 +48,10 @@ export default (locals) => {
         stylesheet: `/snake-heuristics/assets/snake-heuristics.${hash}.min.css`,
         script: `/snake-heuristics/assets/snake-heuristics.${hash}.min.js`,
         html: renderToString(
-          <Provider store={ configureStore() }>
-            <Application />
+          <Provider store={ store }>
+            <StaticRouter location={ path }>
+              <Application />
+            </StaticRouter>
           </Provider>
         ),
       },

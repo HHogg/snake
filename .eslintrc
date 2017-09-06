@@ -8,7 +8,6 @@
     "jest": true
   },
   "globals": {
-    "__DEVELOPMENT__": true,
     "document": true,
     "window": true,
     "Promise": true,

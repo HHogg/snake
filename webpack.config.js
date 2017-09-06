@@ -2,10 +2,14 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: 'inline-source-map',
-  entry: {
-    main: './src/client.js',
-  },
+  devtool: 'source-map',
+  entry: [
+    'babel-polyfill',
+    'react-hot-loader/patch',
+    'webpack-dev-server/client?http://localhost:4000',
+    'webpack/hot/only-dev-server',
+    './src/client.js',
+  ],
   output: {
     filename: 'snake-heuristics.js',
     publicPath: '/',
@@ -25,11 +29,17 @@ module.exports = {
     }],
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.ejs',
     }),
-    new webpack.DefinePlugin({
-      __DEVELOPMENT__: true,
-    }),
   ],
+  devServer: {
+    contentBase: './src',
+    host: 'localhost',
+    port: 4000,
+    historyApiFallback: true,
+    hot: true,
+  },
 };
