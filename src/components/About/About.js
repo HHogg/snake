@@ -1,19 +1,18 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import AboutSteps from '../components/About/AboutSteps';
-import AboutStep from '../components/About/AboutStep';
-import HeuristicValueSVG from '../components/About/HeuristicValueSVG';
-import PathfindingSVG from '../components/About/PathfindingSVG';
-import ScoringSVG from '../components/About/ScoringSVG';
-import Button from '../components/Button/Button';
-import ButtonGroup from '../components/Button/ButtonGroup';
-import Flex from '../components/Flex/Flex';
-import Heading from '../components/Heading/Heading';
-import Link from '../components/Link/Link';
-import Paragraph from '../components/Paragraph/Paragraph';
-import GithubAuthenticationLink from './GithubAuthenticationLink';
+import AboutStep from './AboutStep';
+import AboutSteps from './AboutSteps';
+import Button from '../Button/Button';
+import ButtonGroup from '../Button/ButtonGroup';
+import Flex from '../Flex/Flex';
+import GithubAuthenticationLink from '../GithubAuthenticationLink';
+import Heading from '../Heading/Heading';
+import HeuristicValueSVG from './HeuristicValueSVG';
+import Link from '../Link/Link';
+import Paragraph from '../Paragraph/Paragraph';
+import PathfindingSVG from './PathfindingSVG';
+import ScoringSVG from './ScoringSVG';
 
-class About extends Component {
+export default class About extends Component {
   static propTypes = {
     isAboutActive: PropTypes.bool.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
@@ -117,8 +116,3 @@ class About extends Component {
     );
   }
 }
-
-export default connect((state) => ({
-  isAboutActive: state.application.about,
-  isLoggedIn: !!state.user.id,
-}), {})(About);

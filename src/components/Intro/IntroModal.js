@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import About from '../../containers/About';
+import About from '../About';
 import SnakeHeuristicsSVG from '../About/SnakeHeuristicsSVG';
 import './IntroModal.css';
 

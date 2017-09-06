@@ -1,15 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import {
-  applicationShowAbout,
-  applicationShowGame,
-  applicationShowLeaderboard,
-} from '../store/application';
-import Link from '../components/Link/Link';
-import Menu from '../components/Menu/Menu';
-import MenuItem from '../components/Menu/MenuItem';
+import Link from '../Link/Link';
+import Menu from '../Menu/Menu';
+import MenuItem from '../Menu/MenuItem';
 
-class MenuC extends Component {
+export default class MainMenu extends Component {
   static propTypes = {
     isAboutActive: PropTypes.bool.isRequired,
     isGameActive: PropTypes.bool.isRequired,
@@ -52,13 +46,3 @@ class MenuC extends Component {
     );
   }
 }
-
-export default connect((state) => ({
-  isAboutActive: state.application.about,
-  isGameActive: state.application.game,
-  isLeaderboardActive: state.application.leaderboard,
-}), {
-  onShowAbout: applicationShowAbout,
-  onShowGame: applicationShowGame,
-  onShowLeaderboard: applicationShowLeaderboard,
-})(MenuC);

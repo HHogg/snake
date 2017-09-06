@@ -1,34 +1,17 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { consoleAddMessage } from '../store/console';
-import {
-  gameCollectPoint,
-  gameMoveSnakeBackwards,
-  gameMoveSnakeForwards,
-  gamePauseGame,
-  gamePopHistory,
-  gameResetGame,
-  gameSetEnvironment,
-  gameStopGame,
-  selectGameNowPoint,
-  selectGameNowSnake,
-  selectGameNowTails,
-  selectGamePrevPoint,
-  selectGamePrevSnake,
-} from '../store/game';
-import Flex from '../components/Flex/Flex';
-import Canvas from './Canvas';
-import Console from './Console';
-import Controller from './Controller';
-import Editor from './Editor';
-import Scoreboard from './Scoreboard';
-import SolutionTitle from './SolutionTitle';
-import { createEnvironment, createPoint } from '../../functions/common/createEnvironment';
-import containsCoordinates from '../../functions/common/containsCoordinates';
-import getSurroundingCells from '../../functions/common/getSurroundingCells';
-import Sandbox from '../utils/Sandbox';
+import { createEnvironment, createPoint } from '../../../functions/common/createEnvironment';
+import containsCoordinates from '../../../functions/common/containsCoordinates';
+import getSurroundingCells from '../../../functions/common/getSurroundingCells';
+import Sandbox from '../../utils/Sandbox';
+import Canvas from '../Canvas';
+import Console from '../Console';
+import Controller from '../Controller';
+import Editor from '../Editor';
+import Flex from '../Flex/Flex';
+import Scoreboard from '../Scoreboard';
+import SolutionTitle from '../SolutionTitle';
 
-class Game extends Component {
+export default class Game extends Component {
   static propTypes = {
     consoleLog: PropTypes.func.isRequired,
     content: PropTypes.string.isRequired,
@@ -241,27 +224,3 @@ class Game extends Component {
     );
   }
 }
-
-export default connect((state) => ({
-  content: state.editor.content,
-  isLoggedIn: !!state.user.id,
-  isPlaying: state.game.isPlaying,
-  isRunning: state.game.isRunning,
-  point: selectGameNowPoint(state),
-  previousPoint: selectGamePrevPoint(state),
-  previousSnake: selectGamePrevSnake(state),
-  snake: selectGameNowSnake(state),
-  tails: selectGameNowTails(state),
-  xMax: state.canvas.xMax,
-  yMax: state.canvas.yMax,
-}), {
-  consoleLog: consoleAddMessage,
-  onCollectPoint: gameCollectPoint,
-  onGameInit: gameSetEnvironment,
-  onPauseGame: gamePauseGame,
-  onPreviousPoint: gamePopHistory,
-  onResetGame: gameResetGame,
-  onStepBackwards: gameMoveSnakeBackwards,
-  onStepForwards: gameMoveSnakeForwards,
-  onStopGame: gameStopGame,
-})(Game);

@@ -1,0 +1,5 @@
+.sh-layout--max-width {
+  margin: 0 auto;
+  max-width: 72rem;
+  width: 100%;
+}

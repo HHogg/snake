@@ -1,13 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { applicationShowSavedSolutions } from '../store/application';
-import Link from '../components/Link/Link';
-import Menu from '../components/Menu/Menu';
-import MenuItem from '../components/Menu/MenuItem';
-import UserAvatar from '../components/UserAvatar/UserAvatar';
-import GithubAuthenticationLink from './GithubAuthenticationLink';
+import GithubAuthenticationLink from '../GithubAuthenticationLink';
+import Link from '../Link/Link';
+import Menu from '../Menu/Menu';
+import MenuItem from '../Menu/MenuItem';
+import UserAvatar from '../UserAvatar/UserAvatar';
 
-class UserMenu extends Component {
+export default class UserMenu extends Component {
   static propTypes = {
     avatar: PropTypes.string,
     displayName: PropTypes.string,
@@ -52,12 +50,3 @@ class UserMenu extends Component {
     );
   }
 }
-
-export default connect((state) => ({
-  avatar: state.user.avatar,
-  displayName: state.user.displayName,
-  isLoggedIn: !!state.user.id,
-  isSavedSolutionsActive: state.application.savedSolutions,
-}), {
-  onShowSavedSolutions: applicationShowSavedSolutions,
-})(UserMenu);

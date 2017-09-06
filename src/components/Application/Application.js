@@ -1,29 +1,23 @@
 import 'normalize.css/normalize.css';
 import 'open-color/open-color.css';
-import '../client.css';
+import './Application.css';
 
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { auth } from 'firebase';
 import debounce from 'lodash.debounce';
-import Flex from '../components/Flex/Flex';
-import IntroModal from '../components/Intro/IntroModal';
-import NotficationBar from '../components/Notifications/NotificationBar';
-import Page from '../components/Page/Page';
-import Pages from '../components/Page/Pages';
-import { applicationShowGame } from '../store/application';
-import { notifierRemoveNotification } from '../store/notifier';
-import { uiSkipIntro } from '../store/ui';
-import { userLoginSuccessful } from '../store/user';
-import About from './About';
-import Game from './Game';
-import Menu from './Menu';
-import Leaderboard from './Leaderboard';
-import SavedSolutions from './SavedSolutions';
-import UserMenu from './UserMenu';
+import About from '../About';
+import Flex from '../Flex/Flex';
+import Game from '../Game';
+import IntroModal from '../Intro/IntroModal';
+import Leaderboard from '../Leaderboard';
+import MainMenu from '../MainMenu';
+import NotficationBar from '../Notifications/NotificationBar';
+import Page from '../Page/Page';
+import Pages from '../Page/Pages';
+import SavedSolutions from '../SavedSolutions';
+import UserMenu from '../UserMenu';
 
-
-class Application extends Component {
+export default class Application extends Component {
   static propTypes = {
     isAboutActive: PropTypes.bool.isRequired,
     isGameActive: PropTypes.bool.isRequired,
@@ -91,7 +85,7 @@ class Application extends Component {
               onRemoveNotification={ onRemoveNotification } >
             <Flex container>
               <Flex>
-                <Menu />
+                <MainMenu />
               </Flex>
 
               <Flex shrink>
@@ -130,18 +124,3 @@ class Application extends Component {
     );
   }
 }
-
-export default connect((state) => ({
-  isAboutActive: state.application.about,
-  isGameActive: state.application.game,
-  isLeaderboardActive: state.application.leaderboard,
-  isLoggedIn: !!state.user.id,
-  isSavedSolutionsActive: state.application.savedSolutions,
-  notifications: state.notifier.notifications,
-  skipIntro: state.ui.skipIntro,
-}), {
-  onLogin: userLoginSuccessful,
-  onRemoveNotification: notifierRemoveNotification,
-  onShowGame: applicationShowGame,
-  onSkipIntro: uiSkipIntro,
-})(Application);

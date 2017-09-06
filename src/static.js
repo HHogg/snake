@@ -8,7 +8,7 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { initializeApp } from 'firebase';
 import configureStore from './store';
-import Application from './containers/Application';
+import Application from './components/Application';
 import template from './index.ejs';
 
 if (typeof document !== 'undefined') {

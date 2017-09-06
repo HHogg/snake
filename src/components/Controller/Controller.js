@@ -1,19 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import {
-  gamePauseGame,
-  gamePlayGame,
-  gameStartGame,
-  selectGameHistory,
-} from '../store/game';
-import Button from '../components/Button/Button';
-import ButtonGroup from '../components/Button/ButtonGroup';
-import Controls from '../components/Controls/Controls';
-import ControlGroup from '../components/Controls/ControlGroup';
-import Icon from '../components/Icon/Icon';
+import Button from '../Button/Button';
+import ButtonGroup from '../Button/ButtonGroup';
+import Controls from './Controls';
+import ControlGroup from './ControlGroup';
+import Icon from '../Icon/Icon';
 
-class Controller extends Component {
+export default class Controller extends Component {
   static propTypes = {
     canGoBackwards: PropTypes.bool.isRequired,
     isGameOver: PropTypes.bool.isRequired,
@@ -120,19 +112,3 @@ class Controller extends Component {
     );
   }
 }
-
-const canGoBackwardsSelector = createSelector(
-  selectGameHistory,
-  (h) => !!h[0] && h[0][2].length > 0,
-);
-
-export default connect((state) => ({
-  canGoBackwards: canGoBackwardsSelector(state),
-  isGameOver: state.game.isGameOver,
-  isPlaying: state.game.isPlaying,
-  isRunning: state.game.isRunning,
-}), {
-  onPause: gamePauseGame,
-  onPlay: gamePlayGame,
-  onStart: gameStartGame,
-})(Controller);

@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { initializeApp } from 'firebase';
 import configureStore from './store';
-import Application from './containers/Application';
+import Application from './components/Application';
 
 initializeApp({
   apiKey: 'AIzaSyDjffGgEF_020YYP4h5TjG8SUyzxd7EVi8',

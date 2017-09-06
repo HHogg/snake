@@ -1,17 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { auth, database } from 'firebase';
-import { applicationShowSavedSolutions } from '../store/application';
-import {
-  notifierAddErrorNotification,
-  notifierAddSuccessNotification,
-} from '../store/notifier';
-import { userLoginSuccessful } from '../store/user';
-import Link from '../components/Link/Link';
+import Link from '../Link/Link';
 
 const provider = new auth.GithubAuthProvider();
 
-class GithubAuthenticationLink extends Component {
+export default class GithubAuthenticationLink extends Component {
   static propTypes = {
     avatar: PropTypes.string,
     displayName: PropTypes.string,
@@ -68,15 +61,3 @@ class GithubAuthenticationLink extends Component {
     );
   }
 }
-
-export default connect((state) => ({
-  avatar: state.user.avatar,
-  displayName: state.user.displayName,
-  isLoggedIn: !!state.user.id,
-  isSavedSolutionsActive: state.application.savedSolutions,
-}), {
-  onErrorNotification: notifierAddErrorNotification,
-  onLogin: userLoginSuccessful,
-  onShowSavedSolutions: applicationShowSavedSolutions,
-  onSuccessNotification: notifierAddSuccessNotification,
-})(GithubAuthenticationLink);

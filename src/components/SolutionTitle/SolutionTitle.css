@@ -1,14 +1,14 @@
-.sh-title-saver {
+.sh-solution-title {
   display: flex;
   padding-bottom: .5rem;
 }
 
-.sh-title-saver__input-container {
+.sh-solution-title__input-container {
   display: flex;
   flex: 1 0 0%;
 }
 
-.sh-title-saver__input {
+.sh-solution-title__input {
   display: block;
   min-width: 0;
   padding: 0 .5rem;
@@ -29,6 +29,6 @@
   }
 }
 
-.sh-title-saver__button {
+.sh-solution-title__button {
   flex: 0 0 auto;
 }

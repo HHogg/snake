@@ -1,17 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import {
   CELL_SIZE,
   CELL_PADDING,
   CHAR_SNAKE_HEAD,
   CHAR_SNAKE_TAIL,
   CHAR_POINT,
-} from '../../functions/config';
-import { canvasSetSize } from '../store/canvas';
-import { gameResetGame, selectGameNowPoint, selectGameNowSnake } from '../store/game';
-import getCSSVar from '../utils/getCSSVar';
+} from '../../../functions/config';
+import getCSSVar from '../../utils/getCSSVar';
 
-class CanvasC extends Component {
+export default class Canvas extends Component {
   static propTypes = {
     canvasSetSize: PropTypes.func.isRequired,
     gameResetGame: PropTypes.func.isRequired,
@@ -135,13 +132,3 @@ class CanvasC extends Component {
     );
   }
 }
-
-export default connect((state) => ({
-  point: selectGameNowPoint(state),
-  snake: selectGameNowSnake(state),
-  xMax: state.canvas.xMax,
-  yMax: state.canvas.yMax,
-}), {
-  canvasSetSize,
-  gameResetGame,
-})(CanvasC);
