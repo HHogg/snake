@@ -117,6 +117,8 @@ export default class Game extends Component {
     } = this.props;
 
     if (!Array.isArray(values)) {
+      onStopGame();
+
       return consoleLog({
         message: '🔥 There were no heuristic values to calculate a move 🔥',
       });
@@ -138,6 +140,22 @@ export default class Game extends Component {
 
     if (containsCoordinates([nextCell], point)) {
       nextSnake = [point, ...snake];
+
+      if (nextSnake.length === (xMax * yMax)) {
+        onStopGame();
+        onCollectPoint({
+          point: null,
+          snake: nextSnake,
+          xMax,
+          yMax,
+        });
+
+        return consoleLog({
+          message: '🎉 You have conquered Snake! 🎉 Submit your solution to the Leaderboard '
+            + 'and see how your average compares.',
+        });
+      }
+
       nextPoint = createPoint(xMax, yMax, nextSnake);
       onCollectPoint({
         point: nextPoint,
