@@ -68,6 +68,11 @@ const runSolution = (getValues, env) => {
     average = calculateAverage(history);
     score = score + calculateScore(xMax * yMax, average, history[0].length, points);
     points = points + 1;
+
+    if (snake.length === (xMax * yMax)) {
+      return { average, points, score };
+    }
+
     point = createPoint(xMax, yMax, snake);
     history = [[], ...history];
   } else {

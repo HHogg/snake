@@ -7,6 +7,8 @@ const OfflinePlugin = require('offline-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
+const basePath = process.env.BASE_PATH === undefined ? '/' : process.env.BASE_PATH;
+
 module.exports = {
   entry: [
     'babel-polyfill',
@@ -15,7 +17,7 @@ module.exports = {
   output: {
     filename: 'assets/snake-heuristics.[hash].min.js',
     path: path.resolve(__dirname, 'static'),
-    publicPath: '/snake-heuristics',
+    publicPath: basePath,
     libraryTarget: 'umd',
   },
   module: {
@@ -55,11 +57,23 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '\'production\'',
+        BASE_PATH: `"${basePath}"`,
       },
     }),
-    new StaticSiteGeneratorPlugin(),
+    new StaticSiteGeneratorPlugin({
+      paths: [
+        '/',
+        '/game',
+        '/about',
+        '/about/playing',
+        '/about/scoring',
+        '/about/leaderboard',
+        '/leaderboard',
+        '/solutions',
+      ],
+    }),
     new OfflinePlugin({
-      publicPath: '/snake-heuristics',
+      publicPath: basePath,
     }),
     new CopyWebpackPlugin([{
       from: './src/assets',

@@ -1,38 +1,34 @@
 import React, { Component, PropTypes } from 'react';
-import AboutStepControl from './AboutStepControl';
+import { NavLink } from 'react-router-dom';
 
 export default class AboutStepControls extends Component {
   static propTypes = {
-    maxSteps: PropTypes.number.isRequired,
-    step: PropTypes.number.isRequired,
-    onSkip: PropTypes.func,
-    onStepChange: PropTypes.func.isRequired,
+    from: PropTypes.string,
+    to: PropTypes.string,
   };
 
   render() {
-    const { maxSteps, step, onSkip, onStepChange } = this.props;
+    const { from: fromLink, to: toLink } = this.props;
 
     return (
-      <div className="sh-about-step__controls">
-        <AboutStepControl
-            hidden={ step < 1 }
-            onClick={ () => onStepChange(step - 1) }>
-          Previous
-        </AboutStepControl>
+      <div className="sh-about__step-controls">
+        <div className="sh-about__step-from">
+          { fromLink && (
+            <NavLink className="sh-about__step-link" to={ fromLink }>
+              Previous
+            </NavLink>
+          ) }
 
-        <AboutStepControl
-            hidden={ !onSkip || step >= maxSteps }
-            inattention={ true }
-            onClick={ () => onSkip() }>
-          Skip (and don't show again)
-        </AboutStepControl>
-
-        <AboutStepControl
-            attention={ true }
-            hidden={ step >= maxSteps }
-            onClick={ () => onStepChange(step + 1) }>
-          Next
-        </AboutStepControl>
+        </div>
+        <div className="sh-about__step-to">
+          { toLink && (
+            <NavLink className="sh-about__step-link" to={ toLink }>
+              <div className="sh-about__step-bounce">
+                Next
+              </div>
+            </NavLink>
+          ) }
+        </div>
       </div>
     );
   }

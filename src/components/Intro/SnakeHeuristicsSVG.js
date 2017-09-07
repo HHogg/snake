@@ -6,7 +6,7 @@ export default class SnakeHeuristicsSVG extends Component {
   render() {
     /* eslint-disable  max-len */
     return (
-      <svg className="sh-about__image" width="100%" viewBox="0 0 362 91">
+      <svg className="sh-snake-heuristics-logo" width="100%" viewBox="0 0 362 91">
         <defs>
           <linearGradient x1="0%" y1="13.0277195%" x2="100%" y2="87.2755721%" id="linearGradient-99">
             <stop stopColor="#FFE066" offset="0%"></stop>

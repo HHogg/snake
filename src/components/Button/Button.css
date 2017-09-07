@@ -12,9 +12,9 @@
   font-weight: 600;
   text-align: center;
   appearance: none;
-  transition: opacity 300ms ease,
-              background-color 300ms ease,
-              box-shadow 300ms ease;
+  transition-property: opacity, background-color, box-shadow;
+  transition-duration: var(--transition-time-fast);
+  transition-timing-function: var(--transition-function);
 
   &:last-child { margin-right: 0; }
 

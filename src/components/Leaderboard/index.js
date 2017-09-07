@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { applicationShowGame, applicationShowSavedSolutions } from '../../store/application';
 import { editorSelectSolution } from '../../store/editor';
 import { notifierAddErrorNotification } from '../../store/notifier';
 import {
@@ -24,9 +23,7 @@ export default connect((state) => ({
   leaderboardUsers: state.solutions.leaderboardUsers,
   solutions: solutionsSelector(state),
 }), {
-  onBackToGame: applicationShowGame,
   onErrorNotification: notifierAddErrorNotification,
-  onShowSavedSolutions: applicationShowSavedSolutions,
   onSolutionAdded: solutionsAddLeaderboard,
   onSolutionLoad: editorSelectSolution,
   onSolutionRemoved: solutionsRemoveLeaderboard,

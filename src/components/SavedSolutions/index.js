@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { applicationShowGame } from '../../store/application';
 import { editorSelectSolution } from '../../store/editor';
 import {
   notifierAddErrorNotification,
@@ -25,7 +24,6 @@ export default connect((state) => ({
   userId: state.user.id,
   displayName: state.user.displayName,
 }), {
-  onBackToGame: applicationShowGame,
   onErrorNotification: notifierAddErrorNotification,
   onSolutionAdded: solutionsAddSaved,
   onSolutionLoad: editorSelectSolution,

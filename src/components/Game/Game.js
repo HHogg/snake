@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
+import debounce from 'lodash.debounce';
 import { createEnvironment, createPoint } from '../../../functions/common/createEnvironment';
 import containsCoordinates from '../../../functions/common/containsCoordinates';
 import getSurroundingCells from '../../../functions/common/getSurroundingCells';
 import Sandbox from '../../utils/Sandbox';
+import AbsoluteChild from '../Layout/AbsoluteChild';
 import Canvas from '../Canvas';
 import Console from '../Console';
 import Controller from '../Controller';
@@ -15,7 +17,6 @@ export default class Game extends Component {
   static propTypes = {
     consoleLog: PropTypes.func.isRequired,
     content: PropTypes.string.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     isRunning: PropTypes.bool.isRequired,
     onCollectPoint: PropTypes.func.isRequired,
@@ -35,15 +36,38 @@ export default class Game extends Component {
     yMax: PropTypes.number.isRequired,
   };
 
+  static childContextTypes = {
+    registerResizeCanvas: PropTypes.func.isRequired,
+    registerResizeEditor: PropTypes.func.isRequired,
+  };
+
+  getChildContext() {
+    return {
+      registerResizeCanvas: (func) => this.resizeCanvas = func,
+      registerResizeEditor: (func) => this.resizeEditor = func,
+    };
+  }
+
   constructor(props) {
     super(props);
 
     this.state = { values: null };
+  }
+
+  componentWillMount() {
+    this.handleResize = debounce(() => {
+      this.resizeCanvas && this.resizeCanvas();
+      this.resizeEditor && this.resizeEditor();
+    }, 500);
 
     this._sandbox = new Sandbox(
       this.handleSandboxMessage.bind(this),
       this.handleSandboxError.bind(this),
     );
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', this.handleResize);
+    }
   }
 
   componentWillReceiveProps(next) {
@@ -61,6 +85,14 @@ export default class Game extends Component {
 
     if (isPlaying && !next.isPlaying) {
       this._sandbox.reset();
+    }
+  }
+
+  componentWillUnmount() {
+    this._unmounting = true;
+
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', this.handleResize);
     }
   }
 
@@ -130,13 +162,15 @@ export default class Game extends Component {
 
 
   handleSandboxMessage({ values }) {
-    this.setState({ values });
+    if (!this._unmounting) {
+      this.setState({ values });
 
-    window.requestAnimationFrame(() => {
-      if (this.props.isRunning) {
-        this.move();
-      }
-    });
+      window.requestAnimationFrame(() => {
+        if (this.props.isRunning) {
+          this.move();
+        }
+      });
+    }
   }
 
   handleSandboxError({ message }) {
@@ -182,45 +216,44 @@ export default class Game extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
     const { values } = this.state;
 
     return (
-      <Flex container>
-        <Flex container direction="vertical">
-          <Flex container>
-            <Canvas values={ values } />
+      <AbsoluteChild type="full">
+        <Flex container>
+          <Flex container direction="vertical">
+            <Flex container>
+              <Canvas values={ values } />
+            </Flex>
+
+            <Flex shrink>
+              <Console />
+            </Flex>
+
+            <Flex shrink>
+              <Scoreboard />
+            </Flex>
+
+            <Flex shrink>
+              <Controller
+                  onRefresh={ () => this.handleRefresh() }
+                  onReset={ () => this.handleReset() }
+                  onStepBackwards={ () => this.handleStepBackwards() }
+                  onStepForwards={ () => this.handleStepForwards() } />
+            </Flex>
           </Flex>
 
-          <Flex shrink>
-            <Console />
-          </Flex>
-
-          <Flex shrink>
-            <Scoreboard />
-          </Flex>
-
-          <Flex shrink>
-            <Controller
-                onRefresh={ () => this.handleRefresh() }
-                onReset={ () => this.handleReset() }
-                onStepBackwards={ () => this.handleStepBackwards() }
-                onStepForwards={ () => this.handleStepForwards() } />
-          </Flex>
-        </Flex>
-
-        <Flex container direction="vertical">
-          { isLoggedIn && (
+          <Flex container direction="vertical">
             <Flex shrink>
               <SolutionTitle />
             </Flex>
-          ) }
 
-          <Flex container>
-            <Editor />
+            <Flex container>
+              <Editor />
+            </Flex>
           </Flex>
         </Flex>
-      </Flex>
+      </AbsoluteChild>
     );
   }
 }

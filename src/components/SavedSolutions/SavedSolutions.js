@@ -1,15 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { database } from 'firebase';
+import Flex from '../Flex/Flex';
+import AbsoluteChild from '../Layout/AbsoluteChild';
 import MaxWidthContainer from '../Layout/MaxWidthContainer';
 import Paragraph from '../Paragraph/Paragraph';
-import Solutions from '../Solutions/Solutions';
+import SolutionsTransitionGroup from '../Solutions/SolutionsTransitionGroup';
+import SolutionTransition from '../Solutions/SolutionTransition';
 import Solution from '../Solutions/Solution';
 
 export default class SavedSolutions extends Component {
   static propTypes = {
-    avatar: PropTypes.string.isRequired,
-    displayName: PropTypes.string.isRequired,
-    onBackToGame: PropTypes.func.isRequired,
+    avatar: PropTypes.string,
+    displayName: PropTypes.string,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     onErrorNotification: PropTypes.func.isRequired,
     onSolutionAdded: PropTypes.func.isRequired,
     onSolutionLoad: PropTypes.func.isRequired,
@@ -17,10 +22,20 @@ export default class SavedSolutions extends Component {
     onSolutionUpdated: PropTypes.func.isRequired,
     onSuccessNotification: PropTypes.func.isRequired,
     solutions: PropTypes.array.isRequired,
-    userId: PropTypes.string.isRequired,
+    userId: PropTypes.string,
   };
 
-  componentDidMount() {
+  componentDidUpdate() {
+    if (!this.solutionsRef && this.props.userId) {
+      this.addSolutionListeners();
+    }
+  }
+
+  componentWillUnmount() {
+    this.solutionsRef.off();
+  }
+
+  addSolutionListeners() {
     const {
       onErrorNotification,
       onSolutionAdded,
@@ -44,10 +59,6 @@ export default class SavedSolutions extends Component {
       (error) => onErrorNotification(`Firebase: ${error.message}`));
   }
 
-  componentWillUnmount() {
-    this.solutionsRef.off();
-  }
-
   handleDelete(solution) {
     const {
       onErrorNotification,
@@ -64,12 +75,12 @@ export default class SavedSolutions extends Component {
 
   handleLoad({ content, key, title }) {
     const {
-      onBackToGame,
+      history,
       onSolutionLoad,
     } = this.props;
 
     onSolutionLoad({ content, title, key });
-    onBackToGame();
+    history.push('/game');
   }
 
   handleSubmit(solution) {
@@ -99,40 +110,41 @@ export default class SavedSolutions extends Component {
   render() {
     const {
       avatar,
-      displayName,
       solutions,
     } = this.props;
 
-    return (
-      <MaxWidthContainer>
-        { !!solutions.length && (
-          <Solutions>
-            { solutions.map((solution) =>
-              <Solution
-                  avatar={ avatar }
-                  average={ solution.average }
-                  content={ solution.content }
-                  displayName={ displayName }
-                  error={ solution.error }
-                  isRunning={ solution.running }
-                  key={ solution.key }
-                  modified={ solution.modified }
-                  onDelete={ () => this.handleDelete(solution) }
-                  onLoad={ () => this.handleLoad(solution) }
-                  onSubmit={ () => this.handleSubmit(solution) }
-                  points={ solution.points }
-                  score={ solution.score }
-                  title={ solution.title } />
-            ) }
-          </Solutions>
-        ) }
+    if (!solutions.length) {
+      return (
+        <Flex centerChildren container>
+          <Paragraph>No Saved Solutions</Paragraph>
+        </Flex>
+      );
+    }
 
-        { !solutions.length && (
-          <Paragraph>
-            No solutions
-          </Paragraph>
-        ) }
-      </MaxWidthContainer>
+    return (
+      <AbsoluteChild type="full">
+        <MaxWidthContainer>
+          <SolutionsTransitionGroup>
+            { solutions.map((solution) =>
+              <SolutionTransition key={ solution.key }>
+                <Solution
+                    avatar={ avatar }
+                    average={ solution.average }
+                    content={ solution.content }
+                    error={ solution.error }
+                    isRunning={ solution.running }
+                    modified={ solution.modified }
+                    onDelete={ () => this.handleDelete(solution) }
+                    onLoad={ () => this.handleLoad(solution) }
+                    onSubmit={ () => this.handleSubmit(solution) }
+                    points={ solution.points }
+                    score={ solution.score }
+                    title={ solution.title } />
+                </SolutionTransition>
+              ) }
+          </SolutionsTransitionGroup>
+        </MaxWidthContainer>
+      </AbsoluteChild>
     );
   }
 }

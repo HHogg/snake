@@ -19,7 +19,6 @@ import Game from './Game';
 
 export default connect((state) => ({
   content: state.editor.content,
-  isLoggedIn: !!state.user.id,
   isPlaying: state.game.isPlaying,
   isRunning: state.game.isRunning,
   point: selectGameNowPoint(state),

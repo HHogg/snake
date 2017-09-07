@@ -29,7 +29,8 @@ const render = (AppComponent) => {
         </ConnectedRouter>
       </Provider>
     </AppContainer>,
-    document.getElementById('react-root'));
+    document.getElementById('react-root')
+  );
 };
 
 render(Application);

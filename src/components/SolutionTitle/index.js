@@ -14,6 +14,7 @@ import SolutionTitle from './SolutionTitle';
 export default connect((state) => ({
   content: state.editor.content,
   edited: state.editor.edited,
+  isLoggedIn: !!state.user.id,
   selectedSolutionKey: state.editor.selectedSolutionKey,
   title: state.editor.title,
   userId: state.user.id,

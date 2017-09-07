@@ -1,6 +1,9 @@
 .sh-solution-title {
   display: flex;
   padding-bottom: .5rem;
+  transition-property: opacity;
+  transition-duration: var(--transition-time-fast);
+  transition-timing-function: var(--transition-function);
 }
 
 .sh-solution-title__input-container {

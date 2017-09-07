@@ -8,6 +8,7 @@ export default class SolutionTitle extends Component {
   static propTypes = {
     content: PropTypes.string,
     edited: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
     onErrorNotifcation: PropTypes.func.isRequired,
     onNew: PropTypes.func.isRequired,
     onSolutionSelect: PropTypes.func.isRequired,
@@ -53,13 +54,14 @@ export default class SolutionTitle extends Component {
   render() {
     const {
       edited,
+      isLoggedIn,
       onTitleChange,
       onNew,
       title,
     } = this.props;
 
     return (
-      <div className="sh-solution-title">
+      <div className="sh-solution-title" style={ { opacity: isLoggedIn ? 1 : 0 } }>
         <div className="sh-solution-title__input-container">
           <input
               className="sh-solution-title__input"

@@ -1,0 +1,23 @@
+.sh-routing-animation-fade--appear,
+.sh-routing-animation-fade--enter {
+  opacity: 0;
+}
+
+.sh-routing-animation-fade--appear-active,
+.sh-routing-animation-fade--enter-active {
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: var(--transition-time-slow);
+  transition-timing-function: var(--transition-function);
+}
+
+.sh-routing-animation-fade--exit {
+  opacity: 1;
+}
+
+.sh-routing-animation-fade--exit-active {
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: var(--transition-time-base);
+  transition-timing-function: var(--transition-function);
+}

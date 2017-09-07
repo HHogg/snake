@@ -13,6 +13,9 @@
   margin-right: var(--menu-item-spacing);
   padding-right: var(--menu-item-spacing);
   border-right: 0.0625rem dotted var(--oc-gray-5);
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
 
   &:last-child {
     margin-right: 0;

@@ -1,37 +1,26 @@
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
 import AboutStepControls from './AboutStepControls';
 import './AboutStep.css';
 
 export default class AboutStep extends Component {
   static propTypes = {
-    active: PropTypes.bool,
     children: PropTypes.node.isRequired,
-  };
-
-  static contextTypes = {
-    maxSteps: PropTypes.number.isRequired,
-    step: PropTypes.number.isRequired,
-    onSkip: PropTypes.func,
-    onStepChange: PropTypes.func.isRequired,
+    pathFrom: PropTypes.string,
+    pathTo: PropTypes.string,
   };
 
   render() {
-    const { active, children } = this.props;
-    const { maxSteps, step, onSkip, onStepChange } = this.context;
-    const classes = classnames('sh-about-step', {
-      'sh-about-step--active': active,
-    });
+    const {
+      children,
+      pathFrom,
+      pathTo,
+    } = this.props;
 
     return (
-      <div className={ classes }>
+      <div className="sh-about__step">
         { children }
 
-        <AboutStepControls
-            maxSteps={ maxSteps }
-            step={ step }
-            onSkip={ onSkip }
-            onStepChange={ onStepChange } />
+        <AboutStepControls from={ pathFrom } to={ pathTo } />
       </div>
     );
   }

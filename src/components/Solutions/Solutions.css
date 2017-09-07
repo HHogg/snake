@@ -6,7 +6,6 @@
 .sh-solution {
   margin-bottom: 1rem;
   border-radius: 0.3125rem;
-  overflow: auto;
   background-color: var(--oc-gray-8);
 }
 
@@ -97,3 +96,27 @@
 
 .sh-solution__info {  background-color: var(--oc-blue-5); }
 .sh-solution__error {  background-color: var(--oc-red-5); }
+
+.sh-solution__transition-appear,
+.sh-solution__transition-enter {
+  opacity: 0;
+}
+
+.sh-solution__transition-appear-active,
+.sh-solution__transition-enter-active {
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: var(--transition-time-slow);
+  transition-timing-function: var(--transition-function);
+}
+
+.sh-solution__transition-exit {
+  opacity: 1;
+}
+
+.sh-solution__transition-exit-active {
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: var(--transition-time-base);
+  transition-timing-function: var(--transition-function);
+}

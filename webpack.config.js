@@ -32,6 +32,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
+      basePath: '',
       template: './src/index.ejs',
     }),
   ],

@@ -7,7 +7,7 @@ export default class Solution extends Component {
   static propTypes = {
     avatar: PropTypes.string.isRequired,
     average: PropTypes.number,
-    displayName: PropTypes.string.isRequired,
+    displayName: PropTypes.string,
     error: PropTypes.string,
     isRunning: PropTypes.bool,
     modified: PropTypes.number.isRequired,
@@ -63,7 +63,11 @@ export default class Solution extends Component {
 
             <div className="sh-solution__details">
               <div className="sh-solution__name">
-                { title } <span className="sh-solution__user">by { displayName }</span>
+                { title } { displayName && (
+                  <span className="sh-solution__user">
+                    by { displayName }
+                  </span>
+                ) }
               </div>
               <div className="sh-solution__lastModified">
                 { fecha.format(new Date(modified), 'dddd Do MMMM, YYYY') }

@@ -28,11 +28,13 @@
 }
 
 html {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 body {
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: "Roboto", Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 0.9rem;
@@ -46,7 +48,8 @@ body {
 
 .sh-app-container {
   display: flex;
+  flex: 1 0 0%;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
+  /*height: 100%;*/
+  /*width: 100%;*/
 }

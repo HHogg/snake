@@ -9,10 +9,8 @@ export default class GithubAuthenticationLink extends Component {
     avatar: PropTypes.string,
     displayName: PropTypes.string,
     isLoggedIn: PropTypes.bool.isRequired,
-    isSavedSolutionsActive: PropTypes.bool.isRequired,
     onErrorNotification: PropTypes.func.isRequired,
     onLogin: PropTypes.func.isRequired,
-    onShowSavedSolutions: PropTypes.func.isRequired,
     onSuccessNotification: PropTypes.func.isRequired,
   };
 

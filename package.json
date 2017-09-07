@@ -4,7 +4,7 @@
   "scripts": {
     "build:static": "NODE_ENV=production BABEL_ENV=production webpack --config webpack.static.config.js",
     "deploy": "firebase deploy --project snake-heuristics",
-    "gh-pages": "yarn build:static && gh-pages -d ./static --repo git@github.com:HHogg/snake-heuristics.git",
+    "gh-pages": "gh-pages -d ./static --repo git@github.com:HHogg/snake-heuristics.git",
     "lint": "eslint --config .eslintrc ./src",
     "start": "webpack-dev-server",
     "test": "jest --config .jest.json"
@@ -53,7 +53,9 @@
     "react-hot-loader": "^3.0.0-beta.7",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.6",
+    "react-transition-group": "^2.2.0",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-devtools-extension": "^2.13.2",
