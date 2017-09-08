@@ -1,14 +1,14 @@
 language: node_js
 cache: yarn
-env:
-  global:
-  - COMMIT_AUTHOR_EMAIL: travis@gh-pages
-  - COMMIT_AUTHOR_NAME: Travis CI
-  - SOURCE_BRANCH: master
-  - BASE_PATH: /snake-heuristics/
+branches:
+  only:
+    - master
+before_script:
+  - yarn global add firebase-tools
+  - cd ./functions && yarn install && cd ../
 script:
   - yarn lint
   - yarn test
   - yarn build:static
 after_success:
-- bash ./deploy/gh_pages.sh
+  - firebase deploy --token=${FIREBASE_TOKEN}

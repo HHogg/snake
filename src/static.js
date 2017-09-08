@@ -45,9 +45,8 @@ export default ({ path, webpackStats }) => {
   return template({
     htmlWebpackPlugin: {
       options: {
-        basePath: process.env.BASE_PATH,
-        stylesheet: `assets/snake-heuristics.${hash}.min.css`,
-        script: `assets/snake-heuristics.${hash}.min.js`,
+        stylesheet: `/assets/snake-heuristics.${hash}.min.css`,
+        script: `/assets/snake-heuristics.${hash}.min.js`,
         html: renderToString(
           <Provider store={ store }>
             <StaticRouter location={ path }>

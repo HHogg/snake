@@ -1,4 +1,7 @@
 {
+  "hosting": {
+    "public": "static"
+  },
   "rules": {
     "leaderboard": {
       ".read": true,
