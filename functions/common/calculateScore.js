@@ -1,5 +1,6 @@
+const AVERAGE_WEIGHT = 20;
 
-module.exports = (norm, avg, value, multi) =>
-  Math.abs(
-    (((norm / (value || 1)) - (norm / (avg || 1))) || 1)
-  ) * multi;
+module.exports = (boardSize, averageMoves, points) =>
+  points * (
+    Math.pow(1 - (averageMoves / boardSize), AVERAGE_WEIGHT)
+  );
