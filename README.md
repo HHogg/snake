@@ -2,8 +2,6 @@
   <img src="images/logo.png" width="50%" />
 </p>
 
-#### Try it out here [https://hhogg.github.io/snake-heuristics](https://hhogg.github.io/snake-heuristics)
-
 ![](images/ui.png)
 
 #### Pathfinding and Heuristics
