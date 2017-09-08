@@ -1,15 +1,13 @@
 .sh-console {
   position: relative;
   background-color: var(--cell-inactive-color);
-  color: var(--text-color);
-  word-break: break-all;
 }
 
 .sh-console__clear {
   position: absolute;
   right: 0;
   bottom: 0;
-  padding: 0.3125rem 0.9275rem;
+  padding: var(--space--x1);
   background-color: var(--background-color);
   opacity: 0.6;
   transition: opacity 300ms ease;
@@ -22,19 +20,14 @@
 }
 
 .sh-console__messages {
-  padding: 0.625rem;
+  padding: var(--space--x2);
   height: 7.5rem;
   overflow: auto;
-  font-size: 1rem;
   font-family: "Courier New", Courier, monospace;
 }
 
-.sh-console__message {
-  margin: 0 0 0.3125rem;
-
-  &::before {
-    display: inline-block;
-    content: '> ';
-    margin-right: 0.3125rem;
-  }
+.sh-console__message::before {
+  display: inline-block;
+  content: '> ';
+  margin-right: var(--space--x1);
 }

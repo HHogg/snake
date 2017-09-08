@@ -1,5 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import './UserAvatar.css';
+import Avatar from '../Avatar/Avatar';
+import Flex from '../Flex/Flex';
+import Text from '../Text/Text';
+
+export const USER_AVATAR_SIZE = '2rem';
 
 export default class UserAvatar extends Component {
   static propTypes = {
@@ -9,15 +13,17 @@ export default class UserAvatar extends Component {
 
   render() {
     const { name, src } = this.props;
+    const style = { height: USER_AVATAR_SIZE };
 
     return (
-      <div className="sh-user-avatar">
-        <div className="sh-user-avatar__name">
-          { name }
-        </div>
-
-        <img className="sh-user-avatar__img" src={ src } />
-      </div>
+      <Flex container alignChildrenVertical="middle" style={ style }>
+        <Flex>
+          <Text strong>{ name }</Text>
+        </Flex>
+        <Flex shrink>
+          <Avatar size={ USER_AVATAR_SIZE } src={ src } />
+        </Flex>
+      </Flex>
     );
   }
 }

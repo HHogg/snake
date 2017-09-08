@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import './ScoreTiles.css';
+import Flex from '../Flex/Flex';
 
 export default class ScoreTiles extends Component {
   static propTypes = {
@@ -8,9 +8,9 @@ export default class ScoreTiles extends Component {
 
   render() {
     return (
-      <div className="sh-score-tiles">
+      <Flex container alignChildrenHorizontal="around">
         { this.props.children }
-      </div>
+      </Flex>
     );
   }
 }

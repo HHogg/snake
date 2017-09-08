@@ -6,22 +6,22 @@
 
 .sh-about__step {
   width: 37.5rem;
-  padding: 1rem;
+  padding: var(--space--x2);
   text-align: center;
 }
 
 .sh-about__image {
-  padding: 1rem 3rem;
+  padding: var(--space--x2) var(--space--x4);
 }
 
 .sh-about__step-controls {
   display: flex;
   justify-content: space-between;
-  margin: 2rem 0;
+  margin: var(--space--x4) 0;
 }
 
 .sh-about__step-link {
-  padding: 0.25rem;
+  padding: var(--space--x1);
   color: inherit;
   font-weight: 600;
   text-decoration: none;

@@ -1,37 +1,21 @@
-.sh-solution-title {
-  display: flex;
-  padding-bottom: .5rem;
+.sh-solution-title__container {
   transition-property: opacity;
   transition-duration: var(--transition-time-fast);
   transition-timing-function: var(--transition-function);
 }
 
-.sh-solution-title__input-container {
-  display: flex;
-  flex: 1 0 0%;
-}
-
-.sh-solution-title__input {
+.sh-solution-title {
   display: block;
   min-width: 0;
-  padding: 0 .5rem;
-  margin-right: 1rem;
   width: 100%;
+  padding: 0 var(--space--x1);
   border: 0;
   background-color: transparent;
-  font-size: 1.2rem;
+  font-size: inherit;
+  font-weight: inherit;
   color: inherit;
   appearance: none;
 
-  &:focus {
-    outline: 0.0625rem dashed var(--oc-blue-7);
-  }
-
-  &::placeholder {
-    font-style: italic;
-  }
-}
-
-.sh-solution-title__button {
-  flex: 0 0 auto;
+  &:focus { outline: 0.0625rem dashed var(--oc-blue-7); }
+  &::placeholder { font-style: italic; }
 }

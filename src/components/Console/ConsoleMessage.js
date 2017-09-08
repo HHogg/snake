@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Text from '../Text/Text';
 
 export default class ConsoleMessage extends Component {
   static propTypes = {
@@ -7,9 +8,9 @@ export default class ConsoleMessage extends Component {
 
   render() {
     return (
-      <p className="sh-console__message">
+      <Text className="sh-console__message" space="x2">
         { this.props.children }
-      </p>
+      </Text>
     );
   }
 }

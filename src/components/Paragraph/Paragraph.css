@@ -1,8 +1,0 @@
-.sh-paragraph {
-  margin: 1rem 0;
-  font-size: 0.875rem;
-  line-height: 1.125rem;
-
-  &:first-child { margin-top: 0; }
-  &:last-child { margin-bottom: 0; }
-}

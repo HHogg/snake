@@ -19,7 +19,7 @@ export default class UserMenu extends Component {
     } = this.props;
 
     return (
-      <Menu style={ { minHeight: 'var(--user-avatar__size)' } }>
+      <Menu>
         { isLoggedIn && (
           <MenuItem to="/solutions">
             My Saved Solutions

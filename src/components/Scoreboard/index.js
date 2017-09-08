@@ -26,11 +26,10 @@ const selectScore = createSelector(
   selectAverage,
   selectPoints,
   selectTails,
-  (xMax, yMax, average, points, tails) => tails.reduce((score, tails) =>
+  (xMax, yMax, average, points, tails) => tails.reduce((score) =>
     score + calculateScore(
       (xMax * yMax),
       average,
-      tails.length,
       points,
     ), 0),
 );

@@ -1,8 +1,0 @@
-.sh-heading {
-  margin: 2rem 0 1rem;
-  font-size: 1rem;
-  font-weight: bold;
-
-  &:first-child { margin-top: 0; }
-  &:last-child { margin-bottom: 0; }
-}

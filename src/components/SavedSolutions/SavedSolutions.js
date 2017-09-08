@@ -3,18 +3,18 @@ import { database } from 'firebase';
 import Flex from '../Flex/Flex';
 import AbsoluteChild from '../Layout/AbsoluteChild';
 import MaxWidthContainer from '../Layout/MaxWidthContainer';
-import Paragraph from '../Paragraph/Paragraph';
 import SolutionsTransitionGroup from '../Solutions/SolutionsTransitionGroup';
 import SolutionTransition from '../Solutions/SolutionTransition';
 import Solution from '../Solutions/Solution';
+import Text from '../Text/Text';
 
 export default class SavedSolutions extends Component {
   static propTypes = {
-    avatar: PropTypes.string,
-    displayName: PropTypes.string,
+    avatar: PropTypes.string.isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    displayName: PropTypes.string.isRequired,
     onErrorNotification: PropTypes.func.isRequired,
     onSolutionAdded: PropTypes.func.isRequired,
     onSolutionLoad: PropTypes.func.isRequired,
@@ -110,13 +110,17 @@ export default class SavedSolutions extends Component {
   render() {
     const {
       avatar,
+      displayName,
       solutions,
     } = this.props;
 
     if (!solutions.length) {
       return (
-        <Flex centerChildren container>
-          <Paragraph>No Saved Solutions</Paragraph>
+        <Flex
+            alignChildrenHorizontal="middle"
+            alignChildrenVertical="middle"
+            container>
+          <Text>No Saved Solutions</Text>
         </Flex>
       );
     }
@@ -127,19 +131,12 @@ export default class SavedSolutions extends Component {
           <SolutionsTransitionGroup>
             { solutions.map((solution) =>
               <SolutionTransition key={ solution.key }>
-                <Solution
+                <Solution { ...solution }
                     avatar={ avatar }
-                    average={ solution.average }
-                    content={ solution.content }
-                    error={ solution.error }
-                    isRunning={ solution.running }
-                    modified={ solution.modified }
+                    displayName={ displayName }
                     onDelete={ () => this.handleDelete(solution) }
                     onLoad={ () => this.handleLoad(solution) }
-                    onSubmit={ () => this.handleSubmit(solution) }
-                    points={ solution.points }
-                    score={ solution.score }
-                    title={ solution.title } />
+                    onSubmit={ () => this.handleSubmit(solution) } />
                 </SolutionTransition>
               ) }
           </SolutionsTransitionGroup>

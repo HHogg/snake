@@ -5,7 +5,7 @@ import MenuItem from '../Menu/MenuItem';
 export default class MainMenu extends Component {
   render() {
     return (
-      <Menu style={ { minHeight: 'var(--user-avatar__size)' } }>
+      <Menu>
         <MenuItem to="/game">
           Play
         </MenuItem>

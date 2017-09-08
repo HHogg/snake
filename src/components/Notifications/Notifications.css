@@ -23,12 +23,11 @@
   left: 0;
   width: 100%;
   min-height: 100%;
-  padding: 0.5rem;
+  padding: var(--space--x1);
   transform: translate3d(0, -100%, 0);
   opacity: 0;
-  border-radius: 0.25rem;
+  border-radius: var(--border-radius);
   text-align: center;
-  font-weight: 600;
   cursor: pointer;
 
   @nest .sh-notifications-bar--error & {
@@ -47,4 +46,10 @@
   transition-property: background-color, color, opacity, transform;
   transition-duration: var(--transition-time-slow);
   transition-timing-function: var(--transition-function);
+}
+
+.sh-notifications-bar__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

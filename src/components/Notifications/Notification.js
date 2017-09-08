@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Text from '../Text/Text';
 
 const NOTIFICATION_DURATION = 5000;
 
@@ -20,9 +21,9 @@ export default class Notification extends Component {
     const { message } = this.props;
 
     return (
-      <div className="sh-notifications-bar__notification">
+      <Text className="sh-notifications-bar__notification" strong>
         { message }
-      </div>
+      </Text>
     );
   }
 }

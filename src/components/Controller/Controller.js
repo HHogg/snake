@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Button from '../Button/Button';
 import ButtonGroup from '../Button/ButtonGroup';
-import Controls from './Controls';
-import ControlGroup from './ControlGroup';
+import Flex from '../Flex/Flex';
 import Icon from '../Icon/Icon';
 
 export default class Controller extends Component {
@@ -36,8 +35,8 @@ export default class Controller extends Component {
     } = this.props;
 
     return (
-      <Controls>
-        <ControlGroup>
+      <Flex container>
+        <Flex>
           <ButtonGroup>
             <Button
                 color="green"
@@ -47,9 +46,9 @@ export default class Controller extends Component {
               Start
             </Button>
           </ButtonGroup>
-        </ControlGroup>
+        </Flex>
 
-        <ControlGroup>
+        <Flex>
           <ButtonGroup>
             <Button
                 color="blue"
@@ -83,9 +82,9 @@ export default class Controller extends Component {
               <Icon name="step-forwards" />
             </Button>
           </ButtonGroup>
-        </ControlGroup>
+        </Flex>
 
-        <ControlGroup>
+        <Flex>
           <ButtonGroup>
             <Button
                 color="blue"
@@ -95,9 +94,9 @@ export default class Controller extends Component {
               <Icon name="refresh" />
             </Button>
           </ButtonGroup>
-        </ControlGroup>
+        </Flex>
 
-        <ControlGroup>
+        <Flex>
           <ButtonGroup>
             <Button
                 color="red"
@@ -107,8 +106,8 @@ export default class Controller extends Component {
               Reset
             </Button>
           </ButtonGroup>
-        </ControlGroup>
-      </Controls>
+        </Flex>
+      </Flex>
     );
   }
 }

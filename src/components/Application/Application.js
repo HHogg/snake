@@ -48,7 +48,7 @@ export default class Application extends Component {
       <Flex container direction="vertical">
         <Flex shrink>
           <Notifications>
-            <Flex container>
+            <Flex container alignChildrenVertical="middle">
               <Flex>
                 <MainMenu />
               </Flex>

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import './Icon.css';
 
 /* eslint-disable max-len */
 const ICONS = {

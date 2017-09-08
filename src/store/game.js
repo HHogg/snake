@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
+import { createBlock, moveForwards, moveBackwards } from '../../functions/common/history';
 import { createAction, handleActions } from '../utils/reduxActions';
-import { createBlock, moveForwards, moveBackwards } from '../utils/history';
 
 const initialState = {
   history: [],

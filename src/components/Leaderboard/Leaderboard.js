@@ -4,10 +4,10 @@ import { LEADERBOARD_LIMIT } from '../../../functions/config';
 import Flex from '../Flex/Flex';
 import AbsoluteChild from '../Layout/AbsoluteChild';
 import MaxWidthContainer from '../Layout/MaxWidthContainer';
-import Paragraph from '../Paragraph/Paragraph';
 import SolutionsTransitionGroup from '../Solutions/SolutionsTransitionGroup';
 import SolutionTransition from '../Solutions/SolutionTransition';
 import Solution from '../Solutions/Solution';
+import Text from '../Text/Text';
 
 export default class Leaderboard extends Component {
   static propTypes = {
@@ -36,7 +36,7 @@ export default class Leaderboard extends Component {
 
     this.solutionsRef = database()
       .ref('leaderboard')
-      .orderByChild('_score/score')
+      .orderByChild('_pathCount/length')
       .startAt(0)
       .limitToLast(LEADERBOARD_LIMIT);
 
@@ -85,8 +85,11 @@ export default class Leaderboard extends Component {
 
     if (!solutions.length) {
       return (
-        <Flex centerChildren container>
-          <Paragraph>No Leaderboard Solutions</Paragraph>
+        <Flex
+            alignChildrenHorizontal="middle"
+            alignChildrenVertical="middle"
+            container>
+          <Text>No Leaderboard Solutions</Text>
         </Flex>
       );
     }
@@ -95,18 +98,9 @@ export default class Leaderboard extends Component {
       <AbsoluteChild type="full">
         <MaxWidthContainer>
           <SolutionsTransitionGroup>
-            { solutions.map((solution) =>
+            { solutions.map((solution, index) =>
               <SolutionTransition key={ solution.key }>
-                <Solution
-                    avatar={ solution.avatar }
-                    average={ (solution._score || {}).average }
-                    content={ solution.content }
-                    displayName={ solution.displayName }
-                    key={ solution.key }
-                    modified={ solution.modified }
-                    points={ (solution._score || {}).points }
-                    score={ (solution._score || {}).score }
-                    title={ solution.title } />
+                <Solution { ...solution } position={ index + 1 } />
               </SolutionTransition>
             ) }
           </SolutionsTransitionGroup>

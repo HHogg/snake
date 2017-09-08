@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
+import { USER_AVATAR_SIZE } from '../UserAvatar/UserAvatar';
 import Notification from './Notification';
 import './Notifications.css';
 
@@ -31,7 +32,9 @@ export default class NotificationBar extends Component {
           ) }
         </div>
 
-        <div className="sh-notifications-bar__content">
+        <div
+            className="sh-notifications-bar__content"
+            style={ { minHeight: USER_AVATAR_SIZE } }>
           { children }
         </div>
       </div>

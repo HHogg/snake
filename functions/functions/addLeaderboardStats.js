@@ -2,16 +2,14 @@
 
 const { VM, VMScript } = require('vm2');
 const { FN_TIMEOUT_SECONDS, CLOUD_RUN_TIMES, CLOUD_CANVAS_SIZE } = require('../config');
-const calculateAverage = require('../common/calculateAverage');
-const calculateScore = require('../common/calculateScore');
-const containsCoordinates = require('../common/containsCoordinates');
+const { createBlock, moveForwards } = require('../common/history');
 const { createEnvironment, createPoint } = require('../common/createEnvironment');
 const getSurroundingCells = require('../common/getSurroundingCells');
-
+const containsCoordinates = require('../common/containsCoordinates');
 const xMax = CLOUD_CANVAS_SIZE;
 const yMax = CLOUD_CANVAS_SIZE;
 
-const createGetValues = (vm, solution) => (cell, snake, point) => {
+const createGetValue = (vm, solution) => (cell, snake, point) => {
   return vm.run(`
 
 ${solution};
@@ -30,63 +28,48 @@ heuristic(
   `);
 };
 
-const runSolution = (getValues, env) => {
-  let {
-    snake,
-    point,
-    history,
-    average,
-    points,
-    score,
-  } = (env || Object.assign({}, createEnvironment(xMax, yMax), {
-    history: [[]],
-    average: 0,
-    points: 0,
-    score: 0,
-  }));
+const runSolution = (getValue, history) => {
+  if (!history) {
+    const { snake, point } = createEnvironment(xMax, yMax);
+    history = createBlock([], 0, snake, point);
+  }
 
-  const nextMatch = getSurroundingCells(snake, xMax, yMax).map((cell) => {
-    const value = getValues(cell, snake, point);
+  const points = history.length - 1;
+  const point = history[points][0];
+  const snake = history[points][1];
+  const nextMove = getSurroundingCells(snake, xMax, yMax).map((cell) => {
+    const value = getValue(cell, snake, point);
 
     if (isNaN(parseInt(value))) {
-      throw new Error('The heuristic function returned NaN.');
+      throw new Error('The heuristic function did not return a number.');
     }
 
     return { cell, value };
   }).sort((a, b) => a.value - b.value)[0];
 
-  if (!nextMatch) {
-    return { average, points, score };
+  if (!nextMove) {
+    return history.slice(0, -1);
   }
 
-  const nextCell = nextMatch.cell;
+  const { cell } = nextMove;
 
-  history = [[nextCell, ...history[0]], ...history.slice(1)];
+  if (containsCoordinates([cell], point)) {
+    const nextSnake = [cell, ...snake];
+    const hasFinished = nextSnake.length === (xMax * yMax);
+    const nextPoint = !hasFinished
+      ? createPoint(xMax, yMax, nextSnake)
+      : null;
+    history = createBlock(history, points + 1, nextSnake, nextPoint);
 
-  if (containsCoordinates([nextCell], point)) {
-    snake = [nextCell, ...snake];
-    average = calculateAverage(history);
-    score = score + calculateScore(xMax * yMax, average, history[0].length, points);
-    points = points + 1;
-
-    if (snake.length === (xMax * yMax)) {
-      return { average, points, score };
+    if (hasFinished) {
+      return history;
     }
-
-    point = createPoint(xMax, yMax, snake);
-    history = [[], ...history];
   } else {
-    snake = [nextCell, ...snake.slice(0, -1)];
+    const nextSnake = [cell, ...snake.slice(0, -1)];
+    history = moveForwards(history, points, nextSnake, snake[snake.length - 1]);
   }
 
-  return runSolution(getValues, {
-    snake,
-    point,
-    history,
-    average,
-    points,
-    score,
-  });
+  return runSolution(getValue, history);
 };
 
 const getStats = (solution) => {
@@ -104,18 +87,20 @@ const getStats = (solution) => {
     throw new Error('Failed to compile solution.');
   }
 
-  const getValues = createGetValues(vm, solution);
+  const getValue = createGetValue(vm, solution);
 
   for (let i = 0; i < CLOUD_RUN_TIMES; i++) {
-    runs.push(runSolution(getValues));
+    runs.push(
+      runSolution(getValue).map(([,, tails]) => tails.length)
+    );
   }
 
-  return runs.sort((a, b) => b.score - a.score)[0];
+  return runs.sort((a, b) => b.length - a.length)[0];
 };
 
 
 module.exports = {
-  createGetValues,
+  createGetValue,
   getStats,
   runSolution,
 };

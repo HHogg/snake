@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { CLOUD_CANVAS_SIZE } from '../../../functions/config';
+import calculateSingleScore from '../../../functions/common/calculateScore';
 import { editorSelectSolution } from '../../store/editor';
 import { notifierAddErrorNotification } from '../../store/notifier';
 import {
@@ -10,12 +12,30 @@ import {
 } from '../../store/solutions';
 import Leaderboard from './Leaderboard';
 
+const calculateAverage = (data) =>
+  data.reduce((acc, n) => acc + n, 0) / data.length;
+
+const calculateScore = (values) =>
+  values.reduce((score, _, index) => score + calculateSingleScore(
+    CLOUD_CANVAS_SIZE * CLOUD_CANVAS_SIZE,
+    calculateAverage(values.slice(0, index + 1)),
+    index + 1,
+  ));
+
 const solutionsSelector = createSelector(
   (state) => state.solutions.leaderboard,
   (state) => state.solutions.leaderboardUsers,
   (solutions, users) => Object.keys(solutions)
-    .map((key) => ({ ...solutions[key], ...users[solutions[key].uid], key }))
-    .sort((a, b) => b._score.score - a._score.score),
+    .map((key) => ({
+      ...solutions[key],
+      ...users[solutions[key].uid],
+      key,
+      average: calculateAverage(solutions[key]._pathCount.values),
+      points: solutions[key]._pathCount.values.length,
+      progress: solutions[key]._pathCount.values.length / (CLOUD_CANVAS_SIZE * CLOUD_CANVAS_SIZE),
+      score: calculateScore(solutions[key]._pathCount.values),
+    }))
+    .sort((a, b) => b.score - a.score),
 );
 
 export default connect((state) => ({

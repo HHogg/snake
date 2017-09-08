@@ -1,6 +1,4 @@
-const AVERAGE_WEIGHT = 20;
-
 module.exports = (boardSize, averageMoves, points) =>
-  points * (
-    Math.pow(1 - (averageMoves / boardSize), AVERAGE_WEIGHT)
-  );
+  Math.max(1, points * (
+    Math.pow(1 - (averageMoves / boardSize), Math.log(points || 1))
+  ));

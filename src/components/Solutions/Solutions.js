@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Flex from '../Flex/Flex';
 import './Solutions.css';
 
 export default class Solutions extends Component {
@@ -10,9 +11,9 @@ export default class Solutions extends Component {
     const { children } = this.props;
 
     return (
-      <div className="sh-solutions">
+      <Flex container direction="vertical" space="x1">
         { children }
-      </div>
+      </Flex>
     );
   }
 }

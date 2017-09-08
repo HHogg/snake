@@ -2,10 +2,10 @@
   "rules": {
     "leaderboard": {
       ".read": true,
-      ".indexOn": "_score/score",
+      ".indexOn": "_pathCount/length",
       "$solutionId": {
         ".write": "auth.uid !== null && (!data.exists() || auth.uid === data.child('uid').val())",
-        "_score": {
+        "_pathCount": {
           ".read": true,
           ".write": false
         }

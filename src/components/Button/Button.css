@@ -35,7 +35,7 @@
 
 .sh-button--gray {
   background-color: var(--oc-gray-2);
-  color: var(--oc-gray-9);
+  color: var(--oc-gray-8);
 
   &:hover { background-color: var(--oc-gray-3); }
   &:active { background-color: var(--oc-gray-4); }

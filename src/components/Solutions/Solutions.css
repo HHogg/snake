@@ -1,108 +1,13 @@
-.sh-solutions {
-  width: 100%;
-  overflow: auto;
-}
-
 .sh-solution {
-  margin-bottom: 1rem;
-  border-radius: 0.3125rem;
+  overflow: hidden;
   background-color: var(--oc-gray-8);
+  border-radius: var(--border-radius);
 }
 
-.sh-solution__data {
-  padding: 1.5rem;
-}
-
-.sh-solution__container {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: -2rem;
-}
-
-.sh-solution__details,
-.sh-solution__stats,
-.sh-solution__actions {
-  margin: 0 2rem 2rem 0;
-
-  &:last-child { margin-right: 0; }
-}
-
-.sh-solution__avatar {
-  margin-right: 1rem;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-}
-
-.sh-solution__details {
-  flex: 1 1 0%;
-}
-
-.sh-solution__name {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin: 0 0 0.125rem;
-  color: var(--text-color);
-}
-
-.sh-solution__user {
-  font-size: 0.875rem;
-  font-style: italic;
-  color: var(--text-color-subtle);
-  white-space: nowrap;
-}
-
-.sh-solution__date {
-  font-size: 0.875rem;
-  font-style: italic;
-  color: var(--text-color-subtle);
-}
-
-.sh-solution__actions {
-  flex: 0 0 auto;
-}
-
-.sh-solution__avatar-container {
-  display: flex;
-}
-
-.sh-solution__stats {
-  display: flex;
-  flex: 0 0 auto;
-}
-
-.sh-solution__stat {
-  flex: 0 0 auto;
-  margin-right: 1rem;
-
-  &:last-child { margin-right: 0; }
-}
-
-.sh-solution__stat-value {
-  font-size: 1.5rem;
-  color: var(--text-color);
-  margin-right: 0.25rem;
-}
-
-.sh-solution__stat-label {
-  color: var(--text-color-subtle);
-}
-
-.sh-solution__info,
-.sh-solution__error {
-  padding: .75rem 1.5rem;
-  font-weight: 700;
-}
-
-.sh-solution__info {  background-color: var(--oc-blue-5); }
-.sh-solution__error {  background-color: var(--oc-red-5); }
-
-.sh-solution__transition-appear,
 .sh-solution__transition-enter {
   opacity: 0;
 }
 
-.sh-solution__transition-appear-active,
 .sh-solution__transition-enter-active {
   opacity: 1;
   transition-property: opacity;
@@ -120,3 +25,6 @@
   transition-duration: var(--transition-time-base);
   transition-timing-function: var(--transition-function);
 }
+
+.sh-solution-notification--error { background-color: var(--oc-red-5); }
+.sh-solution-notification--info  { background-color: var(--oc-blue-5); }

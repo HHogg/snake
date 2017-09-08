@@ -1,6 +1,6 @@
 import { VM } from 'vm2';
 import { FN_TIMEOUT_SECONDS } from '../config';
-import { createGetValues, getStats, runSolution } from './addLeaderboardStats';
+import { createGetValue, getStats, runSolution } from './addLeaderboardStats';
 
 const mockCell = [4, 4];
 const mockSnake = [[8, 4], [7, 4], [6, 4], [5, 4]];
@@ -36,63 +36,55 @@ describe('addLeaderboardStats:', () => {
     });
   });
 
-  describe('createGetValues:', () => {
+  describe('createGetValue:', () => {
     it('creates a callable function', () => {
-      expect(typeof createGetValues(vm, validSolution)).toBe('function');
+      expect(typeof createGetValue(vm, validSolution)).toBe('function');
     });
 
     it('returns the value from the heuristic function', () => {
-      expect(isNaN(createGetValues(vm, validSolution)(mockCell, mockSnake, mockPoint))).toBe(false);
+      expect(isNaN(createGetValue(vm, validSolution)(mockCell, mockSnake, mockPoint))).toBe(false);
     });
 
     it('handles invalid solution', () => {
-      expect(() => createGetValues(vm, invalidSolution)(mockCell, mockSnake, mockPoint))
+      expect(() => createGetValue(vm, invalidSolution)(mockCell, mockSnake, mockPoint))
         .toThrow('No function called "heuristic" was found.');
     });
 
     it('handles empty solution', () => {
-      expect(() => createGetValues(vm, emptySolution)(mockCell, mockSnake, mockPoint))
+      expect(() => createGetValue(vm, emptySolution)(mockCell, mockSnake, mockPoint))
         .toThrow('No function called "heuristic" was found.');
     });
   });
 
   describe('runSolution:', () => {
     it('handles valid solution', () => {
-      const { average, points, score } = runSolution(createGetValues(vm, validSolution));
-
-      expect(average).toBeGreaterThan(0);
-      expect(points).toBeGreaterThan(0);
-      expect(score).toBeGreaterThan(0);
+      expect(runSolution(createGetValue(vm, validSolution)).length).toBeGreaterThan(0);
     });
 
     it('handles non-integer solution', () => {
-      expect(() => runSolution(createGetValues(vm, nonIntegerSolution)))
-        .toThrow('The heuristic function returned NaN.');
+      expect(() => runSolution(createGetValue(vm, nonIntegerSolution)))
+        .toThrow('The heuristic function did not return a number.');
     });
 
     it('handles invalid solution', () => {
-      expect(() => runSolution(createGetValues(vm, invalidSolution)))
+      expect(() => runSolution(createGetValue(vm, invalidSolution)))
         .toThrow('No function called "heuristic" was found.');
     });
 
     it('handles empty solution', () => {
-      expect(() => runSolution(createGetValues(vm, emptySolution)))
+      expect(() => runSolution(createGetValue(vm, emptySolution)))
         .toThrow('No function called "heuristic" was found.');
     });
   });
 
   describe('getStats:', () => {
     it('handles valid solution', () => {
-      const { average, points, score } = getStats(validSolution);
-
-      expect(average).toBeGreaterThan(0);
-      expect(points).toBeGreaterThan(0);
-      expect(score).toBeGreaterThan(0);
+      expect(getStats(validSolution).length).toBeGreaterThan(0);
     });
 
     it('handles non-integer solution', () => {
       expect(() => getStats(nonIntegerSolution))
-        .toThrow('The heuristic function returned NaN.');
+        .toThrow('The heuristic function did not return a number.');
     });
 
     it('handles invalid solution', () => {
