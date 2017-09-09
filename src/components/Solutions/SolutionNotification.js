@@ -15,7 +15,7 @@ export default class SolutionNotification extends Component {
       `sh-solution-notification--${type}`);
 
     return (
-      <Flex { ...rest } className={ classes } padding="x1">
+      <Flex { ...rest } className={ classes } padding="x3">
         <Text strong>
           { children }
         </Text>

@@ -125,7 +125,15 @@ export default class Game extends Component {
     }
 
     const cells = getSurroundingCells(snake, xMax, yMax);
-    const nextCell = cells.sort(([ax, ay], [bx, by]) => values[ay][ax] - values[by][bx])[0];
+    let nextValue;
+    let nextCell;
+
+    for (let i = 0; i < cells.length; i++) {
+      if (nextValue === undefined || values[cells[i][1]][cells[i][0]] < nextValue) {
+        nextValue = values[cells[i][1]][cells[i][0]];
+        nextCell = cells[i];
+      }
+    }
 
     if (!nextCell) {
       onStopGame();
@@ -140,29 +148,22 @@ export default class Game extends Component {
 
     if (containsCoordinates([nextCell], point)) {
       nextSnake = [point, ...snake];
-
-      if (nextSnake.length === (xMax * yMax)) {
-        onStopGame();
-        onCollectPoint({
-          point: null,
-          snake: nextSnake,
-          xMax,
-          yMax,
-        });
-
-        return consoleLog({
-          message: '🎉 You have conquered Snake! 🎉 Submit your solution to the Leaderboard '
-            + 'and see how your average compares.',
-        });
-      }
-
-      nextPoint = createPoint(xMax, yMax, nextSnake);
+      const hasFinished = nextSnake.length === (xMax * yMax);
+      nextPoint = hasFinished ? null : createPoint(xMax, yMax, nextSnake);
       onCollectPoint({
         point: nextPoint,
         snake: nextSnake,
         xMax,
         yMax,
       });
+
+      if (hasFinished) {
+        onStopGame();
+        return consoleLog({
+          message: '🎉 You have conquered Snake! 🎉 Submit your solution to the Leaderboard '
+            + 'and see how your average compares.',
+        });
+      }
     } else {
       nextSnake = [nextCell, ...snake.slice(0, -1)];
       onStepForwards({

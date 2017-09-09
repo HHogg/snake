@@ -12,7 +12,7 @@ export default class Solution extends Component {
     average: PropTypes.number,
     displayName: PropTypes.string,
     error: PropTypes.string,
-    isRunning: PropTypes.bool,
+    running: PropTypes.bool,
     modified: PropTypes.number.isRequired,
     onDelete: PropTypes.func,
     onLoad: PropTypes.func,
@@ -30,7 +30,7 @@ export default class Solution extends Component {
       average,
       displayName,
       error,
-      isRunning,
+      running,
       modified,
       onSubmit,
       onLoad,
@@ -74,7 +74,7 @@ export default class Solution extends Component {
             { (onSubmit && onLoad && onDelete) && (
               <Flex shrink>
                 <SolutionControls
-                    isRunning={ isRunning }
+                    running={ running }
                     onDelete={ onDelete }
                     onLoad={ onLoad }
                     onSubmit={ onSubmit }/>
@@ -83,15 +83,15 @@ export default class Solution extends Component {
           </Flex>
         </Flex>
 
-        { (error || isRunning) && (
+        { (error || running) && (
           <Flex shrink>
-            { error && !isRunning && (
+            { error && !running && (
               <SolutionNotification type="error">
                 Last leaderboard solution returned: { error }
               </SolutionNotification>
             ) }
 
-            { isRunning && (
+            { running && (
               <SolutionNotification type="info">
                 Currently running, this may take a few minutes.
               </SolutionNotification>

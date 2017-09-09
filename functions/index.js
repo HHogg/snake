@@ -20,23 +20,23 @@ exports.addLeaderboardStats = functions
     const userSolutionRef = admin.database()
       .ref(`/solutions/${userId}/${solutionId}`);
 
-    return userSolutionRef
-      .update({ error: null, running: true })
-      .then(() => {
-        try {
-          const stats = getStats(solution);
 
-          return leaderboardSolutionScoreRef
-            .update({
-              length: stats.length,
-              values: stats,
-            })
-            .then(() => userSolutionRef.update({ error: null, running: false }));
-        } catch (error) {
-          return userSolutionRef.update({
-            error: error.toString(),
-            running: false,
-          });
-        }
-      });
+    return userSolutionRef.update({ error: null, running: true })
+      .then(() => getStats(solution))
+      .then((stats) =>
+        leaderboardSolutionScoreRef.update({
+          length: stats.length,
+          values: stats.map(([,, tails]) => tails.length),
+        }))
+      .then(() =>
+        userSolutionRef.update({
+          error: null,
+          running: false,
+        }))
+      .catch((error) =>
+        userSolutionRef.update({
+          error: error.toString(),
+          running: false,
+        })
+      );
   });

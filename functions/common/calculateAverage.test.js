@@ -2,12 +2,12 @@ import calculateAverage from './calculateAverage';
 
 describe('common: calculateAverage', () => {
   describe('with an empty dataset', () => {
-    it('return 0', () => {
+    test('return 0', () => {
       expect(calculateAverage([])).toBe(0);
     });
   });
 
-  it('returns the mean', () => {
+  test('returns the mean', () => {
     expect(calculateAverage([
       new Array(5),
       new Array(5),
