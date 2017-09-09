@@ -133,6 +133,7 @@ export default class SavedSolutions extends Component {
               <SolutionTransition key={ solution.key }>
                 <Solution { ...solution }
                     avatar={ avatar }
+                    avatarSize="2.5rem"
                     displayName={ displayName }
                     onDelete={ () => this.handleDelete(solution) }
                     onLoad={ () => this.handleLoad(solution) }

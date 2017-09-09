@@ -7,19 +7,20 @@ import Text from '../Text/Text';
 export default class SolutionInformation extends Component {
   static propTypes = {
     avatar: PropTypes.string.isRequired,
+    avatarSize: PropTypes.string.isRequired,
     displayName: PropTypes.string,
     modified: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
   };
 
   render() {
-    const { avatar, displayName, modified, title } = this.props;
+    const { avatar, avatarSize, displayName, modified, title } = this.props;
 
     return (
       <Flex alignChildrenVertical="middle" container space="x1">
         { avatar && (
           <Flex shrink>
-            <Avatar size="2.5rem" src={ avatar } />
+            <Avatar size={ avatarSize } src={ avatar } />
           </Flex>
         ) }
 

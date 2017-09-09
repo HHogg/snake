@@ -1,6 +1,6 @@
 :root {
   --menu-item-spacing: 1rem;
-  --menu-snake-size: 0.3125rem;
+  --menu-snake-size: 0.25rem;
 }
 
 .sh-menu {
@@ -53,8 +53,11 @@
   &::after {
     left: 0;
     width: calc(80% - ((var(--menu-snake-size) * 2) + var(--menu-item-spacing)));
-    background-color: var(--cell-snake-tail-color);
-    border-right: var(--menu-snake-size) solid var(--cell-snake-head-color);
+    background: linear-gradient(to right,
+      rgba(255,224,102,1) 0%,
+      rgba(192,235,117,1) 50%,
+      rgba(102,217,232,1) 100%
+    );
     transform: scaleX(0);
     transform-origin: left;
   }

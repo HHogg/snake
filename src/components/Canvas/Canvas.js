@@ -1,12 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import {
-  CELL_SIZE,
-  CELL_PADDING,
-  CHAR_SNAKE_HEAD,
-  CHAR_SNAKE_TAIL,
-  CHAR_POINT,
-} from '../../../functions/config';
+import { CELL_SIZE, CELL_PADDING } from '../../../functions/config';
 import getCSSVar from '../../utils/getCSSVar';
+import getGradientColor from '../../utils/getGradientColor';
 
 export default class Canvas extends Component {
   static propTypes = {
@@ -25,9 +20,7 @@ export default class Canvas extends Component {
 
   componentDidMount() {
     this.colorMap = {
-      [CHAR_SNAKE_HEAD]: getCSSVar('cell-snake-head-color'),
-      [CHAR_SNAKE_TAIL]: getCSSVar('cell-snake-tail-color'),
-      [CHAR_POINT]: getCSSVar('cell-point-color'),
+      point: getCSSVar('cell-point-color'),
       inactive: getCSSVar('cell-inactive-color'),
       error: getCSSVar('cell-error-color'),
       text: getCSSVar('cell-text-color'),
@@ -99,7 +92,7 @@ export default class Canvas extends Component {
     }
 
     if (point) {
-      this.drawCell(point[0], point[1], this.colorMap[CHAR_POINT]);
+      this.drawCell(point[0], point[1], this.colorMap.point);
     }
 
     for (let y = 0; y < yMax; y++) {
@@ -120,7 +113,7 @@ export default class Canvas extends Component {
 
     for (let i = 0; i < snake.length; i++) {
       this.drawCell(snake[i][0], snake[i][1],
-        this.colorMap[i === 0 ? CHAR_SNAKE_HEAD : CHAR_SNAKE_TAIL]);
+        getGradientColor(((snake.length - 1) - i) / snake.length));
     }
   }
 

@@ -1,11 +1,7 @@
 module.exports = {
   CELL_PADDING: 5,
   CELL_SIZE: 30,
-  CHAR_POINT: '$',
-  CHAR_SNAKE_HEAD: 'X',
-  CHAR_SNAKE_TAIL: 'x',
   CLOUD_CANVAS_SIZE: 15,
-  CLOUD_RUN_TIMES: 1,
   FN_TIMEOUT_SECONDS: 1,
   LEADERBOARD_LIMIT: 20,
   LOCAL_STORAGE_REDUX_KEY: 'snake-heuristics:redux:v1',

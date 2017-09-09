@@ -9,6 +9,7 @@ import SolutionScoreBoard from './SolutionScoreBoard';
 export default class Solution extends Component {
   static propTypes = {
     avatar: PropTypes.string.isRequired,
+    avatarSize: PropTypes.string.isRequired,
     average: PropTypes.number,
     displayName: PropTypes.string,
     error: PropTypes.string,
@@ -27,6 +28,7 @@ export default class Solution extends Component {
   render() {
     const {
       avatar,
+      avatarSize,
       average,
       displayName,
       error,
@@ -57,6 +59,7 @@ export default class Solution extends Component {
             <Flex>
               <SolutionInformation
                   avatar={ avatar }
+                  avatarSize={ avatarSize }
                   displayName={ displayName }
                   modified={ modified }
                   title={ title } />

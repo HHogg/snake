@@ -100,7 +100,9 @@ export default class Leaderboard extends Component {
           <SolutionsTransitionGroup>
             { solutions.map((solution, index) =>
               <SolutionTransition key={ solution.key }>
-                <Solution { ...solution } position={ index + 1 } />
+                <Solution { ...solution }
+                    avatarSize="3rem"
+                    position={ index + 1 } />
               </SolutionTransition>
             ) }
           </SolutionsTransitionGroup>
