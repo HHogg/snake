@@ -11,7 +11,7 @@ export default class Solutions extends Component {
     const { children } = this.props;
 
     return (
-      <Flex container direction="vertical" space="x1">
+      <Flex container direction="vertical" shrink space="x1">
         { children }
       </Flex>
     );

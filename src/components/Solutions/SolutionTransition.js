@@ -6,7 +6,7 @@ export default class SolutionTransition extends Component {
     return (
       <CSSTransition { ...this.props }
           classNames="sh-solution__transition"
-          timeout={ 400 } />
+          timeout={ 200 } />
     );
   }
 }

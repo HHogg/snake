@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Flex from '../Flex/Flex';
 import './MaxWidthContainer.css';
 
 export default class MaxWidthContainer extends Component {
@@ -7,10 +8,12 @@ export default class MaxWidthContainer extends Component {
   };
 
   render() {
+    const { children, ...rest } = this.props;
+
     return (
-      <div className="sh-layout--max-width">
-        { this.props.children }
-      </div>
+      <Flex { ...rest } className="sh-layout--max-width">
+        { children }
+      </Flex>
     );
   }
 }

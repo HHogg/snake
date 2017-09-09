@@ -5,6 +5,7 @@
 .sh-absolute__child {
   display: flex;
   position: absolute;
+  overflow: auto;
 }
 
 .sh-absolute__child--full {

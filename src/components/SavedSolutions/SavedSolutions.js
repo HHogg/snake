@@ -114,20 +114,28 @@ export default class SavedSolutions extends Component {
       solutions,
     } = this.props;
 
-    if (!solutions.length) {
-      return (
-        <Flex
-            alignChildrenHorizontal="middle"
-            alignChildrenVertical="middle"
-            container>
-          <Text>No Saved Solutions</Text>
-        </Flex>
-      );
-    }
-
     return (
       <AbsoluteChild type="full">
-        <MaxWidthContainer>
+        <MaxWidthContainer container direction="vertical">
+          <Flex
+              alignChildrenHorizontal="middle"
+              container
+              padding="x4"
+              shrink>
+            <Flex shrink><Text size="large">💾</Text></Flex>
+            <Flex shrink><Text size="large">My Saved Solutions</Text></Flex>
+            <Flex shrink><Text size="large">💾</Text></Flex>
+          </Flex>
+
+          { !solutions.length && (
+            <Flex
+                alignChildrenHorizontal="middle"
+                alignChildrenVertical="middle"
+                container>
+              <Text>No Saved Solutions</Text>
+            </Flex>
+          ) }
+
           <SolutionsTransitionGroup>
             { solutions.map((solution) =>
               <SolutionTransition key={ solution.key }>

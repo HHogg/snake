@@ -83,23 +83,31 @@ export default class Leaderboard extends Component {
   render() {
     const { solutions } = this.props;
 
-    if (!solutions.length) {
-      return (
-        <Flex
-            alignChildrenHorizontal="middle"
-            alignChildrenVertical="middle"
-            container>
-          <Text>No Leaderboard Solutions</Text>
-        </Flex>
-      );
-    }
-
     return (
       <AbsoluteChild type="full">
-        <MaxWidthContainer>
+        <MaxWidthContainer container direction="vertical">
+          <Flex
+              alignChildrenHorizontal="middle"
+              container
+              padding="x4"
+              shrink>
+            <Flex shrink><Text size="large">🏆</Text></Flex>
+            <Flex shrink><Text size="large">Leaderboard</Text></Flex>
+            <Flex shrink><Text size="large">🏆</Text></Flex>
+          </Flex>
+
+          { !solutions.length && (
+            <Flex
+                alignChildrenHorizontal="middle"
+                alignChildrenVertical="middle"
+                container>
+              <Text>No Leaderboard Solutions</Text>
+            </Flex>
+          ) }
+
           <SolutionsTransitionGroup>
             { solutions.map((solution, index) =>
-              <SolutionTransition key={ solution.key }>
+              <SolutionTransition key={ solution.key } index={ index }>
                 <Solution { ...solution }
                     avatarSize="3rem"
                     position={ index + 1 } />
