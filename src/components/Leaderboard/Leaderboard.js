@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { database } from 'firebase';
 import { LEADERBOARD_LIMIT } from '../../../functions/config';
 import Flex from '../Flex/Flex';
-import AbsoluteChild from '../Layout/AbsoluteChild';
-import MaxWidthContainer from '../Layout/MaxWidthContainer';
 import SolutionsTransitionGroup from '../Solutions/SolutionsTransitionGroup';
 import SolutionTransition from '../Solutions/SolutionTransition';
 import Solution from '../Solutions/Solution';
@@ -84,38 +82,36 @@ export default class Leaderboard extends Component {
     const { solutions } = this.props;
 
     return (
-      <AbsoluteChild type="full">
-        <MaxWidthContainer container direction="vertical">
+      <Flex direction="vertical" maxWidth="medium" parent>
+        <Flex
+            alignChildrenHorizontal="middle"
+            padding="x4"
+            parent
+            shrink>
+          <Flex shrink><Text size="large">🏆</Text></Flex>
+          <Flex shrink><Text size="large">Leaderboard</Text></Flex>
+          <Flex shrink><Text size="large">🏆</Text></Flex>
+        </Flex>
+
+        { !solutions.length && (
           <Flex
               alignChildrenHorizontal="middle"
-              container
-              padding="x4"
-              shrink>
-            <Flex shrink><Text size="large">🏆</Text></Flex>
-            <Flex shrink><Text size="large">Leaderboard</Text></Flex>
-            <Flex shrink><Text size="large">🏆</Text></Flex>
+              alignChildrenVertical="middle"
+              parent>
+            <Text>No Leaderboard Solutions</Text>
           </Flex>
+        ) }
 
-          { !solutions.length && (
-            <Flex
-                alignChildrenHorizontal="middle"
-                alignChildrenVertical="middle"
-                container>
-              <Text>No Leaderboard Solutions</Text>
-            </Flex>
+        <SolutionsTransitionGroup>
+          { solutions.map((solution, index) =>
+            <SolutionTransition key={ solution.key } index={ index }>
+              <Solution { ...solution }
+                  avatarSize="3rem"
+                  position={ index + 1 } />
+            </SolutionTransition>
           ) }
-
-          <SolutionsTransitionGroup>
-            { solutions.map((solution, index) =>
-              <SolutionTransition key={ solution.key } index={ index }>
-                <Solution { ...solution }
-                    avatarSize="3rem"
-                    position={ index + 1 } />
-              </SolutionTransition>
-            ) }
-          </SolutionsTransitionGroup>
-        </MaxWidthContainer>
-      </AbsoluteChild>
+        </SolutionsTransitionGroup>
+      </Flex>
     );
   }
 }

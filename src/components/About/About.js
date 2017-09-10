@@ -4,7 +4,7 @@ import AboutPathfinding from './AboutPathfinding';
 import AboutPlaying from './AboutPlaying';
 import AboutScoring from './AboutScoring';
 import AboutLeaderboard from './AboutLeaderboard';
-import AbsoluteChild from '../Layout/AbsoluteChild';
+import Flex from '../Flex/Flex';
 import RoutingAnimation from '../RoutingAnimation/RoutingAnimation';
 
 export default class About extends Component {
@@ -24,14 +24,20 @@ export default class About extends Component {
     const key = pathname.split('/')[2] || '/';
 
     return (
-      <AbsoluteChild type="full">
-        <RoutingAnimation location={ location } transitionKey={ key }>
+      <Flex parent>
+        <RoutingAnimation
+            component={ Flex }
+            container
+            location={ location }
+            parent
+            space="x0"
+            transitionKey={ key }>
           <Route path={ url } exact component={ AboutPathfinding } />
           <Route path={ `${url}/playing` } component={ AboutPlaying } />
           <Route path={ `${url}/scoring` } component={ AboutScoring } />
           <Route path={ `${url}/leaderboard` } component={ AboutLeaderboard } />
         </RoutingAnimation>
-      </AbsoluteChild>
+      </Flex>
     );
   }
 }

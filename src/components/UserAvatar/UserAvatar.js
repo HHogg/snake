@@ -16,7 +16,7 @@ export default class UserAvatar extends Component {
     const style = { height: USER_AVATAR_SIZE };
 
     return (
-      <Flex container alignChildrenVertical="middle" style={ style }>
+      <Flex alignChildrenVertical="middle" parent style={ style }>
         <Flex>
           <Text strong>{ name }</Text>
         </Flex>

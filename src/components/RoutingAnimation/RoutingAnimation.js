@@ -3,7 +3,7 @@ import { Switch } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import './RoutingAnimation.css';
 
-const timeout = { enter: 400, exit: 200 };
+const timeout = { enter: 800, exit: 400 };
 
 export default class RoutingAnimation extends Component {
   static propTypes = {

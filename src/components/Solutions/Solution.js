@@ -45,8 +45,8 @@ export default class Solution extends Component {
     } = this.props;
 
     return (
-      <Flex className="sh-solution" container direction="vertical">
-        <Flex alignChildrenVertical="middle" container shrink space="x0">
+      <Flex className="sh-solution" direction="vertical" parent>
+        <Flex alignChildrenVertical="middle" parent shrink space="x0">
           { progress && (
             <Flex shrink>
               <SolutionProgress
@@ -55,7 +55,7 @@ export default class Solution extends Component {
             </Flex>
           ) }
 
-          <Flex alignChildrenVertical="middle" container padding="x3">
+          <Flex alignChildrenVertical="middle" padding="x3" parent>
             <Flex>
               <SolutionInformation
                   avatar={ avatar }

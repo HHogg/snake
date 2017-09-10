@@ -17,7 +17,7 @@ export default class SolutionInformation extends Component {
     const { avatar, avatarSize, displayName, modified, title } = this.props;
 
     return (
-      <Flex alignChildrenVertical="middle" container space="x1">
+      <Flex alignChildrenVertical="middle" parent space="x1">
         { avatar && (
           <Flex shrink>
             <Avatar size={ avatarSize } src={ avatar } />

@@ -6,7 +6,6 @@ import React, { Component, PropTypes } from 'react';
 import { Route } from 'react-router-dom';
 import { auth } from 'firebase';
 import About from '../About';
-import AbsoluteContainer from '../Layout/AbsoluteContainer';
 import Flex from '../Flex/Flex';
 import Game from '../Game';
 import Intro from '../Intro';
@@ -45,10 +44,10 @@ export default class Application extends Component {
     const key = pathname.split('/')[1] || '/';
 
     return (
-      <Flex container direction="vertical">
+      <Flex direction="vertical" maxWidth="large" parent>
         <Flex shrink>
           <Notifications>
-            <Flex container alignChildrenVertical="middle">
+            <Flex  alignChildrenVertical="middle" parent>
               <Flex>
                 <MainMenu />
               </Flex>
@@ -60,20 +59,20 @@ export default class Application extends Component {
           </Notifications>
         </Flex>
 
-        <AbsoluteContainer container>
-          <RoutingAnimation
-              component={ Flex }
-              container
-              direction="vertical"
-              location={ location }
-              transitionKey={ key }>
-            <Route path="/" exact component={ Intro } />
-            <Route path="/game" component={ Game } />
-            <Route path="/about" component={ About } />
-            <Route path="/leaderboard" component={ Leaderboard } />
-            <Route path="/solutions" component={ SavedSolutions } />
-          </RoutingAnimation>
-        </AbsoluteContainer>
+        <RoutingAnimation
+            component={ Flex }
+            container
+            direction="vertical"
+            location={ location }
+            parent
+            space="x0"
+            transitionKey={ key }>
+          <Route path="/" exact component={ Intro } />
+          <Route path="/game" component={ Game } />
+          <Route path="/about" component={ About } />
+          <Route path="/leaderboard" component={ Leaderboard } />
+          <Route path="/solutions" component={ SavedSolutions } />
+        </RoutingAnimation>
       </Flex>
     );
   }

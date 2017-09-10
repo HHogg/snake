@@ -66,7 +66,7 @@ export default class SolutionTitle extends Component {
       <Flex
           alignChildrenVertical="middle"
           className="sh-solution-title__container"
-          container
+          parent
           style={ { opacity: isLoggedIn ? 1 : 0 } }>
         <Flex>
           <Text size="large">

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import AboutStepControls from './AboutStepControls';
+import Flex from '../Flex/Flex';
 import './AboutStep.css';
 
 export default class AboutStep extends Component {
@@ -17,11 +18,18 @@ export default class AboutStep extends Component {
     } = this.props;
 
     return (
-      <div className="sh-about__step">
-        { children }
-
-        <AboutStepControls from={ pathFrom } to={ pathTo } />
-      </div>
+      <Flex
+          alignChildrenHorizontal="middle"
+          alignChildrenVertical="middle"
+          className="sh-about__step"
+          direction="vertical"
+          padding="x2"
+          parent>
+        <Flex maxWidth="small" shrink>
+          { children }
+          <AboutStepControls from={ pathFrom } to={ pathTo } />
+        </Flex>
+      </Flex>
     );
   }
 }

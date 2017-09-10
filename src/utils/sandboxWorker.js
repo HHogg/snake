@@ -4,7 +4,7 @@ onmessage = ({ data }) => {
   const values = [];
   const snakeMap = {};
 
-  for (let i = 0; i < snake.length; i++) {
+  for (let i = 0; i < snake.length - 1; i++) {
     snakeMap[snake[i]] = true;
   }
 

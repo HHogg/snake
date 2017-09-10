@@ -35,7 +35,7 @@ export default class Controller extends Component {
     } = this.props;
 
     return (
-      <Flex container>
+      <Flex parent>
         <Flex>
           <ButtonGroup>
             <Button

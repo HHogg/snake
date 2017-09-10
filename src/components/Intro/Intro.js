@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import AbsoluteChild from '../Layout/AbsoluteChild';
+import Flex from '../Flex/Flex';
 import SnakeHeuristicsSVG from './SnakeHeuristicsSVG';
 import './Intro.css';
 
@@ -26,11 +26,13 @@ export default class Intro extends Component {
 
   render() {
     return (
-      <AbsoluteChild type="center">
-        <div style={ { width: '30rem', maxWidth: '100%' } }>
-          <SnakeHeuristicsSVG />
-        </div>
-      </AbsoluteChild>
+      <Flex
+          alignChildrenHorizontal="middle"
+          alignChildrenVertical="middle"
+          maxWidth="small"
+          parent>
+        <SnakeHeuristicsSVG />
+      </Flex>
     );
   }
 }

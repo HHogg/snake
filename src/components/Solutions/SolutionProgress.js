@@ -27,9 +27,9 @@ export default class SolutionProgress extends Component {
       <Flex
           alignChildrenHorizontal="middle"
           alignChildrenVertical="middle"
-          container
           direction="vertical"
           padding="x3"
+          parent
           style={ style }>
         <Text color="dark" size="large">{ ordinal(position) }</Text>
         <Text color="dark">({ (progress * 100).toFixed() }%)</Text>

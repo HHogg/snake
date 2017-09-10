@@ -4,7 +4,6 @@ import { createEnvironment, createPoint } from '../../../functions/common/create
 import containsCoordinates from '../../../functions/common/containsCoordinates';
 import getSurroundingCells from '../../../functions/common/getSurroundingCells';
 import Sandbox from '../../utils/Sandbox';
-import AbsoluteChild from '../Layout/AbsoluteChild';
 import Canvas from '../Canvas';
 import Console from '../Console';
 import Controller from '../Controller';
@@ -238,41 +237,39 @@ export default class Game extends Component {
     const { values } = this.state;
 
     return (
-      <AbsoluteChild type="full">
-        <Flex container>
-          <Flex container direction="vertical">
-            <Flex container>
-              <Canvas values={ values } />
-            </Flex>
-
-            <Flex shrink>
-              <Console />
-            </Flex>
-
-            <Flex shrink>
-              <Scoreboard />
-            </Flex>
-
-            <Flex shrink>
-              <Controller
-                  onRefresh={ () => this.handleRefresh() }
-                  onReset={ () => this.handleReset() }
-                  onStepBackwards={ () => this.handleStepBackwards() }
-                  onStepForwards={ () => this.handleStepForwards() } />
-            </Flex>
+      <Flex parent size="large">
+        <Flex parent direction="vertical" shrink>
+          <Flex parent shrink>
+            <Canvas values={ values } />
           </Flex>
 
-          <Flex container direction="vertical">
-            <Flex shrink>
-              <SolutionTitle />
-            </Flex>
+          <Flex parent direction="vertical">
+            <Console />
+          </Flex>
 
-            <Flex container>
-              <Editor />
-            </Flex>
+          <Flex shrink>
+            <Scoreboard />
+          </Flex>
+
+          <Flex shrink>
+            <Controller
+                onRefresh={ () => this.handleRefresh() }
+                onReset={ () => this.handleReset() }
+                onStepBackwards={ () => this.handleStepBackwards() }
+                onStepForwards={ () => this.handleStepForwards() } />
           </Flex>
         </Flex>
-      </AbsoluteChild>
+
+        <Flex direction="vertical" parent>
+          <Flex shrink>
+            <SolutionTitle />
+          </Flex>
+
+          <Flex parent>
+            <Editor />
+          </Flex>
+        </Flex>
+      </Flex>
     );
   }
 }

@@ -5,8 +5,6 @@
 }
 
 .sh-about__step {
-  width: 37.5rem;
-  padding: var(--space--x2);
   text-align: center;
 }
 

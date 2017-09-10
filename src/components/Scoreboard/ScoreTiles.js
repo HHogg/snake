@@ -8,7 +8,7 @@ export default class ScoreTiles extends Component {
 
   render() {
     return (
-      <Flex container alignChildrenHorizontal="around">
+      <Flex alignChildrenHorizontal="around" parent>
         { this.props.children }
       </Flex>
     );

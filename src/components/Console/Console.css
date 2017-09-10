@@ -1,6 +1,7 @@
 .sh-console {
   position: relative;
   background-color: var(--cell-inactive-color);
+  min-height: 5rem;
 }
 
 .sh-console__clear {
@@ -21,9 +22,10 @@
 
 .sh-console__messages {
   padding: var(--space--x2);
-  height: 7.5rem;
+  width: 0;
   overflow: auto;
   font-family: "Courier New", Courier, monospace;
+  word-break: break-all;
 }
 
 .sh-console__message::before {
