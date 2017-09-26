@@ -8,22 +8,15 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { ConnectedRouter } from 'react-router-redux';
-import { initializeApp } from 'firebase';
 import createBrowserHistory from 'history/createBrowserHistory';
 import createMemoryHistory from 'history/createMemoryHistory';
-import configureStore from './store';
-import Application from './components/Application';
 import template from './index.ejs';
+import configureStore from './store';
+import initialiseFirebase from './initialiseFirebase';
+import Application from './components/Application';
 
 if (typeof document !== 'undefined') {
-  initializeApp({
-    apiKey: 'AIzaSyDjffGgEF_020YYP4h5TjG8SUyzxd7EVi8',
-    authDomain: 'snake-heuristics.firebaseapp.com',
-    databaseURL: 'https://snake-heuristics.firebaseio.com',
-    projectId: 'snake-heuristics',
-    storageBucket: 'snake-heuristics.appspot.com',
-    messagingSenderId: '1049330516962',
-  });
+  initialiseFirebase();
 
   const history = createBrowserHistory();
   const store = configureStore(history);

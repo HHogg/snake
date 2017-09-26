@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 const { VM, VMScript } = require('vm2');
-const { FN_TIMEOUT_SECONDS, CLOUD_CANVAS_SIZE } = require('../config');
+const { FN_TIMEOUT_SECONDS, CLOUD_CANVAS_SIZE, CLOUD_TIMEOUT_SECONDS } = require('../config');
 const { createBlock, moveForwards } = require('../common/history');
 const { createEnvironment, createPoint } = require('../common/createEnvironment');
 const getSurroundingCells = require('../common/getSurroundingCells');
@@ -95,7 +95,7 @@ const runSolution = (getValue, resolve, reject, history) => {
 
 const getStats = (solution) => {
   const vm = new VM({
-    timeout: FN_TIMEOUT_SECONDS * 1000,
+    timeout: (FN_TIMEOUT_SECONDS * 1000) / 3,
     sandbox: {},
     wrapper: 'none',
     console: 'off',
@@ -108,7 +108,14 @@ const getStats = (solution) => {
       return reject(new Error('Failed to compile solution.'));
     }
 
-    runSolution(createGetValue(vm, solution), resolve, reject);
+    const solutionTimeout = setTimeout(() => {
+      reject(new Error('Solution took too long to run'));
+    }, CLOUD_TIMEOUT_SECONDS * 1000);
+
+    runSolution(createGetValue(vm, solution), (history) => {
+      clearTimeout(solutionTimeout);
+      resolve(history);
+    }, reject);
   });
 };
 

@@ -20,13 +20,12 @@ exports.addLeaderboardStats = functions
     const userSolutionRef = admin.database()
       .ref(`/solutions/${userId}/${solutionId}`);
 
-
     return userSolutionRef.update({ error: null, running: true })
       .then(() => getStats(solution))
-      .then((stats) =>
+      .then((historu) =>
         leaderboardSolutionScoreRef.update({
-          length: stats.length,
-          values: stats.map(([,, tails]) => tails.length),
+          length: historu.length,
+          values: historu.map(([,, tails]) => tails.length),
         }))
       .then(() =>
         userSolutionRef.update({
