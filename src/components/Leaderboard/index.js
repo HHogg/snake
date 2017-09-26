@@ -20,7 +20,7 @@ const calculateScore = (values) =>
     CLOUD_CANVAS_SIZE * CLOUD_CANVAS_SIZE,
     calculateAverage(values.slice(0, index + 1)),
     index + 1,
-  ));
+  ), 0);
 
 const solutionsSelector = createSelector(
   (state) => state.solutions.leaderboard,
