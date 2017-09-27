@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { CLOUD_CANVAS_SIZE } from '../../../functions/config';
+import { CLOUD_CANVAS_SIZE, SNAKE_LENGTH } from '../../../functions/config';
 import calculateSingleScore from '../../../functions/common/calculateScore';
 import { editorSelectSolution } from '../../store/editor';
 import { notifierAddErrorNotification } from '../../store/notifier';
@@ -31,8 +31,9 @@ const solutionsSelector = createSelector(
       ...users[solutions[key].uid],
       key,
       average: calculateAverage(solutions[key]._pathCount.values),
-      points: solutions[key]._pathCount.values.length,
-      progress: solutions[key]._pathCount.values.length / (CLOUD_CANVAS_SIZE * CLOUD_CANVAS_SIZE),
+      points: solutions[key]._pathCount.values.length - 1,
+      progress: ((solutions[key]._pathCount.values.length - 1) + SNAKE_LENGTH) /
+        (CLOUD_CANVAS_SIZE * CLOUD_CANVAS_SIZE),
       score: calculateScore(solutions[key]._pathCount.values),
     }))
     .sort((a, b) => b.score - a.score),

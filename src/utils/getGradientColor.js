@@ -5,7 +5,7 @@ const GRADIENT = [
 ];
 
 export default (percent) => {
-  const upperIndex = GRADIENT.findIndex(([p]) => p > percent);
+  const upperIndex = GRADIENT.findIndex(([p]) => p >= percent);
   const [lp, [lr, lg, lb]] = GRADIENT[upperIndex - 1];
   const [up, [ur, ug, ub]] = GRADIENT[upperIndex];
   const upperPercentage = (percent - lp) / (up - lp);
