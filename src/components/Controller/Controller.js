@@ -1,8 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import Button from '../Button/Button';
-import ButtonGroup from '../Button/ButtonGroup';
-import Flex from '../Flex/Flex';
-import Icon from '../Icon/Icon';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Button, Buttons, Flex, Icon } from 'preshape';
 
 export default class Controller extends Component {
   static propTypes = {
@@ -35,77 +33,72 @@ export default class Controller extends Component {
     } = this.props;
 
     return (
-      <Flex parent>
-        <Flex>
-          <ButtonGroup>
+      <Flex direction="horizontal" gutter="x3">
+        <Flex direction="horizontal" grow>
+          <Buttons grow>
             <Button
-                color="green"
+                color="positive"
                 disabled={ isGameOver || isPlaying }
                 onClick={ () => onStart() }
                 title="Start the game">
               Start
             </Button>
-          </ButtonGroup>
+          </Buttons>
         </Flex>
 
-        <Flex>
-          <ButtonGroup>
+        <Flex direction="horizontal" grow>
+          <Buttons grow>
             <Button
-                color="blue"
                 disabled={ !canGoBackwards || !isPlaying || isRunning }
                 onClick={ () => onStepBackwards() }
                 title="Rewind one cell at a time">
-              <Icon name="step-backwards" />
+              <Icon name="Beginning" size="1rem" />
             </Button>
 
             <Button
-                color="blue"
                 disabled={ isGameOver || !isPlaying || isRunning }
                 onClick={ () => onPlay() }
                 title="Run the solution and move Snake">
-              <Icon name="play" />
+              <Icon name="Play" size="1rem" />
             </Button>
 
             <Button
-                color="blue"
                 disabled={ isGameOver || !isPlaying || !isRunning }
                 onClick={ () => onPause() }
                 title="Pause the solution from being run">
-              <Icon name="pause" />
+              <Icon name="Pause" size="1rem" />
             </Button>
 
             <Button
-                color="blue"
                 disabled={ isGameOver || !isPlaying || isRunning }
                 onClick={ () => onStepForwards() }
                 title="Move the cell snake forward one cell at a time">
-              <Icon name="step-forwards" />
+              <Icon name="End" size="1rem" />
             </Button>
-          </ButtonGroup>
+          </Buttons>
         </Flex>
 
-        <Flex>
-          <ButtonGroup>
+        <Flex direction="horizontal" grow>
+          <Buttons grow>
             <Button
-                color="blue"
                 disabled={ isGameOver || !isPlaying || isRunning }
                 onClick={ () => onRefresh() }
                 title="Rerun the solution with the current snakes position">
-              <Icon name="refresh" />
+              <Icon name="Refresh" size="1rem" />
             </Button>
-          </ButtonGroup>
+          </Buttons>
         </Flex>
 
-        <Flex>
-          <ButtonGroup>
+        <Flex direction="horizontal">
+          <Buttons>
             <Button
-                color="red"
+                color="negative"
                 disabled={ !isPlaying }
                 onClick={ () => onReset() }
                 title="Reset the Snake back to starting position">
               Reset
             </Button>
-          </ButtonGroup>
+          </Buttons>
         </Flex>
       </Flex>
     );

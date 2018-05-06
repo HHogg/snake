@@ -1,16 +1,12 @@
-import React, { Component, PropTypes } from 'react';
-import Flex from '../Flex/Flex';
+import React, { Component } from 'react';
+import { Flex } from 'preshape';
 
 export default class ScoreTiles extends Component {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-  };
-
   render() {
     return (
-      <Flex alignChildrenHorizontal="around" parent>
-        { this.props.children }
-      </Flex>
+      <Flex{ ...this.props }
+          direction="horizontal"
+          gutter="x3" />
     );
   }
 }

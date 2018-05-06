@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import ConsoleMessage from './ConsoleMessage';
-import Flex from '../Flex/Flex';
-import './Console.css';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Buttons, Button, Flex, Text } from 'preshape';
 
+/* eslint-disable react/no-find-dom-node */
 export default class Console extends Component {
   static propTypes = {
     messages: PropTypes.array.isRequired,
@@ -17,23 +18,32 @@ export default class Console extends Component {
   }
 
   render() {
-    const { messages, onConsoleClear } = this.props;
+    const { messages, onConsoleClear, ...rest } = this.props;
 
     return (
-      <Flex className="sh-console" parent>
+      <Flex { ...rest } container direction="vertical" minHeight="7rem">
         <Flex
-            className="sh-console__messages"
-            ref={ (el) => this.messages = el }>
-          { messages.map((message, index) =>
-            <ConsoleMessage key={ index }>
-              { message }
-            </ConsoleMessage>
-          ) }
-        </Flex>
+            borderColor
+            borderSize="x2"
+            direction="vertical"
+            grow
+            minHeight="5rem">
+          <Flex
+              backgroundColor="shade-2"
+              padding="x3"
+              grow
+              initial="none"
+              ref={ (el) => this.messages = ReactDOM.findDOMNode(el) }
+              scrollable>
+            { messages.map((message, index) => (
+              <Text key={ index } monospace>{ `> ${message}` }</Text>
+            )) }
+          </Flex>
 
-        <a className="sh-console__clear" onClick={ onConsoleClear }>
-          Clear console
-        </a>
+          <Buttons absolute="bottom-right">
+            <Button onClick={ onConsoleClear }>Clear Console</Button>
+          </Buttons>
+        </Flex>
       </Flex>
     );
   }

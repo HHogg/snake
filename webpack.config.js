@@ -1,12 +1,15 @@
 const webpack = require('webpack');
+const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const port = process.env.PORT || 4002;
 
 module.exports = {
   devtool: 'source-map',
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:4000',
+    `webpack-dev-server/client?http://localhost:${port}`,
     'webpack/hot/only-dev-server',
     './src/client.js',
   ],
@@ -21,11 +24,7 @@ module.exports = {
       use: ['babel-loader'],
     }, {
       test: /\.css$/,
-      use: [
-        'style-loader',
-        'css-loader',
-        'postcss-loader',
-      ],
+      use: ['style-loader', 'css-loader', 'postcss-loader'],
     }],
   },
   plugins: [
@@ -37,9 +36,9 @@ module.exports = {
   ],
   devServer: {
     contentBase: './src',
-    host: 'localhost',
-    port: 4000,
     historyApiFallback: true,
+    host: 'localhost',
     hot: true,
+    port,
   },
 };

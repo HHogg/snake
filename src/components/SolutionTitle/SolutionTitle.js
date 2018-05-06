@@ -1,10 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { database } from 'firebase';
-import Flex from '../Flex/Flex';
-import ButtonGroup from '../Button/ButtonGroup';
-import Button from '../Button/Button';
-import Text from '../Text/Text';
-import './SolutionTitle.css';
+import { Buttons, Button, Flex, Input } from 'preshape';
 
 export default class SolutionTitle extends Component {
   static propTypes = {
@@ -63,31 +60,22 @@ export default class SolutionTitle extends Component {
     } = this.props;
 
     return (
-      <Flex
-          alignChildrenVertical="middle"
-          className="sh-solution-title__container"
-          parent
-          style={ { opacity: isLoggedIn ? 1 : 0 } }>
-        <Flex>
-          <Text size="large">
-            <input
-                className="sh-solution-title"
-                onChange={ (e) => onTitleChange({ title: e.target.value }) }
-                placeholder="Untitled solution"
-                value={ title || '' } />
-          </Text>
+      <Flex direction="horizontal" gutter="x3">
+        <Flex grow>
+          <Input
+              disabled={ !isLoggedIn }
+              onChange={ (e) => onTitleChange({ title: e.target.value }) }
+              placeholder="Untitled solution"
+              value={ title || '' } />
         </Flex>
 
-        <Flex shrink>
-          <ButtonGroup>
+        <Flex direction="horizontal">
+          <Buttons>
+            <Button onClick={ () => onNew() }>New</Button>
             <Button
-                color="blue"
-                onClick={ () => onNew() }>New</Button>
-              <Button
-                  color="blue"
-                  disabled={ !title || !edited }
-                  onClick={ () => this.handleSave() }>Save</Button>
-          </ButtonGroup>
+                disabled={ !isLoggedIn || !title || !edited }
+                onClick={ () => this.handleSave() }>Save</Button>
+          </Buttons>
         </Flex>
       </Flex>
     );

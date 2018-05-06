@@ -1,10 +1,9 @@
-import { compose, createStore, applyMiddleware } from 'redux';
+import { compose, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { routerMiddleware as createRouterMiddleware } from 'react-router-redux';
 import localStore from './localStore';
 import rootReducer from './root';
 
-export default function configureStore(history) {
+export default function configureStore() {
   const finalCompose = process.env.NODE_ENV === 'production'
     ? compose
     : composeWithDevTools;
@@ -13,7 +12,6 @@ export default function configureStore(history) {
     rootReducer,
     finalCompose(
       localStore(),
-      applyMiddleware(createRouterMiddleware(history))
     ),
   );
 }

@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { consoleAddMessage } from '../../store/console';
 import {
   gameCollectPoint,
@@ -17,7 +18,7 @@ import {
 } from '../../store/game';
 import Game from './Game';
 
-export default connect((state) => ({
+export default withRouter(connect((state) => ({
   content: state.editor.content,
   isPlaying: state.game.isPlaying,
   isRunning: state.game.isRunning,
@@ -38,4 +39,4 @@ export default connect((state) => ({
   onStepBackwards: gameMoveSnakeBackwards,
   onStepForwards: gameMoveSnakeForwards,
   onStopGame: gameStopGame,
-})(Game);
+})(Game));

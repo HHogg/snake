@@ -15,7 +15,7 @@ onmessage = ({ data }) => {
       values[y] = [];
 
       for (let x = 0; x < xMax; x++) {
-        if (!snakeMap[[x,y]]) {
+        if (!snakeMap[[x, y]]) {
           values[y][x] = heuristicFn([x, y], xMax, yMax, snake, point);
 
           if (isNaN(parseInt(values[y][x]))) {

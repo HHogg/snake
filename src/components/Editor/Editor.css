@@ -1,15 +1,11 @@
-.sh-editor {
-  flex: 1 1 100%;
-}
-
 .ace-sh .ace_gutter {
-  background: var(--background-color);
-  color: var(--text-color-subtle);
+  background: var(--color-background--shade-1);
+  color: var(--color-text--shade-3);
 }
 
 .ace-sh {
-  background-color: var(--background-color);
-  color: var(--oc-gray-4);
+  background-color: var(--color-background--shade-1);
+  color: var(--color-text--shade-3);
 }
 
 .ace-sh .ace_cursor {
@@ -52,8 +48,8 @@
 }
 
 .ace-sh .ace_invalid {
-  color: var(--oc-gray-2);
   background-color: var(--oc-red-7);
+  color: var(--oc-gray-2);
 }
 
 .ace-sh .ace_support.ace_constant,
@@ -64,8 +60,8 @@
 .ace-sh .ace_storage.ace_type,
 .ace-sh .ace_support.ace_class,
 .ace-sh .ace_support.ace_type {
-  font-style: italic;
   color: var(--oc-cyan-4);
+  font-style: italic;
 }
 
 .ace-sh .ace_entity.ace_name.ace_function,
@@ -76,8 +72,8 @@
 }
 
 .ace-sh .ace_variable.ace_parameter {
-  font-style: italic;
   color: var(--oc-orange-4);
+  font-style: italic;
 }
 
 .ace-sh .ace_string {
@@ -89,5 +85,5 @@
 }
 
 .ace-sh .ace_indent-guide {
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWPQ0FD0ZXBzd/wPAAjVAoxeSgNeAAAAAElFTkSuQmCC) right repeat-y
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWPQ0FD0ZXBzd/wPAAjVAoxeSgNeAAAAAElFTkSuQmCC') right repeat-y;
 }

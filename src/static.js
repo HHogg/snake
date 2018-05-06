@@ -1,39 +1,29 @@
-if (typeof window !== 'undefined') {
-  require('offline-plugin/runtime').install();
-}
-
 import React from 'react';
 import { render } from 'react-dom';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
-import { StaticRouter } from 'react-router';
-import { ConnectedRouter } from 'react-router-redux';
-import createBrowserHistory from 'history/createBrowserHistory';
-import createMemoryHistory from 'history/createMemoryHistory';
+import { BrowserRouter, StaticRouter } from 'react-router-dom';
 import template from './index.ejs';
 import configureStore from './store';
 import initialiseFirebase from './initialiseFirebase';
-import Application from './components/Application';
+import Root from './components/Root';
 
 if (typeof document !== 'undefined') {
   initialiseFirebase();
 
-  const history = createBrowserHistory();
-  const store = configureStore(history);
+  const store = configureStore();
 
   render((
     <Provider store={ store }>
-      <ConnectedRouter history={ history }>
-        <Application />
-      </ConnectedRouter>
+      <BrowserRouter>
+        <Root />
+      </BrowserRouter>
     </Provider>
-  ), document.getElementById('react-root'));
+  ), document.getElementById('Root'));
 }
 
-export default ({ path, webpackStats }) => {
-  const history = createMemoryHistory();
-  const store = configureStore(history);
-  const hash = webpackStats.hash;
+export default ({ path, webpackStats: { hash } }) => {
+  const store = configureStore();
 
   return template({
     htmlWebpackPlugin: {
@@ -43,7 +33,7 @@ export default ({ path, webpackStats }) => {
         html: renderToString(
           <Provider store={ store }>
             <StaticRouter location={ path }>
-              <Application />
+              <Root />
             </StaticRouter>
           </Provider>
         ),

@@ -1,34 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import createHistory from 'history/createBrowserHistory';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import { BrowserRouter } from 'react-router-dom';
 import configureStore from './store';
 import initialiseFirebase from './initialiseFirebase';
-import Application from './components/Application';
+import Root from './components/Root';
 
 initialiseFirebase();
 
-const history = createHistory();
 const store = configureStore(history);
 
 const render = (AppComponent) => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={ store }>
-        <ConnectedRouter history={ history }>
+        <BrowserRouter>
           <AppComponent />
-        </ConnectedRouter>
+        </BrowserRouter>
       </Provider>
     </AppContainer>,
-    document.getElementById('react-root')
+    document.getElementById('Root')
   );
 };
 
-render(Application);
+render(Root);
 
 if (module.hot) {
-  module.hot.accept('./components/Application',
-    () => render(Application));
+  module.hot.accept('./components/Root',
+    () => render(Root));
 }

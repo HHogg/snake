@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import Flex from '../Flex/Flex';
-import Text from '../Text/Text';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Flex, Text } from 'preshape';
 
 export default class ScoreTile extends Component {
   static propTypes = {
@@ -12,8 +12,15 @@ export default class ScoreTile extends Component {
     const { value, label } = this.props;
 
     return (
-      <Flex shrink>
-        <Text inline size="large">{ value }</Text> <Text inline subtle>{ label }</Text>
+      <Flex
+          borderColor
+          borderSize="x2"
+          grow
+          initial="none"
+          padding="x1">
+        <Text align="middle">
+          <Text inline size="title">{ value }</Text> <Text color="shade-3" inline size="small">{ label }</Text>
+        </Text>
       </Flex>
     );
   }

@@ -1,18 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { database } from 'firebase';
-import Flex from '../Flex/Flex';
-import SolutionsTransitionGroup from '../Solutions/SolutionsTransitionGroup';
-import SolutionTransition from '../Solutions/SolutionTransition';
-import Solution from '../Solutions/Solution';
-import Text from '../Text/Text';
+import { transitionTimeFast, Appear, Flex, Responsive, Text } from 'preshape';
+import { widthSmall } from '../Root';
+import SavedSolution from './SavedSolution';
+import SignInRequired from '../Auth/SignInRequired';
 
 export default class SavedSolutions extends Component {
   static propTypes = {
-    avatar: PropTypes.string.isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    displayName: PropTypes.string.isRequired,
     onErrorNotification: PropTypes.func.isRequired,
     onSolutionAdded: PropTypes.func.isRequired,
     onSolutionLoad: PropTypes.func.isRequired,
@@ -30,7 +28,9 @@ export default class SavedSolutions extends Component {
   }
 
   componentWillUnmount() {
-    this.solutionsRef.off();
+    if (this.solutionsRef) {
+      this.solutionsRef.off();
+    }
   }
 
   addSolutionListeners() {
@@ -78,7 +78,7 @@ export default class SavedSolutions extends Component {
     } = this.props;
 
     onSolutionLoad({ content, title, key });
-    history.push('/game');
+    history.push('/');
   }
 
   handleSubmit(solution) {
@@ -107,46 +107,54 @@ export default class SavedSolutions extends Component {
 
   render() {
     const {
-      avatar,
-      displayName,
       solutions,
     } = this.props;
 
     return (
-      <Flex direction="vertical" maxWidth="medium" parent>
+      <SignInRequired>
         <Flex
-            alignChildrenHorizontal="middle"
-            padding="x4"
-            parent
-            shrink>
-          <Flex shrink><Text size="large">💾</Text></Flex>
-          <Flex shrink><Text size="large">My Saved Solutions</Text></Flex>
-          <Flex shrink><Text size="large">💾</Text></Flex>
-        </Flex>
-
-        { !solutions.length && (
-          <Flex
-              alignChildrenHorizontal="middle"
-              alignChildrenVertical="middle"
-              parent>
-            <Text>No Saved Solutions</Text>
+            direction="vertical"
+            grow
+            gutter="x12"
+            maxWidth="48rem"
+            paddingHorizontal="x3"
+            paddingVertical="x12">
+          <Flex>
+            <Text size="title">My Saved Solutions</Text>
           </Flex>
-        ) }
 
-        <SolutionsTransitionGroup>
-          { solutions.map((solution) =>
-            <SolutionTransition key={ solution.key }>
-              <Solution { ...solution }
-                  avatar={ avatar }
-                  avatarSize="2.5rem"
-                  displayName={ displayName }
-                  onDelete={ () => this.handleDelete(solution) }
-                  onLoad={ () => this.handleLoad(solution) }
-                  onSubmit={ () => this.handleSubmit(solution) } />
-              </SolutionTransition>
-            ) }
-        </SolutionsTransitionGroup>
-      </Flex>
+          { !solutions.length && (
+            <Flex
+                alignChildrenHorizontal="middle"
+                alignChildrenVertical="middle"
+                direction="horizontal"
+                grow>
+              <Text>No Saved Solutions</Text>
+            </Flex>
+          ) }
+
+          { !!solutions.length && (
+            <Responsive queries={ [widthSmall] }>
+              { (match) => (
+                <Flex>
+                  { solutions.map((solution, index) => (
+                    <Appear
+                        delay={ transitionTimeFast * index }
+                        key={ solution.key }
+                        margin="x2">
+                      <SavedSolution { ...solution }
+                          compact={ !match(widthSmall) }
+                          onDelete={ () => this.handleDelete(solution) }
+                          onLoad={ () => this.handleLoad(solution) }
+                          onSubmit={ () => this.handleSubmit(solution) } />
+                    </Appear>
+                  )) }
+                </Flex>
+              ) }
+            </Responsive>
+          ) }
+        </Flex>
+      </SignInRequired>
     );
   }
 }

@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
@@ -60,17 +59,9 @@ module.exports = {
     new StaticSiteGeneratorPlugin({
       paths: [
         '/',
-        '/game',
         '/about',
-        '/about/playing',
-        '/about/scoring',
-        '/about/leaderboard',
         '/leaderboard',
-        '/solutions',
       ],
-    }),
-    new OfflinePlugin({
-      publicPath: '/',
     }),
     new CopyWebpackPlugin([{
       from: './src/assets',

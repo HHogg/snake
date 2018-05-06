@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html class="Theme--night" lang="en-us">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -8,21 +8,16 @@
     <meta name="author" content="Harry Hogg">
     <meta name="description" content="Snake Heuristics">
     <meta name="keywords" content="AI,Artificial Intelligence,Snake,Game,Pathfinding,Heuristics">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/assets/favicon/manifest.json">
-    <link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#212529">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
-    <meta name="msapplication-config" content="/assets/favicon/browserconfig.xml">
-    <meta name="theme-color" content="#212529">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <% if (htmlWebpackPlugin.options.stylesheet) { %>
       <link href="<%= htmlWebpackPlugin.options.stylesheet %>" rel="stylesheet">
     <% } %>
   </head>
   <body>
-    <div class="sh-app-container" id="react-root">
+    <div id="Root">
       <% if (htmlWebpackPlugin.options.html) { %>
         <%= htmlWebpackPlugin.options.html %>
       <% } %>

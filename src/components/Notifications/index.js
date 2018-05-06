@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { notifierRemoveNotification } from '../../store/notifier';
-import NotificationBar from './NotificationBar';
+import Notifications from './Notifications';
 
 export default connect((state) => ({
   notifications: state.notifier.notifications,
 }), {
   onRemoveNotification: notifierRemoveNotification,
-})(NotificationBar);
+})(Notifications);

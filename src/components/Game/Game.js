@@ -1,14 +1,15 @@
-import React, { Component, PropTypes } from 'react';
-import debounce from 'lodash.debounce';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Flex, Responsive, ThemeContext } from 'preshape';
 import { createEnvironment, createPoint } from '../../../functions/common/createEnvironment';
 import containsCoordinates from '../../../functions/common/containsCoordinates';
 import getSurroundingCells from '../../../functions/common/getSurroundingCells';
+import { widthMedium } from '../Root';
 import Sandbox from '../../utils/Sandbox';
 import Canvas from '../Canvas';
 import Console from '../Console';
 import Controller from '../Controller';
 import Editor from '../Editor';
-import Flex from '../Flex/Flex';
 import Scoreboard from '../Scoreboard';
 import SolutionTitle from '../SolutionTitle';
 
@@ -35,38 +36,16 @@ export default class Game extends Component {
     yMax: PropTypes.number.isRequired,
   };
 
-  static childContextTypes = {
-    registerResizeCanvas: PropTypes.func.isRequired,
-    registerResizeEditor: PropTypes.func.isRequired,
-  };
-
-  getChildContext() {
-    return {
-      registerResizeCanvas: (func) => this.resizeCanvas = func,
-      registerResizeEditor: (func) => this.resizeEditor = func,
-    };
-  }
-
   constructor(props) {
     super(props);
-
     this.state = { values: null };
   }
 
   componentWillMount() {
-    this.handleResize = debounce(() => {
-      this.resizeCanvas && this.resizeCanvas();
-      this.resizeEditor && this.resizeEditor();
-    }, 500);
-
     this._sandbox = new Sandbox(
       this.handleSandboxMessage.bind(this),
       this.handleSandboxError.bind(this),
     );
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', this.handleResize);
-    }
   }
 
   componentWillReceiveProps(next) {
@@ -178,7 +157,6 @@ export default class Game extends Component {
     });
   }
 
-
   handleSandboxMessage({ values }) {
     if (!this._unmounting) {
       this.setState({ values });
@@ -237,39 +215,81 @@ export default class Game extends Component {
     const { values } = this.state;
 
     return (
-      <Flex parent size="large">
-        <Flex parent direction="vertical" shrink>
-          <Flex parent shrink>
-            <Canvas values={ values } />
-          </Flex>
+      <Responsive queries={ [widthMedium] }>
+        { (match) => (
+          <Flex
+              direction={ match(widthMedium) ? 'horizontal' : 'vertical' }
+              grow
+              gutter="x4">
+            { !match(widthMedium) && (
+              <Flex>
+                <SolutionTitle />
+              </Flex>
+            ) }
 
-          <Flex parent direction="vertical">
-            <Console />
-          </Flex>
+            <Flex direction="vertical" gutter="x4">
+              <Flex>
+                <ThemeContext.Consumer>
+                  { ({ theme }) => (
+                    <Canvas theme={ theme } values={ values } />
+                  ) }
+                </ThemeContext.Consumer>
+              </Flex>
 
-          <Flex shrink>
-            <Scoreboard />
-          </Flex>
+              { match(widthMedium) && (
+                <Flex direction="horizontal" grow>
+                  <Console initial="none" grow shrink />
+                </Flex>
+              ) }
 
-          <Flex shrink>
-            <Controller
-                onRefresh={ () => this.handleRefresh() }
-                onReset={ () => this.handleReset() }
-                onStepBackwards={ () => this.handleStepBackwards() }
-                onStepForwards={ () => this.handleStepForwards() } />
-          </Flex>
-        </Flex>
+              <Flex>
+                <Scoreboard />
+              </Flex>
 
-        <Flex direction="vertical" parent>
-          <Flex shrink>
-            <SolutionTitle />
-          </Flex>
+              { match(widthMedium) && (
+                <Flex>
+                  <Controller
+                      onRefresh={ () => this.handleRefresh() }
+                      onReset={ () => this.handleReset() }
+                      onStepBackwards={ () => this.handleStepBackwards() }
+                      onStepForwards={ () => this.handleStepForwards() } />
+                </Flex>
+              ) }
+            </Flex>
 
-          <Flex parent>
-            <Editor />
+            <Flex direction="vertical" grow gutter="x4">
+              { match(widthMedium) && (
+                <Flex>
+                  <SolutionTitle />
+                </Flex>
+              ) }
+
+              <Flex direction="vertical" grow>
+                <Editor
+                    initial="none"
+                    grow
+                    minHeight="30rem" />
+              </Flex>
+            </Flex>
+
+            { !match(widthMedium) && (
+              <Flex>
+                <Controller
+                    onRefresh={ () => this.handleRefresh() }
+                    onReset={ () => this.handleReset() }
+                    onStepBackwards={ () => this.handleStepBackwards() }
+                    onStepForwards={ () => this.handleStepForwards() } />
+              </Flex>
+            ) }
+
+            { !match(widthMedium) && (
+              <Flex direction="horizontal" grow>
+                <Console initial="none" grow shrink />
+              </Flex>
+            ) }
           </Flex>
-        </Flex>
-      </Flex>
+        ) }
+      </Responsive>
     );
   }
 }

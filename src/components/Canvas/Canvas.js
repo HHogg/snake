@@ -1,36 +1,36 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { themes, colorNegativeShade2, colorPositiveShade2, Bounds, Flex } from 'preshape';
 import { CELL_SIZE, CELL_PADDING, CLOUD_CANVAS_SIZE } from '../../../functions/config';
-import getCSSVar from '../../utils/getCSSVar';
 import getGradientColor from '../../utils/getGradientColor';
 
+const colorMap = (theme) => ({
+  point: colorPositiveShade2,
+  inactive: themes[theme].colorBackgroundShade3,
+  error: colorNegativeShade2,
+  text: themes[theme].colorTextShade2,
+});
+
+/* eslint-disable react/no-find-dom-node */
 export default class Canvas extends Component {
   static propTypes = {
     canvasSetSize: PropTypes.func.isRequired,
     gameResetGame: PropTypes.func.isRequired,
     point: PropTypes.array,
     snake: PropTypes.array,
+    theme: PropTypes.string.isRequired,
     values: PropTypes.array,
     xMax: PropTypes.number.isRequired,
     yMax: PropTypes.number.isRequired,
   };
 
-  static contextTypes = {
-    registerResizeCanvas: PropTypes.func.isRequired,
-  };
-
   componentDidMount() {
-    this.colorMap = {
-      point: getCSSVar('cell-point-color'),
-      inactive: getCSSVar('cell-inactive-color'),
-      error: getCSSVar('cell-error-color'),
-      text: getCSSVar('cell-text-color'),
-    };
-
     this.initDimensions();
   }
 
   componentDidUpdate() {
-    this.context = this.el.getContext('2d');
+    this.ctx = this.el.getContext('2d');
     this.redraw(this.props.values);
   }
 
@@ -67,7 +67,8 @@ export default class Canvas extends Component {
   }
 
   redraw(values) {
-    const { point, snake, xMax, yMax } = this.props;
+    const { point, snake, theme, xMax, yMax } = this.props;
+    const colors = colorMap(theme);
 
     this.ctx.clearRect(0, 0, this.width, this.height);
 
@@ -75,15 +76,15 @@ export default class Canvas extends Component {
       for (let x = 0; x < xMax; x++) {
         const value = values && values[y] && values[y][x];
         const color = isNaN(value) && value !== '_S_'
-          ? this.colorMap.error
-          : this.colorMap.inactive;
+          ? colors.error
+          : colors.inactive;
 
         this.drawCell(x, y, color);
       }
     }
 
     if (point) {
-      this.drawCell(point[0], point[1], this.colorMap.point);
+      this.drawCell(point[0], point[1], colors.point);
     }
 
     for (let y = 0; y < yMax; y++) {
@@ -91,7 +92,7 @@ export default class Canvas extends Component {
         const value = values && values[y] && values[y][x];
 
         if (value !== null && value !== '_S_') {
-          this.ctx.fillStyle = this.colorMap.text;
+          this.ctx.fillStyle = colors.text;
           this.ctx.textAlign = 'center';
           this.ctx.font = '"Courier New", Courier, monospace';
           this.ctx.fillText(isNaN(value) ? 'NaN' : +value.toFixed(2),
@@ -104,15 +105,28 @@ export default class Canvas extends Component {
 
     for (let i = 0; i < snake.length; i++) {
       this.drawCell(snake[i][0], snake[i][1],
-        getGradientColor(((snake.length - 1) - i) / snake.length));
+        getGradientColor(theme, ((snake.length - 1) - i) / snake.length));
     }
   }
 
   render() {
     return (
-      <canvas
-          ref={ (el) => this.el = el }
-          style={ { flex: '1 1 0%', minHeight: '0', minWidth: '0' } } />
+      <Bounds>
+        { () => (
+          <Flex
+              alignChildrenHorizontal="middle"
+              borderColor
+              borderSize="x2"
+              direction="horizontal">
+            <Flex
+                Component="canvas"
+                padding="x2"
+                minHeight="0rem"
+                minWidth="0rem"
+                ref={ (el) => this.el = ReactDOM.findDOMNode(el) } />
+          </Flex>
+        ) }
+      </Bounds>
     );
   }
 }

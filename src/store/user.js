@@ -6,15 +6,16 @@ const initialState = {
   displayName: undefined,
 };
 
-const USER_LOGIN_SUCCESSFUL = 'USER_LOGIN_SUCCESSFUL';
-
-export const userLoginSuccessful = createAction(USER_LOGIN_SUCCESSFUL,
-  ({ id, avatar, displayName }) => ({ id, avatar, displayName }));
+export const userLoginSuccessful = createAction('USER_LOGIN_SUCCESSFUL');
+export const userLogoutSuccessful = createAction('USER_LOGOUT_SUCCESSFUL');
 
 export default handleActions({
-  [USER_LOGIN_SUCCESSFUL]: (_, { payload }) => ({
+  [userLoginSuccessful]: (_, { payload }) => ({
     id: payload.id,
     avatar: payload.avatar,
     displayName: payload.displayName,
+  }),
+  [userLogoutSuccessful]: () => ({
+    ...initialState,
   }),
 }, initialState);

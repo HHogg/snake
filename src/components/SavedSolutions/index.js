@@ -19,10 +19,8 @@ const solutionsSelector = createSelector(
 );
 
 export default connect((state) => ({
-  avatar: state.user.avatar,
   solutions: solutionsSelector(state),
   userId: state.user.id,
-  displayName: state.user.displayName,
 }), {
   onErrorNotification: notifierAddErrorNotification,
   onSolutionAdded: solutionsAddSaved,

@@ -1,14 +1,18 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import { cloneElement, Children, Component } from 'react';
 import { auth, database } from 'firebase';
-import Link from '../Link/Link';
+import { connect } from 'react-redux';
+import {
+  notifierAddErrorNotification,
+  notifierAddSuccessNotification,
+} from '../../store/notifier';
+import { userLoginSuccessful } from '../../store/user';
 
 const provider = new auth.GithubAuthProvider();
 
-export default class GithubAuthenticationLink extends Component {
+class GithubAuthenticationLink extends Component {
   static propTypes = {
-    avatar: PropTypes.string,
-    displayName: PropTypes.string,
-    isLoggedIn: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
     onErrorNotification: PropTypes.func.isRequired,
     onLogin: PropTypes.func.isRequired,
     onSuccessNotification: PropTypes.func.isRequired,
@@ -52,10 +56,14 @@ export default class GithubAuthenticationLink extends Component {
   }
 
   render() {
-    return (
-      <Link onClick={ () => this.handleOnClick() }>
-        Sign in with Github
-      </Link>
-    );
+    return cloneElement(Children.only(this.props.children), {
+      onClick: () => this.handleOnClick(),
+    });
   }
 }
+
+export default connect(() => ({}), {
+  onErrorNotification: notifierAddErrorNotification,
+  onLogin: userLoginSuccessful,
+  onSuccessNotification: notifierAddSuccessNotification,
+})(GithubAuthenticationLink);

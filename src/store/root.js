@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
 import canvas from './canvas';
 import console from './console';
 import editor from './editor';
@@ -14,7 +13,6 @@ export default combineReducers({
   editor,
   game,
   notifier,
-  routing: routerReducer,
   solutions,
   user,
 });
