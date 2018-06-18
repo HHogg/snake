@@ -6488,9 +6488,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-preshape@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/preshape/-/preshape-1.0.0.tgz#32d5e72dc6af09e0fa3bf0a0e5c0b21aae3cf4a3"
+preshape@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/preshape/-/preshape-1.0.2.tgz#3f1517106b9aee3dca60c891afa22e5e5462576f"
   dependencies:
     classnames "^2.2.5"
     lodash.debounce "^4.0.8"
