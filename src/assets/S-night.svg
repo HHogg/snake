@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>S-night</title>
+    <desc>Created with Sketch.</desc>
+    <g id="S-night" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(4.000000, 2.000000)">
+            <polygon id="Path-5" fill="#AE3EC9" points="0.961126317 16.0657725 11.8435075 20 3.62631777 20"></polygon>
+            <polygon id="Path-14" fill="#9C36B5" points="0.961126317 16.0657725 6.08704509 16.0657725 11.8435075 20"></polygon>
+            <polygon id="Path-15" fill="#AE3EC9" points="11.8435075 20 9.89159577 12.0864188 6.08704509 16.0657725"></polygon>
+            <polygon id="Path-16" fill="#BE4BDB" points="11.8435075 20 15.9510808 14.2940552 9.89159577 12.0864188"></polygon>
+            <polygon id="Path-17" fill="#CC5DE8" points="15.9510808 14.2940552 1.42108547e-14 5.46136346 2.63246704 9.47368421"></polygon>
+            <polygon id="Path-18" fill="#DA77F2" points="15.9510808 14.2940552 11.8435075 8.56822031 -1.5093602e-14 5.46136346"></polygon>
+            <polygon id="Path-19" fill="#CC5DE8" points="-1.42108547e-14 5.46136346 3.76337965 7.10542736e-14 7.46451753 7.43046841"></polygon>
+            <polygon id="Path-20" fill="#BE4BDB" points="3.76337965 7.10542736e-14 7.46451753 7.43046841 8.9652763 5.28346465"></polygon>
+            <polygon id="Path-21" fill="#AE3EC9" points="3.76337965 -1.42108547e-14 11.8435075 -1.42108547e-14 8.9652763 5.28346465"></polygon>
+            <polygon id="Path-22" fill="#BE4BDB" points="11.8435075 -1.42108547e-14 15.9510808 5.28346465 8.9652763 5.28346465"></polygon>
+        </g>
+    </g>
+</svg>

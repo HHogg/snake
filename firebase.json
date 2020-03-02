@@ -1,36 +1,10 @@
 {
   "hosting": {
-    "public": "static"
-  },
-  "rules": {
-    "leaderboard": {
-      ".read": true,
-      ".indexOn": "_pathCount/length",
-      "$solutionId": {
-        ".write": "auth.uid !== null && (!data.exists() || auth.uid === data.child('uid').val())",
-        "_pathCount": {
-          ".read": true,
-          ".write": false
-        }
-      }
-    },
-    "leaderboardSolutions": {
-      "$userId": {
-        ".read": "auth.uid === $userId",
-        ".write": "auth.uid === $userId"
-      }
-    },
-    "solutions": {
-      "$userId": {
-        ".read": "auth.uid === $userId",
-        ".write": "auth.uid === $userId"
-      }
-    },
-    "users": {
-      "$userId": {
-        ".read": true,
-        ".write": "auth.uid === $userId"
-      }
-    }
+    "target": "snake",
+    "public": "public",
+    "rewrites": [{
+      "source": "**",
+      "destination": "/index.html"
+    }]
   }
 }

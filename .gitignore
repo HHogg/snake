@@ -1,4 +1,7 @@
-node_modules
-static
-yarn-error.log
-firebase-debug.log
+.cache
+.firebase
+/dist
+/lib
+/node_modules
+/public
+/yarn-error.log

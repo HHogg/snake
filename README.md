@@ -1,35 +1,64 @@
 <p align="center">
-  <img src="images/logo.png" width="50%" />
+  <img src="./src/assets/snake.svg" />
 </p>
 
-![](images/ui.png)
+<h2 align="center" style="margin: 0">Snake</h2>
+<h5 align="center"  style="margin: 0"><a href="https://circles.hogg.io">https://snake.hogg.io</a></h5>
 
-#### Pathfinding and Heuristics
+Snake Heuristics is a game for developers to code the behaviour of the snake in the classic point finding game.
 
-Pathfinding is ["the problem of finding a good path from the starting point to the goal―avoiding obstacles, avoiding enemies, and minimizing costs (fuel, time, distance, equipment, money, etc)" (Amit Patel)](http://theory.stanford.edu/~amitp/GameProgramming/). A heurisitic funcition provides an estimated value of the cost for a step to the goal. It can be used to control the behaviour of the searching algorithm.
+The goal is to write a heuristic function that returns a single number. The function is run on every cell on the board (but only the cells around the head of the snake are important). The snake will move to the cell with the lowest number, and will continue to do this while collecting points, until it either crashes or there are no cell left to move to.
 
-<p align="center">
-  <img src="images/pathfinding.png" width="50%" />
-</p>
+The solution is scored in 3 areas: accuracy, speed and efficiency. Basically, the fewer moves the snake takes to reach the point the better. The score grows exponentially with the more points collected and the efficiency has a greater weight at the beginning of the game.
 
-#### Playing Snake Heuristics
+### Technology
 
-The goal is to move the snake across the cells to the point by returning a number from the heuristic() function. The function is called for every cell every time the snake needs to move, and is provided with information of the environment.
+- [Typescript](https://www.typescriptlang.org/)
+- [Parcel](https://parceljs.org/) (bundler and dev servers)
+- [React](https://reactjs.org/)
+- [PostCSS](https://postcss.org/) (with postcss-preset-env for a little power)
+- [Firebase](https://firebase.google.com/) (hosting)
 
-The lowest number given for the 3 cells around the snakes head will be the next position the snake will take. If two cells have the same value, the first cell clockwise from the top cell will be selected. Cells that are out of bounds and contain the snake are already excluded from selection.
+### Setup
 
-#### Scoring
+##### Prerequisites
 
-To encourage minimizing costs, metrics for each point collection and the overall averages are fed into a rudementary scoring system. This will give an indication to how good your solution is.
+• [Node](https://nodejs.org/en/) - Either use [nvm use](https://github.com/nvm-sh/nvm) or checkout the tested version inside the [.nvmrc](./nmvrc) file.
 
-#### The Leaderboard
+##### Setup
 
-Solutions are temporary stored into local storage, but when authenticated with GitHub they can be stored more perminantly. Once a valid solution has been saved, it can be submitted to the Leaderboard where it will be run against a similar environment.
+Clone the repository
 
-## Try it out locally
 ```
-git clone git@github.com:HHogg/snake-heuristics.git
-cd snake-heuristics
+git clone git@github.com:HHogg/circles.git
+```
+
+Install the dependencies with your favourite package manager
+
+```
 yarn install
+```
+
+##### Running
+
+Spin up the Parcel development server
+
+```
 yarn start
+```
+
+##### Building
+
+Build the static files using Parcel
+
+```
+yarn build
+```
+
+##### Deploying
+
+Deploy to Firebase hosting (... after authenticating)
+
+```
+yarn deploy
 ```

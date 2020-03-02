@@ -1,5 +1,14 @@
 {
   "projects": {
-    "default": "snake-heuristics"
+    "default": "hoggio-2524a"
+  },
+  "targets": {
+    "hoggio-2524a": {
+      "hosting": {
+        "snake": [
+          "snake-f04d1"
+        ]
+      }
+    }
   }
 }

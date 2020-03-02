@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600px" height="180px" viewBox="0 0 600 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>snake</title>
+    <desc>Created with Sketch.</desc>
+    <g id="snake" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#212529" x="0" y="0" width="600" height="180"></rect>
+        <g id="Group_looper" transform="translate(-5.000000, -1.000000)">
+            <g id="Group_40" opacity="0.250748764" transform="translate(590.000000, 156.000000) rotate(2808.000000) translate(-590.000000, -156.000000) translate(576.000000, 132.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_39" opacity="0.49214293" transform="translate(526.000000, 156.000000) rotate(2736.000000) translate(-526.000000, -156.000000) translate(512.000000, 132.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_38" opacity="0.904151954" transform="translate(462.000000, 156.000000) rotate(2664.000000) translate(-462.000000, -156.000000) translate(448.000000, 132.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_37" opacity="0.610725157" transform="translate(398.000000, 156.000000) rotate(2592.000000) translate(-398.000000, -156.000000) translate(384.000000, 132.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_36" opacity="0.860304932" transform="translate(334.000000, 156.000000) rotate(2520.000000) translate(-334.000000, -156.000000) translate(320.000000, 132.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_35" opacity="0.080751647" transform="translate(270.000000, 156.000000) rotate(2448.000000) translate(-270.000000, -156.000000) translate(256.000000, 132.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_34" opacity="0.736008001" transform="translate(206.000000, 156.000000) rotate(2376.000000) translate(-206.000000, -156.000000) translate(192.000000, 132.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_33" opacity="0.704477316" transform="translate(142.000000, 156.000000) rotate(2304.000000) translate(-142.000000, -156.000000) translate(128.000000, 132.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_32" opacity="0.184608642" transform="translate(78.000000, 156.000000) rotate(2232.000000) translate(-78.000000, -156.000000) translate(64.000000, 132.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_31" opacity="0.394860263" transform="translate(14.000000, 156.000000) rotate(2160.000000) translate(-14.000000, -156.000000) translate(0.000000, 132.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_25" opacity="0.272479912" transform="translate(590.000000, 92.000000) rotate(1728.000000) translate(-590.000000, -92.000000) translate(576.000000, 68.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_24" opacity="0.739152764" transform="translate(526.000000, 92.000000) rotate(1656.000000) translate(-526.000000, -92.000000) translate(512.000000, 68.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_23" opacity="0.997629804" transform="translate(462.000000, 92.000000) rotate(1584.000000) translate(-462.000000, -92.000000) translate(448.000000, 68.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_22" opacity="0.626433774" transform="translate(398.000000, 92.000000) rotate(1512.000000) translate(-398.000000, -92.000000) translate(384.000000, 68.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_21" opacity="0.647647502" transform="translate(334.000000, 92.000000) rotate(1440.000000) translate(-334.000000, -92.000000) translate(320.000000, 68.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_20" opacity="0.377028232" transform="translate(270.000000, 92.000000) rotate(1368.000000) translate(-270.000000, -92.000000) translate(256.000000, 68.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_19" opacity="0.30678471" transform="translate(206.000000, 92.000000) rotate(1296.000000) translate(-206.000000, -92.000000) translate(192.000000, 68.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_18" opacity="0.143785504" transform="translate(142.000000, 92.000000) rotate(1224.000000) translate(-142.000000, -92.000000) translate(128.000000, 68.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_17" opacity="0.244550634" transform="translate(78.000000, 92.000000) rotate(1152.000000) translate(-78.000000, -92.000000) translate(64.000000, 68.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_16" opacity="0.272021428" transform="translate(14.000000, 92.000000) rotate(1080.000000) translate(-14.000000, -92.000000) translate(0.000000, 68.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_10" opacity="0.0708431976" transform="translate(590.000000, 28.000000) rotate(648.000000) translate(-590.000000, -28.000000) translate(576.000000, 4.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_9" opacity="0.237442844" transform="translate(526.000000, 28.000000) rotate(576.000000) translate(-526.000000, -28.000000) translate(512.000000, 4.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_8" opacity="0.241046326" transform="translate(462.000000, 28.000000) rotate(504.000000) translate(-462.000000, -28.000000) translate(448.000000, 4.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_7" opacity="0.308893617" transform="translate(398.000000, 28.000000) rotate(432.000000) translate(-398.000000, -28.000000) translate(384.000000, 4.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_6" opacity="0.734321373" transform="translate(334.000000, 28.000000) rotate(360.000000) translate(-334.000000, -28.000000) translate(320.000000, 4.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_5" opacity="0.207889828" transform="translate(270.000000, 28.000000) rotate(288.000000) translate(-270.000000, -28.000000) translate(256.000000, 4.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_4" opacity="0.673352248" transform="translate(206.000000, 28.000000) rotate(216.000000) translate(-206.000000, -28.000000) translate(192.000000, 4.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_3" opacity="0.0463204103" transform="translate(142.000000, 28.000000) rotate(144.000000) translate(-142.000000, -28.000000) translate(128.000000, 4.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_2" opacity="0.658997065" transform="translate(78.000000, 28.000000) rotate(72.000000) translate(-78.000000, -28.000000) translate(64.000000, 4.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+            <g id="Group_1" opacity="0.102072399" transform="translate(0.000000, 4.000000)">
+                <rect id="Rectangle" fill="#20C997" x="0" y="40" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy" fill="#F8F9FA" x="0" y="30" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#F8F9FA" x="0" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-3" fill="#F8F9FA" x="10" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-4" fill="#F8F9FA" x="20" y="20" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-5" fill="#F8F9FA" x="20" y="10" width="8" height="8" rx="2"></rect>
+                <rect id="Rectangle-Copy-6" fill="#F8F9FA" x="20" y="0" width="8" height="8" rx="2"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
