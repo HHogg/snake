@@ -17,17 +17,23 @@ import {
   ThemeSwitcher,
   TypeTheme,
 } from 'preshape';
-import { Solution } from '../Types';
+import { Snake, SnakeViewer } from '@hogg/snake';
+import { ISolution } from '../Types';
+import { CANVAS_SIZE } from '../config';
 import { blank, manhattanDistance } from '../solutions';
 import About from './About';
-import Game from './Game';
+import Console from './Console';
+import Controller from './Controller';
 import Logo from './Logo';
+import Scoreboard from './Scoreboard';
 import Solutions from './Solutions';
 
 import 'brace/mode/javascript';
 
-export const RootContext = React.createContext<Solution & {
-  onSelect: (solution: Solution) => void;
+const worker = new Worker('../../src/SnakeRunnerWorker.js');
+
+export const RootContext = React.createContext<ISolution & {
+  onSelect: (solution: ISolution) => void;
   theme: TypeTheme;
 }>({
   content: '',
@@ -40,7 +46,7 @@ export const RootContext = React.createContext<Solution & {
 
 export default () => {
   const [theme, setTheme ] = useLocalStorage<TypeTheme>('com.hogg.theme', 'night');
-  const [editorState, setEditorState] = useLocalStorage<Solution>('com.hogg.snake.editor', manhattanDistance);
+  const [editorState, setEditorState] = useLocalStorage<ISolution>('com.hogg.snake.editor', manhattanDistance);
   const [activeTab, setActiveTab] = React.useState<'game' | 'editor'>('game');
   const match = useMatchMedia(['1000px']);
 
@@ -50,7 +56,7 @@ export default () => {
     setEditorState({ ...editorState, content });
   };
 
-  const onSelect = (solution: Solution) => {
+  const onSelect = (solution: ISolution) => {
     setEditorState(solution);
   };
 
@@ -135,7 +141,42 @@ export default () => {
                 grow
                 paddingHorizontal="x6"
                 paddingVertical="x4">
-              <Game />
+              <Snake
+                  solution={ editorState.content }
+                  worker={ worker }
+                  xLength={ CANVAS_SIZE }
+                  yLength={ CANVAS_SIZE }>
+                <Flex
+                    direction="horizontal"
+                    gap="x4"
+                    grow>
+                  <Flex
+                      basis="none"
+                      direction="vertical"
+                      gap="x2"
+                      grow>
+                    <Flex
+                        basis="none"
+                        direction="vertical"
+                        grow
+                        minHeight="20rem">
+                      <SnakeViewer theme={ theme } />
+                    </Flex>
+
+                    <Flex direction="horizontal">
+                      <Console />
+                    </Flex>
+
+                    <Flex>
+                      <Scoreboard />
+                    </Flex>
+
+                    <Flex>
+                      <Controller />
+                    </Flex>
+                  </Flex>
+                </Flex>
+              </Snake>
             </Flex>
           ) }
 

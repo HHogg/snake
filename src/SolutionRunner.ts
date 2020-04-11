@@ -1,15 +1,18 @@
-import { Point, Snake, Values } from '../Types';
-import { FN_TIMEOUT_SECONDS } from '../config';
+import { TypePoint, TypeSnake, TypeValues } from './Types';
+
+interface Config {
+  timeout: number;
+  worker: Worker;
+}
 
 interface MessageData {
-  isRunning: boolean;
-  values: Values;
+  values: TypeValues;
 }
 
 interface RunData {
   env: {
-    point: Point;
-    snake: Snake;
+    point: TypePoint;
+    snake: TypeSnake;
     xMax: number;
     yMax: number;
   };
@@ -19,20 +22,16 @@ interface RunData {
 type ErrorHandler = (error: Error | ErrorEvent) => void;
 type MessageHandler = (data: MessageData) => void;
 
-export default class Sandbox {
+export default class SolutionRunner {
+  config: Config;
   onError?: ErrorHandler;
   onMessage?: MessageHandler;
   timeout?: NodeJS.Timeout;
-  worker?: Worker;
+  worker: Worker;
 
-  constructor() {
-    if (typeof Worker !== 'undefined') {
-      this.createWorker();
-    }
-  }
-
-  createWorker() {
-    this.worker = new Worker('./SandboxWorker.js');
+  constructor(config: Config) {
+    this.config = config;
+    this.worker = config.worker;
 
     this.worker.onerror = (error) => {
       this.reset();
@@ -53,17 +52,15 @@ export default class Sandbox {
 
   run(args: RunData) {
     if (!this.timeout) {
-      this.worker?.postMessage(args);
+      this.worker.postMessage(args);
       this.timeout = setTimeout(() => {
         const error = new Error('Timeout');
-        error.message = `⏰ Your code exceeded the maximum ${FN_TIMEOUT_SECONDS} seconds run time.`;
-        this.worker?.terminate();
-        this.createWorker();
+        error.message = `⏰ Your code exceeded the maximum ${this.config.timeout} ms run time.`;
 
         if (this.onError) {
           this.onError(error);
         }
-      }, FN_TIMEOUT_SECONDS * 1000);
+      }, this.config.timeout);
     }
   }
 
@@ -72,5 +69,10 @@ export default class Sandbox {
       clearTimeout(this.timeout);
       delete this.timeout;
     }
+  }
+
+  destroy() {
+    this.reset();
+    this.worker.terminate();
   }
 }

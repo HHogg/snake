@@ -1,5 +1,5 @@
 export default {
-  name: '📐Hypotenuse',
+  name: '📐Euclidean Distance',
   average: 10,
   points: 35,
   score: 1031,

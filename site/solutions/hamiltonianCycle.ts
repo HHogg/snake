@@ -1,5 +1,5 @@
 export default {
-  name: '🌀Alternating Hamiltonian Cycle',
+  name: '🌀Hamiltonian Cycle',
   average: 76,
   points: 195,
   score: 4303,

@@ -13,7 +13,7 @@ import {
   TableRow,
 } from 'preshape';
 import solutions from '../solutions';
-import { Solution } from '../Types';
+import { ISolution } from '../Types';
 import { CANVAS_SIZE, SNAKE_LENGTH } from '../config';
 import { RootContext } from './Root';
 
@@ -21,7 +21,7 @@ export default () => {
   const { onSelect } = React.useContext(RootContext);
   const { push } = useHistory();
 
-  const handleSelect = (solution: Solution) => {
+  const handleSelect = (solution: ISolution) => {
     onSelect(solution);
     push('/');
   };
@@ -89,7 +89,7 @@ export default () => {
 
                 <TableCell align="middle">
                   <Text strong>
-                    { `${((solution.points / ((CANVAS_SIZE * CANVAS_SIZE) - SNAKE_LENGTH)) * 100).toFixed()}%` }
+                    { `${Math.floor((solution.points / ((CANVAS_SIZE * CANVAS_SIZE) - SNAKE_LENGTH)) * 100)}%` }
                   </Text>
                 </TableCell>
               </TableRow>

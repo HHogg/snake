@@ -1,20 +1,16 @@
 import * as React from 'react';
 import { Appear, Flex, Link, Text } from 'preshape';
+import { SnakeContext } from '@hogg/snake';
 
-interface Props {
-  messages: string[];
-  onConsoleClear: () => void;
-}
-
-export default (props: Props) => {
-  const { messages, onConsoleClear } = props;
+export default () => {
+  const { logs, onClearLog } = React.useContext(SnakeContext);;
   const ref = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     window.requestAnimationFrame(() => {
       ref.current?.lastElementChild?.scrollIntoView();
     });
-  }, [messages]);
+  }, [logs]);
 
   return (
     <Flex
@@ -34,14 +30,14 @@ export default (props: Props) => {
             padding="x3"
             ref={ ref }
             scrollable>
-          { messages.map((message, index) => (
+          { logs.map((message, index) => (
             <Text key={ index } monospace>{ `> ${message}` }</Text>
           )) }
         </Flex>
 
-        <Appear animation="FadeSlideUp" visible={ messages.length > 0 }>
+        <Appear animation="FadeSlideUp" visible={ logs.length > 0 }>
           <Flex absolute="bottom-right" padding="x2">
-            <Link onClick={ onConsoleClear } size="x1" strong>Clear Console</Link>
+            <Link onClick={ onClearLog } size="x1" strong>Clear Console</Link>
           </Flex>
         </Appear>
       </Flex>

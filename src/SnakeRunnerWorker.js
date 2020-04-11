@@ -22,7 +22,7 @@ onmessage = ({ data }) => {
             values[y][x] = NaN;
           }
         } else {
-          values[y][x] = '_S_';
+          values[y][x] = undefined;
         }
       }
     }

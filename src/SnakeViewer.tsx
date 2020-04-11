@@ -1,27 +1,35 @@
 import * as React from 'react';
-import { colorNegativeShade2, colorPositiveShade2, colorWhite, themes, Flex, useResizeObserver } from 'preshape';
-import { CANVAS_SIZE } from '../config';
-import { Point, Snake, Values } from '../Types';
-import getGradientColor from '../utils/getGradientColor';
-import { RootContext } from './Root';
+import {
+  colorNegativeShade2,
+  colorPositiveShade2,
+  colorWhite,
+  themes,
+  useResizeObserver,
+  Flex,
+  FlexProps,
+  TypeTheme,
+} from 'preshape';
+import { SnakeContext } from './Snake';
+import getGradientColor from './utils/getGradientColor';
 
-interface Props {
-  point?: Point | null;
-  snake?: Snake;
-  values: null | Values;
+interface Props extends FlexProps {
+  theme: TypeTheme;
 }
 
-export default (props: Props) => {
-  const { point, snake, values } = props;
-  const { theme } = React.useContext(RootContext);
+const padding = 0;
+
+const SnakeViewer: React.FC<Props> = (props) => {
+  const { theme, ...rest } = props;
+  const { point, snake, values, xLength, yLength } = React.useContext(SnakeContext);
+
   const [{ height, width }, refContainer] = useResizeObserver();
-  const cellStep = Math.floor(Math.min(height / CANVAS_SIZE, width / CANVAS_SIZE));
+  const refCanvas = React.useRef<HTMLCanvasElement>(null);
+
+  const cellStep = Math.floor(Math.min((height - padding * 2) / yLength, (width - padding * 2) / xLength));
   const cellPadding = cellStep * 0.1;
   const cellSize = cellStep - cellPadding;
-  const offsetX = (width - (cellStep * CANVAS_SIZE)) / 2;
-  const offsetY = (height - (cellStep * CANVAS_SIZE)) / 2;
-
-  const refCanvas = React.useRef<HTMLCanvasElement>(null);
+  const offsetX = padding + ((width - (cellStep * xLength)) / 2);
+  const offsetY = padding + ((height - (cellStep * yLength)) / 2);
 
   const redraw = () => {
     if (refCanvas.current) {
@@ -29,11 +37,13 @@ export default (props: Props) => {
 
       if (ctx) {
         ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = themes[theme].colorBackgroundShade1;
+        ctx.fillRect(offsetX - padding, offsetY - padding, (cellStep * xLength) + padding, (cellStep * yLength) + padding);
 
-        for (let y = 0; y < CANVAS_SIZE; y++) {
-          for (let x = 0; x < CANVAS_SIZE; x++) {
+        for (let y = 0; y < yLength; y++) {
+          for (let x = 0; x < xLength; x++) {
             const value = values && values[y] && values[y][x];
-            const color = value !== '_S_' && value !== null && isNaN(value)
+            const color = value !== undefined && isNaN(value)
               ? colorNegativeShade2
               : themes[theme].colorBackgroundShade2;
 
@@ -47,11 +57,11 @@ export default (props: Props) => {
           ctx.fillRect(offsetX + point[0] * cellStep, offsetY + point[1] * cellStep, cellSize, cellSize);
         }
 
-        for (let y = 0; y < CANVAS_SIZE; y++) {
-          for (let x = 0; x < CANVAS_SIZE; x++) {
+        for (let y = 0; y < yLength; y++) {
+          for (let x = 0; x < xLength; x++) {
             const value = values && values[y] && values[y][x];
 
-            if (value !== null && value !== '_S_') {
+            if (value !== undefined) {
               ctx.fillStyle = colorWhite;
               ctx.textAlign = 'center';
               ctx.font = '"Courier New", Courier, monospace';
@@ -87,9 +97,10 @@ export default (props: Props) => {
   }, [refCanvas.current, height, width]);
 
   return (
-
-    <Flex container grow ref={ refContainer }>
+    <Flex { ...rest } container grow ref={ refContainer }>
       <Flex absolute="fullscreen" ref={ refCanvas } tag="canvas" />
     </Flex>
   );
 };
+
+export default SnakeViewer;

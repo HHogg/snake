@@ -1,4 +1,4 @@
-import { Cell } from '../Types';
+import { TypeCell } from '../Types';
 
-export default (set: Cell[], [x, y]: Cell) =>
+export default (set: TypeCell[], [x, y]: TypeCell) =>
   set.some(([sx, sy]) => x === sx && y === sy);

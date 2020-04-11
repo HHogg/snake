@@ -1,25 +1,11 @@
 import * as React from 'react';
 import { useMatchMedia, Button, Buttons, Flex, Icon } from 'preshape';
+import { SnakeContext } from '@hogg/snake';
 
-interface Props {
-  canGoBackwards: boolean;
-  isGameOver: boolean;
-  isPlaying: boolean;
-  isRunning: boolean;
-  onPause: () => void;
-  onPlay: () => void;
-  onRefresh: () => void;
-  onReset: () => void;
-  onStart: () => void;
-  onStepBackwards: () => void;
-  onStepForwards: () => void;
-}
-
-export default (props: Props) => {
+export default () => {
   const {
-    canGoBackwards,
-    isGameOver,
-    isPlaying,
+    history,
+    isStarted,
     isRunning,
     onPause,
     onPlay,
@@ -28,8 +14,9 @@ export default (props: Props) => {
     onStart,
     onStepBackwards,
     onStepForwards,
-  } = props;
+  } = React.useContext(SnakeContext);
 
+  const isAtBeginning = history[0] && !history[0][1].length;
   const match = useMatchMedia(['600px']);
 
   return (
@@ -40,7 +27,7 @@ export default (props: Props) => {
         <Buttons grow>
           <Button
               color="positive"
-              disabled={ isGameOver || isPlaying }
+              disabled={ isStarted }
               onClick={ () => onStart() }
               title="Start the game">
             Start
@@ -51,35 +38,35 @@ export default (props: Props) => {
       <Flex direction="horizontal" grow>
         <Buttons grow joined>
           <Button
-              disabled={ !canGoBackwards || !isPlaying || isRunning }
+              disabled={ isAtBeginning || !isStarted || isRunning }
               onClick={ () => onStepBackwards() }
               title="Rewind one cell at a time">
             <Icon name="Beginning" size="1rem" />
           </Button>
 
           <Button
-              disabled={ isGameOver || !isPlaying || isRunning }
+              disabled={ !isStarted || isRunning }
               onClick={ () => onPlay() }
               title="Run the solution and move Snake">
             <Icon name="Play" size="1rem" />
           </Button>
 
           <Button
-              disabled={ isGameOver || !isPlaying || !isRunning }
+              disabled={ !isStarted || !isRunning }
               onClick={ () => onPause() }
               title="Pause the solution from being run">
             <Icon name="Pause" size="1rem" />
           </Button>
 
           <Button
-              disabled={ isGameOver || !isPlaying || isRunning }
+              disabled={ !isStarted || isRunning }
               onClick={ () => onStepForwards() }
               title="Move the cell snake forward one cell at a time">
             <Icon name="End" size="1rem" />
           </Button>
 
           <Button
-              disabled={ isGameOver || !isPlaying || isRunning }
+              disabled={ !isStarted || isRunning }
               onClick={ () => onRefresh() }
               title="Rerun the solution with the current snakes position">
             <Icon name="Refresh" size="1rem" />
@@ -91,7 +78,7 @@ export default (props: Props) => {
         <Buttons grow>
           <Button
               color="negative"
-              disabled={ !isPlaying }
+              disabled={ !isStarted }
               onClick={ () => onReset() }
               title="Reset the Snake back to starting position">
             Reset

@@ -1,47 +1,66 @@
 {
-  "name": "snake",
+  "name": "@hhogg/snake",
   "description": "Snake Heuristics a game of pathfinding",
-  "scripts": {
-    "build": "rm -rf public && parcel build src/index.html -d public && react-snap",
-    "deploy": "firebase deploy",
-    "lint:css": "stylelint src/**/*.css",
-    "lint:js": "eslint src/**/*.ts src/**/*.tsx",
-    "lint": "yarn lint:js && yarn lint:css",
-    "serve": "superstatic ./public --port 4000 -c superstatic.json",
-    "start": "rm -rf dist && parcel src/index.html --port 4000 -d dist --no-cache --no-autoinstall"
-  },
+  "version": "0.0.1",
   "repository": "https://git@github.com/HHogg/snake.git",
   "author": "Harry Hogg <harry@hogg.io>",
   "license": "MIT",
+  "main": "lib/cjs/index.js",
+  "esnext": "lib/esn/index.js",
+  "typings": "lib/cjs/index.d.ts",
+  "scripts": {
+    "build": "yarn build:site",
+    "build:lib": "rm -rf ./lib && yarn build:lib:cjs && yarn build:lib:esn",
+    "build:lib:esn": "tsc -p src -m esnext -t esnext --outDir lib/esn",
+    "build:lib:cjs": "tsc -p src --outDir lib/cjs",
+    "build:site": "rm -rf public && parcel build site/index.html -d public",
+    "deploy": "firebase deploy",
+    "lint:css": "stylelint site/**/*.css",
+    "lint:js": "eslint site/**/*.ts site/**/*.tsx",
+    "lint": "yarn lint:js && yarn lint:css",
+    "serve": "superstatic ./public --port 4000 -c superstatic.json",
+    "start": "rm -rf dist && parcel site/index.html --port 4000 -d dist --no-cache --no-autoinstall"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0"
+  },
   "dependencies": {
-    "@svgr/parcel-plugin-svgr": "^5.3.0",
-    "autoprefixer": "^9.7.4",
-    "babel-eslint": "^8.2.2",
-    "brace": "^0.11.1",
-    "caniuse-lite": "^1.0.30000697",
-    "classnames": "^2.2.5",
-    "parcel-bundler": "^1.12.4",
-    "postcss-preset-env": "^6.7.0",
-    "preshape": "^4.4.0",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-router-dom": "^5.1.2",
-    "react-snap": "^1.23.0",
-    "typescript": "^3.7.5"
+    "preshape": "^4.4.0"
   },
   "devDependencies": {
+    "@svgr/parcel-plugin-svgr": "^5.3.0",
     "@types/react": "*",
     "@types/react-dom": "*",
     "@types/react-router-dom": "*",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.20.0",
+    "autoprefixer": "^9.7.4",
+    "babel-eslint": "^8.2.2",
+    "caniuse-lite": "^1.0.30000697",
+    "classnames": "^2.2.5",
     "eslint": "^6.8.0",
     "eslint-config-preshape": "^1.1.0",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.4.0",
+    "parcel-bundler": "^1.12.4",
+    "postcss-preset-env": "^6.7.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-router-dom": "^5.1.2",
+    "react-snap": "^1.23.0",
     "stylelint": "^13.2.0",
     "stylelint-config-preshape": "^2.0.0",
-    "superstatic": "^6.0.4"
+    "superstatic": "^6.0.4",
+    "typescript": "^3.7.5"
+  },
+  "alias": {
+    "@hhogg/snake": "./src"
+  },
+  "resolutions": {
+    "remark": "11.0.2"
   },
   "reactSnap": {
     "crawl": false,

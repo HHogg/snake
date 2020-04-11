@@ -1,22 +1,14 @@
-export type Cell = [number, number];
+export type TypeCell = [number, number];
 
-export type Path = Cell[];
-export type Point = Cell
-export type Snake = Cell[];
-export type Values = [number |  '_S_'][]
+export type TypePath = TypeCell[];
+export type TypePoint = TypeCell;
+export type TypeSnake = TypeCell[];
+export type TypeValues = number[][];
 
-export type Environment = { point: null | Point; snake: Snake };
+export interface IEnvironment {
+  point: undefined | TypePoint;
+  snake: TypeSnake;
+}
 
-export type HistoryBlock = [Environment, Path];
-export type History = HistoryBlock[];
-
-export type Solution = {
-  name: string;
-  content: string;
-};
-
-export type SolutionWithScore = Solution & {
-  average: number;
-  points: number;
-  score: number;
-};
+export type TypeHistoryBlock = [IEnvironment, TypePath];
+export type TypeHistory = TypeHistoryBlock[];

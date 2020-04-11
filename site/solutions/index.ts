@@ -1,23 +1,23 @@
 import { SolutionWithScore } from '../Types';
-import alternatingHamiltonianCycle from './alternatingHamiltonianCycle';
+import hamiltonianCycle from './hamiltonianCycle';
 import blank from './blank';
-import hypotenuse from './hypotenuse';
+import euclideanDistance from './euclideanDistance';
 import manhattanDistance from './manhattanDistance';
 import random from './random';
 import tailEscape from './tailEscape';
 
 export {
-  alternatingHamiltonianCycle,
+  hamiltonianCycle,
   blank,
-  hypotenuse,
+  euclideanDistance,
   manhattanDistance,
   random,
   tailEscape,
 };
 
 const solutions: SolutionWithScore[] = [
-  alternatingHamiltonianCycle,
-  hypotenuse,
+  hamiltonianCycle,
+  euclideanDistance,
   manhattanDistance,
   random,
   tailEscape,
