@@ -6,9 +6,9 @@ export type TypeSnake = TypeCell[];
 export type TypeValues = number[][];
 
 export interface IEnvironment {
+  path: TypePath;
   point: undefined | TypePoint;
   snake: TypeSnake;
 }
 
-export type TypeHistoryBlock = [IEnvironment, TypePath];
-export type TypeHistory = TypeHistoryBlock[];
+export type TypeHistory = IEnvironment[];

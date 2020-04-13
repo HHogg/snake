@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useMatchMedia, Button, Buttons, Flex, Icon } from 'preshape';
-import { SnakeContext } from '@hogg/snake';
+import { getCompletedHistory, SnakeContext } from '@hhogg/snake';
 
 export default () => {
   const {
@@ -16,8 +16,14 @@ export default () => {
     onStepForwards,
   } = React.useContext(SnakeContext);
 
-  const isAtBeginning = history[0] && !history[0][1].length;
+  const isAtBeginning = history[0] && !history[0].path.length;
   const match = useMatchMedia(['600px']);
+
+  React.useEffect(() => {
+    if (!isRunning) {
+      console.log(getCompletedHistory(history));
+    }
+  }, [isRunning]);
 
   return (
     <Flex

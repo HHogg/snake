@@ -1,9 +1,10 @@
 import { TypeHistory } from '../Types';
+import getCompletedHistory from './getCompletedHistory';
 import getMean from './getMean';
 
 export default (xLength: number, yLength: number, history: TypeHistory) => {
   const nCells = xLength * yLength;
-  const moves = history.map(([, path]) => path.length);
+  const moves = getCompletedHistory(history).map(({ path }) => path.length);
 
   let score = 0;
 

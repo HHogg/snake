@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Appear, Flex, Link, Text } from 'preshape';
-import { SnakeContext } from '@hogg/snake';
+import { SnakeContext } from '@hhogg/snake';
 
 export default () => {
   const { logs, onClearLog } = React.useContext(SnakeContext);;

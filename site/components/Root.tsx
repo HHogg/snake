@@ -17,7 +17,7 @@ import {
   ThemeSwitcher,
   TypeTheme,
 } from 'preshape';
-import { Snake, SnakeViewer } from '@hogg/snake';
+import { Snake, SnakeViewer } from '@hhogg/snake';
 import { ISolution } from '../Types';
 import { CANVAS_SIZE } from '../config';
 import { blank, manhattanDistance } from '../solutions';

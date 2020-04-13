@@ -2,8 +2,8 @@ import * as React from 'react';
 import SolutionRunner from './SolutionRunner';
 import { TypeCell, TypeHistory, TypePoint, TypeSnake, TypeValues } from './Types';
 import { createBlock, moveForwards, moveBackwards } from './utils/history';
-import containsCell from './utils/containsCell';
 import getSurroundingCells from './utils/getSurroundingCells';
+import isCellIncluded from './utils/isCellIncluded';
 
 interface Props {
   solution: string;
@@ -17,7 +17,7 @@ export const SnakeContext = React.createContext<{
   history: TypeHistory;
   isStarted: boolean;
   isRunning: boolean;
-  logs: string[],
+  logs: string[];
   onClearLog: () => void;
   onPause: () => void;
   onPlay: () => void;
@@ -70,20 +70,8 @@ const Snake: React.FC<Props> = (props) => {
   const [values, setValues] = React.useState<TypeValues>();
 
   const level = history[history.length - 1];
-  const snake = level && level[0].snake;
-  const point = level && level[0].point;
-
-  const handleGeneratePoint = () => {
-    setHistory(createBlock(xLength, yLength, history));
-  };
-
-  const handleMoveSnakeBackwards = () => {
-    setHistory(moveBackwards(history));
-  };
-
-  const handleMoveSnakeForwards = (cell: TypeCell) => {
-    setHistory(moveForwards(history, cell, true));
-  };
+  const snake = level && level.snake;
+  const point = level && level.point;
 
   const handleReset = () => {
     if (refAnimationFrame.current) {
@@ -144,16 +132,15 @@ const Snake: React.FC<Props> = (props) => {
       return handleLog('The 🐍 did not reach the point. There were no valid cells to move to.');
     }
 
-
-    if (containsCell([nextCell], point) && snake) {
-      handleGeneratePoint();
+    if (isCellIncluded([nextCell], point) && snake) {
+      setHistory(createBlock(xLength, yLength, moveForwards(history, nextCell, true)));
 
       if (snake.length - 1 === (xLength * yLength)) {
         setIsRunning(false);
         handleLog('🎉 You have conquered Snake! 🎉');
       }
     } else {
-      handleMoveSnakeForwards(nextCell);
+      setHistory(moveForwards(history, nextCell));
     }
   }, [values, snake, point]);
 
@@ -187,7 +174,7 @@ const Snake: React.FC<Props> = (props) => {
   React.useEffect(() => {
     if (!point || !snake) {
       setValues(undefined);
-      handleGeneratePoint();
+      setHistory(createBlock(xLength, yLength, history));
     }
   }, [point, snake]);
 
@@ -217,7 +204,7 @@ const Snake: React.FC<Props> = (props) => {
       onRefresh: () => runSolution(),
       onReset: () => handleReset(),
       onStart: () => setIsStarted(true),
-      onStepBackwards: () => handleMoveSnakeBackwards(),
+      onStepBackwards: () => setHistory(moveBackwards(history)),
       onStepForwards: () => moveSnake(),
       point: point,
       snake: snake,
