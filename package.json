@@ -1,7 +1,7 @@
 {
   "name": "@hhogg/snake",
   "description": "Snake Heuristics a game of pathfinding",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": "https://git@github.com/HHogg/snake.git",
   "author": "Harry Hogg <harry@hogg.io>",
   "license": "MIT",
