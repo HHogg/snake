@@ -99,6 +99,9 @@ const Snake: React.FC<Props> = (props) => {
           point: point,
         },
       });
+    } else if (snake.length === (xLength * yLength)) {
+      setIsRunning(false);
+      handleLog('🎉 You have conquered Snake! 🎉');
     }
   }, [solution, point, snake]);
 
@@ -120,9 +123,16 @@ const Snake: React.FC<Props> = (props) => {
     let nextCell: TypeCell | undefined;
 
     for (let i = 0; i < cells.length; i++) {
-      if (nextValue === undefined || values[cells[i][1]][cells[i][0]] < nextValue) {
-        nextValue = values[cells[i][1]][cells[i][0]];
-        nextCell = cells[i];
+      if (snake.length === (xLength * yLength) - 1 && cells.length === 2) {
+        if (isCellIncluded([cells[i]], point)) {
+          nextValue = values[cells[i][1]][cells[i][0]];
+          nextCell = cells[i];
+        }
+      } else {
+        if (nextValue === undefined || values[cells[i][1]][cells[i][0]] < nextValue) {
+          nextValue = values[cells[i][1]][cells[i][0]];
+          nextCell = cells[i];
+        }
       }
     }
 
@@ -134,11 +144,6 @@ const Snake: React.FC<Props> = (props) => {
 
     if (isCellIncluded([nextCell], point) && snake) {
       setHistory(createBlock(xLength, yLength, moveForwards(history, nextCell, true)));
-
-      if (snake.length - 1 === (xLength * yLength)) {
-        setIsRunning(false);
-        handleLog('🎉 You have conquered Snake! 🎉');
-      }
     } else {
       setHistory(moveForwards(history, nextCell));
     }

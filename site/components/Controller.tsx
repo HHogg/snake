@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useMatchMedia, Button, Buttons, Flex, Icon } from 'preshape';
-import { getCompletedHistory, SnakeContext } from '@hhogg/snake';
+import { SnakeContext } from '@hhogg/snake';
 
 export default () => {
   const {
@@ -18,12 +18,6 @@ export default () => {
 
   const isAtBeginning = history[0] && !history[0].path.length;
   const match = useMatchMedia(['600px']);
-
-  React.useEffect(() => {
-    if (!isRunning) {
-      console.log(getCompletedHistory(history));
-    }
-  }, [isRunning]);
 
   return (
     <Flex
