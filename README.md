@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="./src/assets/snake.svg" />
+  <img src="./site/assets/snake.svg" />
 </p>
 
 <h2 align="center" style="margin: 0">Snake</h2>
-<h5 align="center"  style="margin: 0"><a href="https://circles.hogg.io">https://snake.hogg.io</a></h5>
+<h5 align="center"  style="margin: 0"><a href="https://snake.hogg.io">https://snake.hogg.io</a></h5>
 
 Snake Heuristics is a game for developers to code the behaviour of the snake in the classic point finding game.
 
