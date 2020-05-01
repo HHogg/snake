@@ -15,6 +15,7 @@ import {
   Tabs,
   Text,
   ThemeSwitcher,
+  Tooltip,
   TypeTheme,
 } from 'preshape';
 import { Snake, SnakeViewer } from '@hhogg/snake';
@@ -92,21 +93,33 @@ export default () => {
           <Flex>
             <List gap="x2">
               <ListItem separator="|">
-                <Link title="Solutions Library" to="/solutions">
-                  <Icon name="Book" size="1.25rem" />
-                </Link>
+                <Tooltip content="Solutions">
+                  { (props) => (
+                    <Link { ...props } display="block" to="/solutions">
+                      <Icon name="Book" size="1.25rem" />
+                    </Link>
+                  ) }
+                </Tooltip>
               </ListItem>
 
               <ListItem separator="|">
-                <Link title="About" to="/about">
-                  <Icon name="Info" size="1.25rem" />
-                </Link>
+                <Tooltip content="About">
+                  { (props) => (
+                    <Link { ...props } display="block" to="/about">
+                      <Icon name="Info" size="1.25rem" />
+                    </Link>
+                  ) }
+                </Tooltip>
               </ListItem>
 
               <ListItem separator="|">
-                <Link href="https://github.com/HHogg/snake" target="Snake" title="Snake">
-                  <Icon name="Github" size="1.25rem" />
-                </Link>
+                <Tooltip content="Github">
+                  { (props) => (
+                    <Link { ...props } display="block" href="https://github.com/HHogg/snake" target="Snake" title="Snake">
+                      <Icon name="Github" size="1.25rem" />
+                    </Link>
+                  ) }
+                </Tooltip>
               </ListItem>
 
               <ListItem separator="|">

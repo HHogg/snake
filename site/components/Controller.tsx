@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useMatchMedia, Button, Buttons, Flex, Icon } from 'preshape';
+import { useMatchMedia, Button, Buttons, Flex, Icon, Tooltip } from 'preshape';
 import { SnakeContext } from '@hhogg/snake';
 
 export default () => {
@@ -37,40 +37,55 @@ export default () => {
 
       <Flex direction="horizontal" grow>
         <Buttons grow joined>
-          <Button
-              disabled={ isAtBeginning || !isStarted || isRunning }
-              onClick={ () => onStepBackwards() }
-              title="Rewind one cell at a time">
-            <Icon name="Beginning" size="1rem" />
-          </Button>
+          <Tooltip content="Step Backward">
+            { (props) => (
+              <Button { ...props }
+                  disabled={ isAtBeginning || !isStarted || isRunning }
+                  onClick={ () => onStepBackwards() }>
+                <Icon name="Beginning" size="1rem" />
+              </Button>
+            ) }
+          </Tooltip>
 
-          <Button
-              disabled={ !isStarted || isRunning }
-              onClick={ () => onPlay() }
-              title="Run the solution and move Snake">
-            <Icon name="Play" size="1rem" />
-          </Button>
+          <Tooltip content="Play">
+            { (props) => (
+              <Button { ...props }
+                  disabled={ !isStarted || isRunning }
+                  onClick={ () => onPlay() }>
+                <Icon name="Play" size="1rem" />
+              </Button>
+            ) }
+          </Tooltip>
 
-          <Button
-              disabled={ !isStarted || !isRunning }
-              onClick={ () => onPause() }
-              title="Pause the solution from being run">
-            <Icon name="Pause" size="1rem" />
-          </Button>
+          <Tooltip content="Pause">
+            { (props) => (
+              <Button { ...props }
+                  disabled={ !isStarted || !isRunning }
+                  onClick={ () => onPause() }>
+                <Icon name="Pause" size="1rem" />
+              </Button>
+            ) }
+          </Tooltip>
 
-          <Button
-              disabled={ !isStarted || isRunning }
-              onClick={ () => onStepForwards() }
-              title="Move the cell snake forward one cell at a time">
-            <Icon name="End" size="1rem" />
-          </Button>
+          <Tooltip content="Step forward">
+            { (props) => (
+              <Button { ...props }
+                  disabled={ !isStarted || isRunning }
+                  onClick={ () => onStepForwards() }>
+                <Icon name="End" size="1rem" />
+              </Button>
+            ) }
+          </Tooltip>
 
-          <Button
-              disabled={ !isStarted || isRunning }
-              onClick={ () => onRefresh() }
-              title="Rerun the solution with the current snakes position">
-            <Icon name="Refresh" size="1rem" />
-          </Button>
+          <Tooltip content="Refresh values">
+            { (props) => (
+              <Button { ...props }
+                  disabled={ !isStarted || isRunning }
+                  onClick={ () => onRefresh() }>
+                <Icon name="Refresh" size="1rem" />
+              </Button>
+            ) }
+          </Tooltip>
         </Buttons>
       </Flex>
 

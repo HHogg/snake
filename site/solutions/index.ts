@@ -1,4 +1,4 @@
-import { SolutionWithScore } from '../Types';
+import { ISolutionWithScore } from '../Types';
 import hamiltonianCycle from './hamiltonianCycle';
 import blank from './blank';
 import euclideanDistance from './euclideanDistance';
@@ -15,7 +15,7 @@ export {
   tailEscape,
 };
 
-const solutions: SolutionWithScore[] = [
+const solutions: ISolutionWithScore[] = [
   hamiltonianCycle,
   euclideanDistance,
   manhattanDistance,

@@ -3,7 +3,7 @@ import { Appear, Flex, Link, Text } from 'preshape';
 import { SnakeContext } from '@hhogg/snake';
 
 export default () => {
-  const { logs, onClearLog } = React.useContext(SnakeContext);;
+  const { logs, onClearLog } = React.useContext(SnakeContext);
   const ref = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
