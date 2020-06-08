@@ -46,6 +46,7 @@
     "eslint-plugin-react-hooks": "^2.4.0",
     "firebase": "^7.14.2",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-html-externals": "^0.2.0",
     "postcss-preset-env": "^6.7.0",
     "preshape": "^5.0.1",
     "react": "^16.13.0",
@@ -59,6 +60,9 @@
   },
   "alias": {
     "@hhogg/snake": "./src"
+  },
+  "externals": {
+    "/__/**/*": false
   },
   "resolutions": {
     "remark": "11.0.2"
