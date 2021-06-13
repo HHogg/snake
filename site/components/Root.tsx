@@ -6,7 +6,7 @@ import {
   useTheme,
   Button,
   Editor,
-  Flex,
+  Box,
   Icon,
   Link,
   List,
@@ -73,24 +73,24 @@ export default () => {
 
   return (
     <RootContext.Provider value={ context }>
-      <Flex direction="vertical" grow>
-        <Flex
+      <Box flex="vertical" grow>
+        <Box
             alignChildrenVertical="middle"
-            direction="horizontal"
+            flex="horizontal"
             gap="x6"
             paddingHorizontal="x6"
             paddingVertical="x2">
-          <Flex
+          <Box
               alignChildrenVertical="middle"
-              direction="horizontal"
+              flex="horizontal"
               gap="x4"
               grow>
-            <Flex>
+            <Box>
               <Logo height="32px" width="32px" />
-            </Flex>
-          </Flex>
+            </Box>
+          </Box>
 
-          <Flex>
+          <Box>
             <List gap="x2">
               <ListItem separator="|">
                 <Tooltip content="Solutions">
@@ -128,12 +128,12 @@ export default () => {
                     theme={ theme } />
               </ListItem>
             </List>
-          </Flex>
-        </Flex>
+          </Box>
+        </Box>
 
-        <Flex>
-          <Flex borderColor="background-shade-3" borderSize="x1" />
-        </Flex>
+        <Box>
+          <Box borderColor="background-shade-3" borderSize="x1" />
+        </Box>
 
         { !match('1000px') && (
           <Tabs margin="x2" paddingHorizontal="x6">
@@ -146,11 +146,11 @@ export default () => {
           </Tabs>
         ) }
 
-        <Flex direction="horizontal" grow>
+        <Box flex="horizontal" grow>
           { (match('1000px') || activeTab === 'game') && (
-            <Flex
-                basis="none"
-                direction="vertical"
+            <Box
+                basis="0"
+                flex="vertical"
                 grow
                 paddingHorizontal="x6"
                 paddingVertical="x4">
@@ -159,81 +159,81 @@ export default () => {
                   worker={ worker }
                   xLength={ CANVAS_SIZE }
                   yLength={ CANVAS_SIZE }>
-                <Flex
-                    direction="horizontal"
+                <Box
+                    flex="horizontal"
                     gap="x4"
                     grow>
-                  <Flex
-                      basis="none"
-                      direction="vertical"
+                  <Box
+                      basis="0"
+                      flex="vertical"
                       gap="x2"
                       grow>
-                    <Flex
-                        basis="none"
-                        direction="vertical"
+                    <Box
+                        basis="0"
+                        flex="vertical"
                         grow
                         minHeight="20rem">
                       <SnakeViewer theme={ theme } />
-                    </Flex>
+                    </Box>
 
-                    <Flex direction="horizontal">
+                    <Box flex="horizontal">
                       <Console />
-                    </Flex>
+                    </Box>
 
-                    <Flex>
+                    <Box>
                       <Scoreboard />
-                    </Flex>
+                    </Box>
 
-                    <Flex>
+                    <Box>
                       <Controller />
-                    </Flex>
-                  </Flex>
-                </Flex>
+                    </Box>
+                  </Box>
+                </Box>
               </Snake>
-            </Flex>
+            </Box>
           ) }
 
           { match('1000px') && (
-            <Flex borderColor="background-shade-3" borderSize="x1" />
+            <Box borderColor="background-shade-3" borderSize="x1" />
           ) }
 
           { (match('1000px') || activeTab === 'editor') && (
-            <Flex
-                basis="none"
-                direction="vertical"
+            <Box
+                basis="0"
+                flex="vertical"
                 gap="x6"
                 grow
                 paddingHorizontal="x6"
                 paddingVertical="x4">
-              <Flex
+              <Box
                   alignChildrenVertical="middle"
-                  direction="horizontal"
+                  flex="horizontal"
                   gap="x2">
-                <Flex basis="none" grow>
+                <Box basis="0" grow>
                   <Text ellipsis strong>{ editorState.name }</Text>
-                </Flex>
+                </Box>
 
-                <Flex>
+                <Box>
                   <Button
                       color="negative"
                       gap="x2"
                       onClick={ () => onReset() }>
-                    <Flex><Icon name="Delete" size="1rem" /></Flex>
-                    <Flex>Clear</Flex>
+                    <Box><Icon name="Delete" size="1rem" /></Box>
+                    <Box>Clear</Box>
                   </Button>
-                </Flex>
-              </Flex>
+                </Box>
+              </Box>
 
-              <Flex direction="vertical" grow>
+              <Box flex="vertical" grow>
                 <Editor
                     language="javascript"
                     onChange={ onChange }
                     value={ editorState.content } />
-              </Flex>
-            </Flex>
+              </Box>
+            </Box>
           ) }
-        </Flex>
-      </Flex>
+        </Box>
+      </Box>
 
       <Switch>
         <Route component={ About } path="/about" />

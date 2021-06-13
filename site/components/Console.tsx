@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Appear, Flex, Link, Text } from 'preshape';
+import { Appear, Box, Link, Text } from 'preshape';
 import { SnakeContext } from '@hhogg/snake';
 
 export default () => {
@@ -13,19 +13,19 @@ export default () => {
   }, [logs]);
 
   return (
-    <Flex
-        basis="none"
+    <Box
+        basis="0"
         container
-        direction="vertical"
+        flex="vertical"
         grow
         height="7rem">
-      <Flex
-          direction="vertical"
+      <Box
+          flex="vertical"
           grow
           height="5rem">
-        <Flex
+        <Box
             backgroundColor="background-shade-2"
-            basis="none"
+            basis="0"
             grow
             padding="x3"
             ref={ ref }
@@ -33,14 +33,14 @@ export default () => {
           { logs.map((message, index) => (
             <Text key={ index } monospace>{ `> ${message}` }</Text>
           )) }
-        </Flex>
+        </Box>
 
         <Appear animation="FadeSlideUp" visible={ logs.length > 0 }>
-          <Flex absolute="bottom-right" padding="x2">
+          <Box absolute="bottom-right" padding="x2">
             <Link onClick={ onClearLog } size="x1" strong>Clear Console</Link>
-          </Flex>
+          </Box>
         </Appear>
-      </Flex>
-    </Flex>
+      </Box>
+    </Box>
   );
 };

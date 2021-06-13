@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
-  Flex,
+  Box,
   Link,
   Modal,
   ModalBody,
@@ -23,9 +23,9 @@ export default () => {
         zIndex={ 5 }>
       <ModalHeader />
       <ModalBody>
-        <Flex alignChildren="middle" direction="vertical" margin="x4">
+        <Box alignChildren="middle" flex="vertical" margin="x4">
           <Logo height="6rem" width="6rem" />
-        </Flex>
+        </Box>
 
         <Text align="middle" margin="x4">
           Snake Heuristics is a game for developers to code the behaviour of the

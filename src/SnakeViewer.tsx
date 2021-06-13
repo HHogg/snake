@@ -5,14 +5,14 @@ import {
   colorWhite,
   themes,
   useResizeObserver,
-  Flex,
-  FlexProps,
+  Box,
+  BoxProps,
   TypeTheme,
 } from 'preshape';
 import { SnakeContext } from './Snake';
 import getGradientColor from './utils/getGradientColor';
 
-interface Props extends FlexProps {
+interface Props extends BoxProps {
   theme: TypeTheme;
 }
 
@@ -97,9 +97,9 @@ const SnakeViewer: React.FC<Props> = (props) => {
   }, [refCanvas.current, height, width]);
 
   return (
-    <Flex { ...rest } container grow ref={ refContainer }>
-      <Flex absolute="fullscreen" ref={ refCanvas } tag="canvas" />
-    </Flex>
+    <Box { ...rest } container grow ref={ refContainer }>
+      <Box absolute="edge-to-edge" ref={ refCanvas } tag="canvas" />
+    </Box>
   );
 };
 

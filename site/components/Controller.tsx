@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useMatchMedia, Button, Buttons, Flex, Icon, Tooltip } from 'preshape';
+import { useMatchMedia, Button, Buttons, Box, Icon, Tooltip } from 'preshape';
 import { SnakeContext } from '@hhogg/snake';
 
 export default () => {
@@ -20,10 +20,10 @@ export default () => {
   const match = useMatchMedia(['600px']);
 
   return (
-    <Flex
-        direction={ match('600px') ? 'horizontal' : 'vertical' }
+    <Box
+        flex={ match('600px') ? 'horizontal' : 'vertical' }
         gap="x3">
-      <Flex direction="horizontal" grow>
+      <Box flex="horizontal" grow>
         <Buttons grow>
           <Button
               color="positive"
@@ -33,9 +33,9 @@ export default () => {
             Start
           </Button>
         </Buttons>
-      </Flex>
+      </Box>
 
-      <Flex direction="horizontal" grow>
+      <Box flex="horizontal" grow>
         <Buttons grow joined>
           <Tooltip content="Step Backward">
             { (props) => (
@@ -87,9 +87,9 @@ export default () => {
             ) }
           </Tooltip>
         </Buttons>
-      </Flex>
+      </Box>
 
-      <Flex direction="horizontal" grow>
+      <Box flex="horizontal" grow>
         <Buttons grow>
           <Button
               color="negative"
@@ -99,7 +99,7 @@ export default () => {
             Reset
           </Button>
         </Buttons>
-      </Flex>
-    </Flex>
+      </Box>
+    </Box>
   );
 };
