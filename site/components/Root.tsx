@@ -21,7 +21,7 @@ import {
 import { Snake, SnakeViewer } from '@hhogg/snake';
 import { ISolution } from '../Types';
 import { CANVAS_SIZE } from '../config';
-import { blank, manhattanDistance } from '../solutions';
+import { blank, tailEscape } from '../solutions';
 import About from './About';
 import Console from './Console';
 import Controller from './Controller';
@@ -47,7 +47,7 @@ export const RootContext = React.createContext<ISolution & {
 
 export default () => {
   const [theme, setTheme ] = useLocalStorage<TypeTheme>('com.hogg.theme', 'night');
-  const [editorState, setEditorState] = useLocalStorage<ISolution>('com.hogg.snake.editor', manhattanDistance);
+  const [editorState, setEditorState] = useLocalStorage<ISolution>('com.hogg.snake.editor', tailEscape);
   const [activeTab, setActiveTab] = React.useState<'game' | 'editor'>('game');
   const match = useMatchMedia(['1000px']);
 
