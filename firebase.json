@@ -2,9 +2,26 @@
   "hosting": {
     "target": "snake",
     "public": "public",
-    "rewrites": [{
+    "cleanUrls": true,
+    "headers": [{
       "source": "**",
-      "destination": "/index.html"
-    }]
+      "headers": [{
+        "key": "Cache-Control",
+        "value": "no-cache, no-store, must-revalidate"
+      }]
+    }, {
+      "source": "**/*.@(js|css|eot|png|svg|ttf|woff|woff2)",
+      "headers": [{
+        "key": "Cache-Control",
+        "value": "public, max-age=604800"
+      }]
+    }],
+    "redirects": [
+      {
+        "source": "/",
+        "destination": "https://hogg.io/projects/snakes",
+        "type": 301
+      }
+    ]
   }
 }
